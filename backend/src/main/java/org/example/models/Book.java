@@ -25,9 +25,9 @@ public class Book {
     private String genre;
 
     /**
-     * The username of the book.
+     * Creates a new book.
      */
-    private String username;
+    public Book() {}
 
     /**
      * Creates a new book.
@@ -36,14 +36,12 @@ public class Book {
      * @param title  The title of the book.
      * @param author  The author of the book.
      * @param genre The genre of the book.
-     * @param username The username of the book.
      * */
-    public Book(int id, String title, String author, String genre, String username) {
+    public Book(int id, String title, String author, String genre) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.genre = genre;
-        this.username = username;
     }
 
     /**
@@ -116,24 +114,6 @@ public class Book {
      */
     public void setGenre(String genre) {
         this.genre = genre;
-    }
-
-    /**
-     * Gets the username of the book.
-     *
-     * @return The username of the book.
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * Sets the username of the book.
-     *
-     * @param username The username of the book.
-     */
-    public void setUsername(String username) {
-        this.username = username;
     }
 }
 

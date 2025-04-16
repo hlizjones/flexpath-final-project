@@ -14,10 +14,14 @@ public class QueryBuilder {
     private List<String> columns;
     private List<String> tables;
     private List<String> joins;
-    private List<String> whereClauses;
-    private List<Object> values;
+    private List<String> whereEqualClauses;
+    private List<String> whereLikeClauses;
+    private List<String> whereComplexClauses;
+    private List<Object> equalValues;
+    private List<Object> likeValues;
+    private List<Object> complexValues;
     private List<String> orderByClauses;
-    private String query;
+
 
     /**
      * Creates a new query builder object.
@@ -26,8 +30,12 @@ public class QueryBuilder {
         this.columns = new ArrayList<String>();
         this.tables = new ArrayList<String>();
         this.joins = new ArrayList<String>();
-        this.whereClauses = new ArrayList<String>();
-        this.values = new ArrayList<>();
+        this.whereEqualClauses = new ArrayList<String>();
+        this.whereLikeClauses = new ArrayList<String>();
+        this.whereComplexClauses = new ArrayList<String>();
+        this.equalValues = new ArrayList<>();
+        this.likeValues = new ArrayList<>();
+        this.complexValues = new ArrayList<>();
         this.orderByClauses = new ArrayList<>();
     }
 
@@ -67,32 +75,76 @@ public class QueryBuilder {
     /**
      * Creates list of WHERE conditions.
      *
-     * @param whereClauses WHERE clauses to append to the SQL query.
+     * @param whereEqualClauses WHERE clauses to append to the SQL query.
      * @return QueryBuilder The query builder object.
      */
-    public QueryBuilder where(String ...whereClauses) {
-        this.whereClauses.addAll(Arrays.asList(whereClauses));
+    public QueryBuilder whereEqual(String ...whereEqualClauses) {
+        this.whereEqualClauses.addAll(Arrays.asList(whereEqualClauses));
         return this;
     }
 
     /**
-     * Creates list of query parameters.
+     * Creates list of WHERE LIKE conditions.
      *
-     * @param values Query parameters.
+     * @param whereLikeClauses WHERE LIKE clauses to append to the SQL query.
      * @return QueryBuilder The query builder object.
      */
-    public QueryBuilder values(String ...values) {
-        this.values.addAll(Arrays.asList(values));
+    public QueryBuilder whereLike(String ...whereLikeClauses) {
+        this.whereLikeClauses.addAll(Arrays.asList(whereLikeClauses));
+        return this;
+    }
+
+    /**
+     * Creates list of complex WHERE conditions.
+     *
+     * @param whereComplexClauses Complex WHERE clauses to append to the SQL query.
+     * @return QueryBuilder The query builder object.
+     */
+    public QueryBuilder whereComplex(String ...whereComplexClauses) {
+        this.whereComplexClauses.addAll(Arrays.asList(whereComplexClauses));
+        return this;
+    }
+
+    /**
+     * Creates list of query parameters for WHERE LIKE clause.
+     *
+     * @param equalValues Query parameters.
+     * @return QueryBuilder The query builder object.
+     */
+    public QueryBuilder equalValues(Object ...equalValues) {
+        this.equalValues.addAll(Arrays.asList(equalValues));
+        return this;
+    }
+
+    /**
+     * Creates list of query parameters for WHERE clause.
+     *
+     * @param likeValues Query parameters.
+     * @return QueryBuilder The query builder object.
+     */
+    public QueryBuilder likeValues(Object ...likeValues) {
+        this.likeValues.addAll(Arrays.asList(likeValues));
+        return this;
+    }
+
+    /**
+     * Creates list of query parameters for complex WHERE clause.
+     *
+     * @param complexValues Query parameters.
+     * @return QueryBuilder The query builder object.
+     */
+    public QueryBuilder complexValues(Object ...complexValues) {
+        this.complexValues.addAll(Arrays.asList(complexValues));
         return this;
     }
 
     /**
      * Creates list of ORDER BY conditions.
      *
-     * @param orderByClauses ORDER BY clauses to append to the SQL query.
+     * @param orderByClauses ORDER BY clause to append to the SQL query.
      * @return QueryBuilder The query builder object.
      */
-    public QueryBuilder orderBy(String ...orderByClauses) {
+    public QueryBuilder orderByClauses(String ...orderByClauses) {
         this.orderByClauses.addAll(Arrays.asList(orderByClauses));
         return this;
     }
@@ -115,12 +167,43 @@ public class QueryBuilder {
             sb.append(String.join(" JOIN", joins));
         }
 
-        if (!whereClauses.isEmpty()) {
-            sb.append(" WHERE ");
-            for (int i = 0; i < whereClauses.size(); i++) {
-                sb.append(whereClauses.get(i));
-                if (i < whereClauses.size() - 1) {
+        if (!whereEqualClauses.isEmpty() || !whereLikeClauses.isEmpty() || !whereComplexClauses.isEmpty()) {
+
+            if (!whereEqualClauses.isEmpty()) {
+                sb.append(" WHERE ");
+                for (int i = 0; i < whereEqualClauses.size(); i++) {
+                    sb.append(whereEqualClauses.get(i)).append(" = ?");
+                    if (i < whereEqualClauses.size() - 1) {
+                        sb.append(" AND ");
+                    }
+                }
+            }
+
+            if (!whereLikeClauses.isEmpty()) {
+                if (!whereEqualClauses.isEmpty()) {
                     sb.append(" AND ");
+                } else {
+                    sb.append(" WHERE ");
+                }
+                for (int i = 0; i < whereLikeClauses.size(); i++) {
+                    sb.append(whereLikeClauses.get(i)).append(" LIKE ?");
+                    if (i < whereLikeClauses.size() - 1) {
+                        sb.append(" AND ");
+                    }
+                }
+            }
+
+            if (!whereComplexClauses.isEmpty()) {
+                if (!whereEqualClauses.isEmpty() || !whereLikeClauses.isEmpty()) {
+                    sb.append(" AND ");
+                } else {
+                    sb.append(" WHERE ");
+                }
+                for (int i = 0; i < whereComplexClauses.size(); i++) {
+                    sb.append(whereComplexClauses.get(i));
+                    if (i < whereComplexClauses.size() - 1) {
+                        sb.append(" AND ");
+                    }
                 }
             }
         }
@@ -132,14 +215,36 @@ public class QueryBuilder {
 
         PreparedStatementCreator psc = con -> {
             PreparedStatement ps = con.prepareStatement(sb.toString());
-            if (!values.isEmpty()) {
-                for (int i = 0; i < values.size(); i++) {
-                    if (values.get(i) instanceof Integer) {
-                        ps.setInt(i + 1, (int) values.get(i));
-                    } else if (values.get(i) instanceof String) {
-                        ps.setString(i + 1, (String) values.get(i));
-                    } else if (values.get(i) instanceof Boolean) {
-                        ps.setBoolean(i + 1, (Boolean) values.get(i));
+            if (!equalValues.isEmpty()) {
+                for (int i = 0; i < equalValues.size(); i++) {
+                    if (equalValues.get(i) instanceof Integer) {
+                        ps.setInt(i + 1, (int) equalValues.get(i));
+                    } else if (equalValues.get(i) instanceof String) {
+                        ps.setString(i + 1, (String) equalValues.get(i));
+                    } else if (equalValues.get(i) instanceof Boolean) {
+                        ps.setBoolean(i + 1, (Boolean) equalValues.get(i));
+                    }
+                }
+            }
+            if (!likeValues.isEmpty()) {
+                for (int i = 0; i < likeValues.size(); i++) {
+                    if (likeValues.get(i) instanceof Integer) {
+                        ps.setInt(i + equalValues.size() + 1, (int) likeValues.get(i));
+                    } else if (likeValues.get(i) instanceof String) {
+                        ps.setString(i + equalValues.size() + 1, (String) likeValues.get(i));
+                    } else if (likeValues.get(i) instanceof Boolean) {
+                        ps.setBoolean(i + equalValues.size() + 1, (Boolean) likeValues.get(i));
+                    }
+                }
+            }
+            if (!complexValues.isEmpty()) {
+                for (int i = 0; i < complexValues.size(); i++) {
+                    if (complexValues.get(i) instanceof Integer) {
+                        ps.setInt(i + equalValues.size() + likeValues.size() + 1, (int) complexValues.get(i));
+                    } else if (complexValues.get(i) instanceof String) {
+                        ps.setString(i + equalValues.size() + likeValues.size() + 1, (String) complexValues.get(i));
+                    } else if (complexValues.get(i) instanceof Boolean) {
+                        ps.setBoolean(i + equalValues.size() + likeValues.size() + 1, (Boolean) complexValues.get(i));
                     }
                 }
             }
@@ -148,31 +253,4 @@ public class QueryBuilder {
 
         return psc;
     }
-
-//    private String sortBooks(String columnName, String sortDirection) {
-//        String column;
-//        String direction;
-//        switch (columnName) {
-//            case "author":
-//                column = "author";
-//                break;
-//            case "rating":
-//                column = "rating";
-//                break;
-//            case "genre":
-//                column = "genre";
-//                break;
-//            default:
-//                column = "title";
-//        }
-//        switch (sortDirection) {
-//            case "desc":
-//                direction = "desc";
-//                break;
-//            default:
-//                direction = "asc";
-//                break;
-//        }
-//        return (column + " " + direction);
-//    }
 }

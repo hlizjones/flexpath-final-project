@@ -2,6 +2,7 @@ package org.example.daos;
 
 import org.example.exceptions.DaoException;
 import org.example.models.Book;
+import org.example.utils.QueryBuilder;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -13,7 +14,10 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Data access object for books.
@@ -34,6 +38,7 @@ public class BookDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+
     /**
      * Gets books.
      *
@@ -41,8 +46,42 @@ public class BookDao {
      * @return List of Book.
      */
     public List<Book> getBooks(Book book) {
-        // using my querybuilder here
-        return jdbcTemplate.query(query, this::mapToBook);
+        QueryBuilder qb = new QueryBuilder();
+        PreparedStatementCreator psc;
+        List<String> where = new ArrayList<>();
+        List<String> values = new ArrayList<>();
+
+        if (book.getTitle() != null) {
+            where.add("title");
+            values.add(book.getTitle());
+        } else if (book.getAuthor() != null) {
+            where.add("author");
+            values.add(book.getAuthor());
+        }  else if (book.getGenre() != null) {
+            where.add("genre");
+            values.add(book.getGenre());
+        }
+
+        if (countNonNullFields(book) == 0) {
+            psc = qb.select("*")
+                    .from("books")
+                    .build();
+        } else if (countNonNullFields(book) == 1) {
+            psc = qb.select("*")
+                    .from("books")
+                    .whereLike(where.toArray(new String[0]))
+                    .likeValues(values.toArray(new Object[0]))
+                    .orderByClauses("CASE WHEN " + where.get(0) + " = '%" + values.get(0) + "%' THEN 1 WHEN " + where.get(0) + " = '%" + values.get(0) + "' THEN 2 ELSE 3 END")
+                    .build();
+        } else {
+            psc = qb.select("*")
+                    .from("books")
+                    .whereEqual(where.toArray(new String[0]))
+                    .equalValues(values.toArray(new Object[0]))
+                    .orderByClauses(where.get(0) + "ASC")
+                    .build();
+        }
+        return jdbcTemplate.query(psc, this::mapToBook);
     }
 
     /**
@@ -52,7 +91,11 @@ public class BookDao {
      * @return Book
      */
     public Book getBookById(int id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM books WHERE book_id = ?", this::mapToBook, id);
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM books WHERE book_id = ?", this::mapToBook, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     /**
@@ -66,18 +109,17 @@ public class BookDao {
             String title = book.getTitle();
             String author = book.getAuthor();
             String genre = book.getGenre();
-            String username = book.getUsername();
             PreparedStatementCreator psc = con -> {
-                PreparedStatement ps = con.prepareStatement("INSERT INTO books (title, author, genre, username) VALUES (?, ?, ?, ?)", new String[]{"book_id"});
+                PreparedStatement ps = con.prepareStatement("INSERT INTO books (title, author, genre) VALUES (?, ?, ?)", new String[]{"book_id"});
                 ps.setString(1, title);
                 ps.setString(2, author);
                 ps.setString(3, genre);
-                ps.setString(4, username);
                 return ps;
             };
             KeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(psc, keyHolder);
             Number key = keyHolder.getKey();
+            assert key != null;
             return getBookById(key.intValue());
         } catch (EmptyResultDataAccessException e) {
             throw new DaoException("Failed to create book.");
@@ -95,17 +137,15 @@ public class BookDao {
         String title = book.getTitle();
         String author = book.getAuthor();
         String genre = book.getGenre();
-        String username = book.getUsername();
         int rowsAffected = jdbcTemplate.update(
-                "UPDATE books SET title = ?, author = ?, genre = ?, username = ? WHERE book_id  = ?",
+                "UPDATE books SET title = ?, author = ?, genre = ? WHERE book_id  = ?",
                 title,
                 author,
                 genre,
-                username,
                 id
                 );
                 if (rowsAffected == 0){
-                    throw new DaoException("Zero rows affected, expected at least one.");
+                    throw new DaoException("Failed to update book.");
                 } else {
                     return getBookById(id);
                 }
@@ -115,10 +155,10 @@ public class BookDao {
      * Deletes a book.
      *
      * @param id The id of the book to delete.
-     * @return The number of rows affected (1 if an book was deleted, 0 if no book was found).
+     * @return The number of rows affected (1 if a book was deleted, 0 if no book was found).
      */
     public int deleteBook(int id) {
-        return jdbcTemplate.update("DELETE FROM books WHERE id = ?", id);
+        return jdbcTemplate.update("DELETE FROM books WHERE book_id = ?", id);
     }
 
     /**
@@ -134,9 +174,18 @@ public class BookDao {
                 rs.getInt("book_id"),
                 rs.getString("title"),
                 rs.getString("author"),
-                rs.getString("genre"),
-                rs.getString("username")
+                rs.getString("genre")
         );
+    }
+
+    /**
+     * Counts the nonnull fields in the book object.
+     *
+     * @param book A book object.
+     * @return The number of nonnull fields in the book object.
+     */
+    private long countNonNullFields(Book book) {
+        return Stream.of(book.getTitle(), book.getAuthor(), book.getGenre()).filter(Objects::nonNull).count();
     }
 }
 

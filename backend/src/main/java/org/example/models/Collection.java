@@ -35,6 +35,16 @@ public class Collection {
     private String username;
 
     /**
+     * The role of user accessing the collection.
+     */
+    private Boolean isAdmin;
+
+    /**
+     * Creates new collection.
+     */
+    public Collection() {}
+
+    /**
      * Creates new collection.
      *
      * @param id The id of the collection.
@@ -158,5 +168,23 @@ public class Collection {
      */
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    /**
+     * Gets the role of user accessing the collection.
+     *
+     * @return The role of user accessing the collection.
+     */
+    public Boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    /**
+     * Sets the role of user accessing the collection.
+     *
+     * @param admin The role of user accessing the collection.
+     */
+    public void setIsAdmin(Boolean admin) {
+        this.isAdmin = admin;
     }
 }

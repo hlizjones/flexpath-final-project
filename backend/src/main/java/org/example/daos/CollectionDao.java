@@ -2,6 +2,7 @@ package org.example.daos;
 
 import org.example.exceptions.DaoException;
 import org.example.models.Collection;
+import org.example.utils.QueryBuilder;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -13,7 +14,10 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Data access object for collections.
@@ -41,9 +45,54 @@ public class CollectionDao {
      * @return List of Collection.
      */
     public List<Collection> getCollections(Collection collection) {
-        // write code to use query builder here
-        return jdbcTemplate.query(query, this::mapToCollection);
+        QueryBuilder qb = new QueryBuilder();
+        PreparedStatementCreator psc;
+        List<String> where = new ArrayList<>();
+        List<String> values = new ArrayList<>();
+        List<String> complexWhere = new ArrayList<>();
+        List<String> complexValues = new ArrayList<>();
+        List<String> orderBy = new ArrayList<>();
+
+        if (collection.getName() != null) {
+            where.add("name");
+            values.add(collection.getName());
+        } else if (collection.getUsername() != null) {
+            where.add("username");
+            values.add(collection.getUsername());
+        }
+
+        if(!collection.getIsAdmin()) {
+            complexWhere.add("(privacy = false OR (privacy = true AND username = ?))");
+            complexValues.add(collection.getUsername());
+        }
+
+        if (collection.getIsAdmin() && countNonNullFields(collection) == 0) {
+                psc = qb.select("*")
+                        .from("collections")
+                        .build();
+        } else if (countNonNullFields(collection) == 1) {
+            psc = qb.select("*")
+                    .from("collections")
+                    .whereLike(where.toArray(new String[0]))
+                    .likeValues(values.toArray(new Object[0]))
+                    .whereComplex(complexWhere.toArray(new String[0]))
+                    .complexValues(complexValues.toArray(new Object[0]))
+                    .orderByClauses("CASE WHEN " + where.get(0) + " = '%" + values.get(0) + "%' THEN 1 WHEN " + where.get(0) + " = '%" + values.get(0) + "' THEN 2 ELSE 3 END")
+                    .build();
+        } else {
+            psc = qb.select("*")
+                    .from("collections")
+                    .whereEqual(where.toArray(new String[0]))
+                    .equalValues(values.toArray(new Object[0]))
+                    .whereComplex(complexWhere.toArray(new String[0]))
+                    .complexValues(complexValues.toArray(new Object[0]))
+                    .orderByClauses(where.get(0) + "ASC")
+                    .build();
+        }
+
+        return jdbcTemplate.query(psc, this::mapToCollection);
     }
+
 
     /**
      * Gets a collection.
@@ -80,6 +129,7 @@ public class CollectionDao {
             KeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(psc, keyHolder);
             Number key = keyHolder.getKey();
+            assert key != null;
             return getCollectionById(key.intValue());
         } catch (EmptyResultDataAccessException e) {
             throw new DaoException("Failed to create collection.");
@@ -120,7 +170,7 @@ public class CollectionDao {
      * @return The number of rows affected (1 if a collection was deleted, 0 if no collection was found).
      */
     public int deleteCollection(int id) {
-        return jdbcTemplate.update("DELETE FROM collections WHERE id = ?", id);
+        return jdbcTemplate.update("DELETE FROM collections WHERE collection_id = ?", id);
     }
 
     /**
@@ -140,5 +190,15 @@ public class CollectionDao {
                 rs.getBoolean("privacy"),
                 rs.getString("username")
         );
+    }
+
+    /**
+     * Counts the nonnull fields in the collection object.
+     *
+     * @param collection A collection object.
+     * @return The number of nonnull fields in the collection object.
+     */
+    private long countNonNullFields(Collection collection) {
+        return Stream.of(collection.getName(), collection.getUsername()).filter(Objects::nonNull).count();
     }
 }

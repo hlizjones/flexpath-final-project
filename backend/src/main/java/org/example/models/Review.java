@@ -35,6 +35,16 @@ public class Review {
     private String username;
 
     /**
+     * The role of user accessing the review.
+     */
+    private Boolean isAdmin;
+
+    /**
+     * Creates a new review.
+     */
+    public Review() {}
+
+    /**
      * Creates a new review.
      *
      * @param id The id of the review.
@@ -177,5 +187,23 @@ public class Review {
      */
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    /**
+     * Gets the role of user accessing the review.
+     *
+     * @return The role of user accessing the review.
+     */
+    public Boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    /**
+     * Sets the role of user accessing the review.
+     *
+     * @param admin The role of user accessing the review.
+     */
+    public void setIsAdmin(Boolean admin) {
+        this.isAdmin = admin;
     }
 }

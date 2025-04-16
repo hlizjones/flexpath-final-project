@@ -2,6 +2,7 @@ package org.example.daos;
 
 import org.example.exceptions.DaoException;
 import org.example.models.Review;
+import org.example.utils.QueryBuilder;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -13,6 +14,8 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,8 +44,28 @@ public class ReviewDao {
      * @return List of Review.
      */
     public List<Review> getReviews(Review review) {
-        // write code to use query builder here
-        return jdbcTemplate.query(query, this::mapToReview);
+        QueryBuilder qb = new QueryBuilder();
+        List<String> where = new ArrayList<>();
+        List<Object> values = new ArrayList<>();
+        List<String> orderBy = new ArrayList<>();
+
+        if (review.getIsAdmin() && review.getBookId() != 0) {
+            where.add("book_id");
+            values.add(review.getBookId());
+        } else if (!review.getIsAdmin() && review.getBookId() != 0) {
+            where.addAll(Arrays.asList("book_id", "(privacy = false OR (privacy = true AND username = ?))"));
+            values.addAll(Arrays.asList(review.getBookId(), review.getUsername()));
+            orderBy.add("CASE WHEN username = " + review.getUsername() + " THEN 1 WHEN rating = 5 THEN 2 WHEN rating = 4 THEN 3 WHEN rating = 3 THEN 4 WHEN rating = 2 THEN 5 ELSE 6 END");
+        }
+
+        PreparedStatementCreator psc = qb.select("*")
+                .from("reviews")
+                .whereEqual(where.toArray(new String[0]))
+                .equalValues(values.toArray(new Object[0]))
+                .orderByClauses(orderBy.toArray(new String[0]))
+                .build();
+
+        return jdbcTemplate.query(psc, this::mapToReview);
     }
 
     /**
@@ -80,6 +103,7 @@ public class ReviewDao {
             KeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(psc, keyHolder);
             Number key = keyHolder.getKey();
+            assert key != null;
             return getReviewById(key.intValue());
         } catch (EmptyResultDataAccessException e) {
             throw new DaoException("Failed to create review.");
@@ -98,7 +122,7 @@ public class ReviewDao {
         String content = review.getContent();
         Boolean privacy = review.getPrivacy();
         int rowsAffected = jdbcTemplate.update(
-                "UPDATE reviews SET rating = ?, content = ?, privacy =? WHERE id = ?",
+                "UPDATE reviews SET rating = ?, content = ?, privacy =? WHERE review_id = ?",
                 rating,
                 content,
                 privacy,
@@ -118,7 +142,7 @@ public class ReviewDao {
      * @return The number of rows affected (1 if a review was deleted, 0 if no review was found).
      */
     public int deleteReview(int id) {
-        return jdbcTemplate.update("DELETE FROM review WHERE id = ?", id);
+        return jdbcTemplate.update("DELETE FROM reviews WHERE review_id = ?", id);
     }
 
     /**
