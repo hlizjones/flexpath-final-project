@@ -46,12 +46,10 @@ public class CollectionDao {
      */
     public List<Collection> getCollections(Collection collection) {
         QueryBuilder qb = new QueryBuilder();
-        PreparedStatementCreator psc;
         List<String> where = new ArrayList<>();
         List<String> values = new ArrayList<>();
-        List<String> complexWhere = new ArrayList<>();
-        List<String> complexValues = new ArrayList<>();
-        List<String> orderBy = new ArrayList<>();
+
+        qb.select("*").from("collections");
 
         if (collection.getName() != null) {
             where.add("name");
@@ -62,37 +60,23 @@ public class CollectionDao {
         }
 
         if(!collection.getIsAdmin()) {
-            complexWhere.add("(privacy = false OR (privacy = true AND username = ?))");
-            complexValues.add(collection.getUsername());
+            qb.whereComplex("(privacy = false OR (privacy = true AND username = ?))");
+            qb.complexValues(collection.getUsername());
+        } else if (countNonNullFields(collection) == 1) {
+            qb.whereLike(where.toArray(new String[0]))
+                    .likeValues(values.toArray(new Object[0]))
+                    .orderByClauses("CASE WHEN " + where.get(0) + " = ? THEN 1 WHEN " + where.get(0) + " LIKE ? THEN 2 ELSE 3 END")
+                    .orderByValues(values.get(0), "%" + values.get(0));
+        } else if (countNonNullFields(collection) > 1) {
+                    qb.whereEqual(where.toArray(new String[0]))
+                    .equalValues(values.toArray(new Object[0]))
+                    .orderByClauses(where.get(0) + " ASC");
         }
 
-        if (collection.getIsAdmin() && countNonNullFields(collection) == 0) {
-                psc = qb.select("*")
-                        .from("collections")
-                        .build();
-        } else if (countNonNullFields(collection) == 1) {
-            psc = qb.select("*")
-                    .from("collections")
-                    .whereLike(where.toArray(new String[0]))
-                    .likeValues(values.toArray(new Object[0]))
-                    .whereComplex(complexWhere.toArray(new String[0]))
-                    .complexValues(complexValues.toArray(new Object[0]))
-                    .orderByClauses("CASE WHEN " + where.get(0) + " = '%" + values.get(0) + "%' THEN 1 WHEN " + where.get(0) + " = '%" + values.get(0) + "' THEN 2 ELSE 3 END")
-                    .build();
-        } else {
-            psc = qb.select("*")
-                    .from("collections")
-                    .whereEqual(where.toArray(new String[0]))
-                    .equalValues(values.toArray(new Object[0]))
-                    .whereComplex(complexWhere.toArray(new String[0]))
-                    .complexValues(complexValues.toArray(new Object[0]))
-                    .orderByClauses(where.get(0) + "ASC")
-                    .build();
-        }
+        PreparedStatementCreator psc = qb.build();
 
         return jdbcTemplate.query(psc, this::mapToCollection);
     }
-
 
     /**
      * Gets a collection.
@@ -118,7 +102,7 @@ public class CollectionDao {
             Boolean privacy = collection.getPrivacy();
             String username = collection.getUsername();
             PreparedStatementCreator psc = con -> {
-                PreparedStatement ps = con.prepareStatement("INSERT INTO collections (name, description, favorite, privacy) VALUES (?, ?, ?, ?, ? )", new String[]{"collection_id}"});
+                PreparedStatement ps = con.prepareStatement("INSERT INTO collections (name, description, favorite, privacy, username) VALUES (?, ?, ?, ?, ? )", new String[]{"collection_id}"});
                 ps.setString(1, name);
                 ps.setString(2, description);
                 ps.setBoolean(3, favorite);

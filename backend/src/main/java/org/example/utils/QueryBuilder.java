@@ -21,6 +21,7 @@ public class QueryBuilder {
     private List<Object> likeValues;
     private List<Object> complexValues;
     private List<String> orderByClauses;
+    private List<Object> orderByValues;
 
 
     /**
@@ -37,6 +38,7 @@ public class QueryBuilder {
         this.likeValues = new ArrayList<>();
         this.complexValues = new ArrayList<>();
         this.orderByClauses = new ArrayList<>();
+        this.orderByValues = new ArrayList<>();
     }
 
     /**
@@ -67,7 +69,7 @@ public class QueryBuilder {
      * @param joins JOIN clauses to append to SQL query.
      * @return QueryBuilder The query builder object.
      */
-    public QueryBuilder join(String ...joins) {
+    public QueryBuilder joins(String ...joins) {
         this.joins.addAll(Arrays.asList(joins));
         return this;
     }
@@ -150,6 +152,17 @@ public class QueryBuilder {
     }
 
     /**
+     * Creates list of query parameters for ORDER BY clauses.
+     *
+     * @param orderByValues Query parameters.
+     * @return QueryBuilder The query builder object.
+     */
+    public QueryBuilder orderByValues(Object ...orderByValues) {
+        this.orderByValues.addAll(Arrays.asList(orderByValues));
+        return this;
+    }
+
+    /**
      * Builds the SQL query and prepares a new PreparedStatementCreator.
      *
      * @return PreparedStatementCreator
@@ -163,8 +176,7 @@ public class QueryBuilder {
         sb.append(String.join(", ", tables));
 
         if (!joins.isEmpty()) {
-            sb.append(" JOIN ");
-            sb.append(String.join(" JOIN", joins));
+            sb.append(joins);
         }
 
         if (!whereEqualClauses.isEmpty() || !whereLikeClauses.isEmpty() || !whereComplexClauses.isEmpty()) {
@@ -245,6 +257,17 @@ public class QueryBuilder {
                         ps.setString(i + equalValues.size() + likeValues.size() + 1, (String) complexValues.get(i));
                     } else if (complexValues.get(i) instanceof Boolean) {
                         ps.setBoolean(i + equalValues.size() + likeValues.size() + 1, (Boolean) complexValues.get(i));
+                    }
+                }
+            }
+            if (!orderByValues.isEmpty()) {
+                for (int i = 0; i < orderByValues.size(); i++) {
+                    if (orderByValues.get(i) instanceof Integer) {
+                        ps.setInt(i + equalValues.size() + likeValues.size() + complexValues.size() + 1, (int) orderByValues.get(i));
+                    } else if (orderByValues.get(i) instanceof String) {
+                        ps.setString(i + equalValues.size() + likeValues.size() + complexValues.size() + 1, (String) orderByValues.get(i));
+                    } else if (orderByValues.get(i) instanceof Boolean) {
+                        ps.setBoolean(i + equalValues.size() + likeValues.size() + complexValues.size() + 1, (Boolean) orderByValues.get(i));
                     }
                 }
             }

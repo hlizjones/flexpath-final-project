@@ -47,9 +47,10 @@ public class BookDao {
      */
     public List<Book> getBooks(Book book) {
         QueryBuilder qb = new QueryBuilder();
-        PreparedStatementCreator psc;
         List<String> where = new ArrayList<>();
         List<String> values = new ArrayList<>();
+
+        qb.select("*").from("books");
 
         if (book.getTitle() != null) {
             where.add("title");
@@ -62,25 +63,17 @@ public class BookDao {
             values.add(book.getGenre());
         }
 
-        if (countNonNullFields(book) == 0) {
-            psc = qb.select("*")
-                    .from("books")
-                    .build();
-        } else if (countNonNullFields(book) == 1) {
-            psc = qb.select("*")
-                    .from("books")
-                    .whereLike(where.toArray(new String[0]))
+        if (countNonNullFields(book) == 1) {
+            qb.whereLike(where.toArray(new String[0]))
                     .likeValues(values.toArray(new Object[0]))
-                    .orderByClauses("CASE WHEN " + where.get(0) + " = '%" + values.get(0) + "%' THEN 1 WHEN " + where.get(0) + " = '%" + values.get(0) + "' THEN 2 ELSE 3 END")
-                    .build();
-        } else {
-            psc = qb.select("*")
-                    .from("books")
-                    .whereEqual(where.toArray(new String[0]))
+                    .orderByClauses("CASE WHEN " + where.get(0) + " = ? THEN 1 WHEN " + where.get(0) + " = ? THEN 2 ELSE 3 END")
+                    .orderByValues("%" + values.get(0) + "%", "%" + values.get(0));
+        } else if (countNonNullFields(book) > 1) {
+            qb.whereEqual(where.toArray(new String[0]))
                     .equalValues(values.toArray(new Object[0]))
-                    .orderByClauses(where.get(0) + "ASC")
-                    .build();
+                    .orderByClauses(where.get(0) + "ASC");
         }
+        PreparedStatementCreator psc = qb.build();
         return jdbcTemplate.query(psc, this::mapToBook);
     }
 

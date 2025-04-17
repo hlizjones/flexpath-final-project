@@ -71,7 +71,7 @@ public class CollectionController {
      * Creates a new collection.
      *
      * @param collection The collection to create.
-     * @param principal The authenticated collection.
+     * @param principal The authenticated user.
      * @return The collection created.
      */
     @ResponseStatus(HttpStatus.CREATED)
@@ -147,6 +147,6 @@ public class CollectionController {
     private boolean isAdmin() {
         return SecurityContextHolder.getContext().getAuthentication()
                 .getAuthorities().stream().anyMatch(a ->
-                        a.getAuthority().equals("ROLE_ADMIN"));
+                        a.getAuthority().equals("ADMIN"));
     }
 }
