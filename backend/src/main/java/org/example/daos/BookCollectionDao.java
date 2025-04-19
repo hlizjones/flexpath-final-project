@@ -47,8 +47,8 @@ public class BookCollectionDao {
      * @param id The id of the collection
      * @return String The username of the collection.
      */
-    public String getCollectionById(int id) {
-        return jdbcTemplate.queryForObject("SELECT username FROM collections WHERE collection_id = ?", String.class, id);
+    public String getCollectionUsername(int id) {
+        return jdbcTemplate.queryForObject("SELECT username, privacy FROM collections WHERE collection_id = ?", String.class, id);
     }
 
     /**

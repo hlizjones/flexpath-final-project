@@ -19,7 +19,6 @@ create table books (
 	title varchar(255) not null,
 	author varchar(255) not null,
 	genre varchar(255) not null,
-	foreign key (username) references users(username),
     unique (title, author)
 );
 create table collections (

@@ -59,12 +59,16 @@ public class CollectionController {
      */
     @GetMapping(path = "/{id}")
     @PreAuthorize("permitAll()")
-    public Collection get(@PathVariable int id) {
+    public Collection get(@PathVariable int id, Principal principal) {
         Collection collection = collectionDao.getCollectionById(id);
         if (collection == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Collection not found");
         }
-        return collection;
+        if (isAdmin() || Objects.equals(collection.getUsername(), principal.getName()) || !collection.getPrivacy()) {
+            return collection;
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
     }
 
     /**

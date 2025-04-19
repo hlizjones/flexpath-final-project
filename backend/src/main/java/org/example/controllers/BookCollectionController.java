@@ -18,7 +18,7 @@ import java.util.Objects;
  *
  */
 @RestController
-@RequestMapping("api/collections")
+@RequestMapping("api/book_collections")
 @PreAuthorize("permitAll()")
 public class BookCollectionController {
     /**
@@ -36,10 +36,9 @@ public class BookCollectionController {
      */
     @GetMapping
     public List<Book> getBooksByCollection(@RequestParam int id, Principal principal) {
-        if (isAdmin() || Objects.equals(bookCollectionDao.getCollectionById(id), principal.getName())) {
+        if (isAdmin() || Objects.equals(bookCollectionDao.getCollectionUsername(id), principal.getName())) {
                 return bookCollectionDao.getBookByCollectionId(id);
             } else {
-
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
             }
     }
@@ -56,7 +55,7 @@ public class BookCollectionController {
     @PostMapping
     public String addBookToCollection(@RequestParam int bookId, @RequestParam int collectionId, Principal principal) {
         int rowsAffected;
-        if (isAdmin() || Objects.equals(bookCollectionDao.getCollectionById(collectionId), principal.getName())) {
+        if (isAdmin() || Objects.equals(bookCollectionDao.getCollectionUsername(collectionId), principal.getName())) {
             rowsAffected = bookCollectionDao.addBookToCollection(bookId, collectionId);
         } else {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
@@ -79,7 +78,7 @@ public class BookCollectionController {
     @DeleteMapping
     public String deleteBooksFromCollection(@RequestParam int bookId, @RequestParam int collectionId, Principal principal) {
         int rowsAffected;
-        if (isAdmin() || Objects.equals(bookCollectionDao.getCollectionById(collectionId), principal.getName())) {
+        if (isAdmin() || Objects.equals(bookCollectionDao.getCollectionUsername(collectionId), principal.getName())) {
             rowsAffected = bookCollectionDao.deleteBookFromCollection(bookId, collectionId);
         } else {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");

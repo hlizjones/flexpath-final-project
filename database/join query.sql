@@ -4,4 +4,5 @@ left join flexpath_final.book_collections bc on bc.collection_id = c.collection_
 left join flexpath_final.books b on bc.book_id = b.book_id
 left join flexpath_final.reviews r on r.book_id = b.book_id
 where u.username = 'x'
-or c.privacy = false
+or c.privacy = false;
+

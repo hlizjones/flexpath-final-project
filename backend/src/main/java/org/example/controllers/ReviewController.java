@@ -53,12 +53,16 @@ public class ReviewController {
      */
     @GetMapping(path = "/{id}")
     @PreAuthorize("permitAll()")
-    public Review get(@PathVariable int id) {
+    public Review get(@PathVariable int id, Principal principal) {
         Review review = reviewDao.getReviewById(id);
         if (review == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found");
         }
-        return review;
+        if (isAdmin() || Objects.equals(review.getUsername(), principal.getName()) || !review.getPrivacy()) {
+            return review;
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
     }
 
     /**
