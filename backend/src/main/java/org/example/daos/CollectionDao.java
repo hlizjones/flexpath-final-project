@@ -64,7 +64,7 @@ public class CollectionDao {
             qb.complexValues(collection.getUsername());
         } else if (countNonNullFields(collection) == 1) {
             qb.whereLike(where.toArray(new String[0]))
-                    .likeValues(values.toArray(new Object[0]))
+                    .likeValues("%" + values.get(0) + "%")
                     .orderByClauses("CASE WHEN " + where.get(0) + " = ? THEN 1 WHEN " + where.get(0) + " LIKE ? THEN 2 ELSE 3 END")
                     .orderByValues(values.get(0), "%" + values.get(0));
         } else if (countNonNullFields(collection) > 1) {
@@ -85,7 +85,7 @@ public class CollectionDao {
      * @return Collection
      */
     public Collection getCollectionById(int id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM collections WHERE collection_id = ?", this::mapToCollection, id);
+        return jdbcTemplate.queryForObject("SELECT * FROM collections WHERE collection_id  ?", this::mapToCollection, id);
     }
 
     /**

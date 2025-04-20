@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
+import { DataContext } from "../../../context/DataProvider";
 
-export default function UserInput(props) {
+
+export default function UserInput() {
+    const { setMap } = useContext(DataContext);
     const [firstInputField, setFirstInputField] = useState("Title");
     const [secondInputField, setSecondInputField] = useState("Author");
     const [thirdInputField, setThirdInputField] = useState("Genre");
@@ -9,11 +12,11 @@ export default function UserInput(props) {
 
     const toggleSearch = (e) => {
         e.preventDefault();
-        if (e.target.value === "books") {
+        if (e.target.value === "book") {
             setFirstInputField("Title");
             setSecondInputField("Author");
             setThirdInputField("Genre");
-        } else if (e.target.value === "collections") {
+        } else if (e.target.value === "collection") {
             setFirstInputField("Name");
             setSecondInputField("Username");
             setThirdInputField(false);
@@ -36,7 +39,7 @@ export default function UserInput(props) {
             map.set(thirdInputField.toLowerCase(), document.getElementById("thirdInput").value)
         }
 
-        props.setMap(map);
+        setMap(map);
     }
 
     return (
@@ -44,14 +47,14 @@ export default function UserInput(props) {
             <div className="col-md-2 mb-3">
                 <label className="form-label text-nowrap" htmlFor="toggleSearch">Search for</label>
                 <select className="form-select" name="toggleSearch" id="toggleSearch" defaultValue="books" onChange={toggleSearch}>
-                    <option value="books">Book</option>
-                    <option value="collections">Collection</option>
+                    <option value="book">Book</option>
+                    <option value="collection">Collection</option>
                 </select>
             </div>
             <div className="col-md-5 d-grid gap-3 mb-3">
                 <input className="form-control" type="search" id="firstInput" placeholder={firstInputField}></input>
                 <input className="form-control" type="search" id="secondInput" placeholder={secondInputField}></input>
-                {thirdInputField === "Genre" &&
+                {thirdInputField &&
                     <input className="form-control" type="search" id="thirdInput" placeholder="Genre"></input>}
             </div>
             <div className="col-md-5 d-grid gap-3 mb-3">

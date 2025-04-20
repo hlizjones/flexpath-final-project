@@ -51,6 +51,17 @@ public class BookCollectionDao {
         return jdbcTemplate.queryForObject("SELECT username, privacy FROM collections WHERE collection_id = ?", String.class, id);
     }
 
+//    /**
+//     * Gets id of a collection.
+//     *
+//     * @param name The name of the collection.
+//     * @param username The username of the collection.
+//     * @return int The id of the collection.
+//     */
+//    public int getCollectionId(String name, String username) {
+//        return jdbcTemplate.queryForObject("SELECT id FROM collections WHERE name = ? AND username = ?", Integer.class, name, username);
+//    }
+
     /**
      * Adds book to a collection.
      *

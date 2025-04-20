@@ -271,6 +271,7 @@ public class QueryBuilder {
                     }
                 }
             }
+            System.out.print(ps);
             return ps;
         };
 

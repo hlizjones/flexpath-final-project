@@ -2,8 +2,8 @@ import React from "react";
 import UserInput from "./UserInput";
 import SearchResults from "./SearchResults"
 import { useState } from "react";
-import useFetch from "../hooks/useFetch";
-import useUrlBuilder from "../hooks/useUrlBuilder"
+import useFetch from "../../../hooks/useFetch";
+import useUrlBuilder from "../../../hooks/useUrlBuilder"
 
 export default function Search() {
     const [map, setMap] = useState();

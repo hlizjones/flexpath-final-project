@@ -16,7 +16,7 @@ import java.util.List;
  *
  */
 @RestController
-@RequestMapping("api/books")
+@RequestMapping("api/book")
 @PreAuthorize("hasAuthority('ADMIN')")
 public class BookController {
     /**

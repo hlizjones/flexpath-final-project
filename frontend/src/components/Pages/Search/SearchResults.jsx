@@ -1,20 +1,27 @@
-import React from "react";
+import React, {useContext} from "react";
+import { useNavigate } from "react-router-dom";
+import { DataContext } from "../../../context/DataProvider";
 
-export default function SearchResults(props) {
-    const { data, loading, error } = props.result;
-
-    if (loading) return <div>Loading Records...</div>;
+export default function SearchResults() {
+    const { loading, data, error, setMap, map } = useContext(DataContext);
+    const navigate = useNavigate();
 
     const handleClick = (e) => {
         e.preventDefault();
-        console.log(e.currentTarget.dataset.id)
+        const page = map.get(`api`)
+        let newMap = new Map();
+        newMap.set(`api`, `${page}/${e.currentTarget.id}`)
+        setMap(newMap)
+        navigate(`/${page}`)
     }
+
+    if (loading) return <div>Loading Records...</div>;
 
     return (
         <>
             {error && <p id="resultsError">Error: {error.message}</p>}
-            <table className="table table-striped">
-                <thead>
+            <table className="table table-hover">
+                <thead className="table-secondary">
                     <tr>
                         {data[0] && Object.keys(data[0]).map(key => {
                             if (key != "id") {
@@ -26,10 +33,10 @@ export default function SearchResults(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {data && data.map(el => {
+                    {data && Array.from(data).map(el => {
                         console.log(el["id"])
                         return (
-                            <tr key={el["id"]} onClick={handleClick} data-id={el["id"]}>
+                            <tr key={el["id"]} onClick={handleClick} id={el["id"]}>
                                 {Object.values(el).map(value => { 
                                     if (!Number.isInteger(value))
                                     return (<th key={value}>{value}</th>)})}

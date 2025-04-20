@@ -65,13 +65,13 @@ public class BookDao {
 
         if (countNonNullFields(book) == 1) {
             qb.whereLike(where.toArray(new String[0]))
-                    .likeValues(values.toArray(new Object[0]))
-                    .orderByClauses("CASE WHEN " + where.get(0) + " = ? THEN 1 WHEN " + where.get(0) + " = ? THEN 2 ELSE 3 END")
-                    .orderByValues("%" + values.get(0) + "%", "%" + values.get(0));
+                    .likeValues("%" + values.get(0) + "%")
+                    .orderByClauses("CASE WHEN " + where.get(0) + " = ? THEN 1 WHEN " + where.get(0) + " LIKE ? THEN 2 ELSE 3 END")
+                    .orderByValues(values.get(0), "%" + values.get(0));
         } else if (countNonNullFields(book) > 1) {
             qb.whereEqual(where.toArray(new String[0]))
                     .equalValues(values.toArray(new Object[0]))
-                    .orderByClauses(where.get(0) + "ASC");
+                    .orderByClauses(where.get(0) + " ASC");
         }
         PreparedStatementCreator psc = qb.build();
         return jdbcTemplate.query(psc, this::mapToBook);

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 export default function useFetch(map) {
     const [url, setUrl] = useState()
-    console.log(map)
 
     useEffect(() => {
 
@@ -27,7 +26,7 @@ export default function useFetch(map) {
             }
             setUrl(url)
         } else {
-            setUrl('null')
+            setUrl(null)
         }
     }, [map])
 

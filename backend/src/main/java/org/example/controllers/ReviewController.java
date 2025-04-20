@@ -18,7 +18,7 @@ import java.util.Objects;
  *
  */
 @RestController
-@RequestMapping("api/reviews")
+@RequestMapping("api/review")
 @PreAuthorize("permitAll()")
 public class ReviewController {
     /**
@@ -34,7 +34,7 @@ public class ReviewController {
      * @return List of Review.
      */
     @GetMapping
-    public List<Review> getReviews(@RequestParam(required = false) Integer bookId) {
+    public List<Review> getReviews(@RequestParam(required = false) Integer bookId, Principal principal) {
         Review review = new Review();
         if (bookId != null) {
             review.setBookId(bookId);
@@ -42,6 +42,7 @@ public class ReviewController {
         if (isAdmin()) {
             review.setIsAdmin(true);
         }
+        review.setUsername(principal.getName());
         return reviewDao.getReviews(review);
     }
 

@@ -18,7 +18,7 @@ import java.util.Objects;
  *
  */
 @RestController
-@RequestMapping("api/book_collections")
+@RequestMapping("api/book_collection")
 @PreAuthorize("permitAll()")
 public class BookCollectionController {
     /**
