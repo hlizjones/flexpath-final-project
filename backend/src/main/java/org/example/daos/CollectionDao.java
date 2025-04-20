@@ -85,7 +85,7 @@ public class CollectionDao {
      * @return Collection
      */
     public Collection getCollectionById(int id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM collections WHERE collection_id  ?", this::mapToCollection, id);
+        return jdbcTemplate.queryForObject("SELECT * FROM collections WHERE collection_id = ?", this::mapToCollection, id);
     }
 
     /**
@@ -102,7 +102,7 @@ public class CollectionDao {
             Boolean privacy = collection.getPrivacy();
             String username = collection.getUsername();
             PreparedStatementCreator psc = con -> {
-                PreparedStatement ps = con.prepareStatement("INSERT INTO collections (name, description, favorite, privacy, username) VALUES (?, ?, ?, ?, ? )", new String[]{"collection_id}"});
+                PreparedStatement ps = con.prepareStatement("INSERT INTO collections (name, description, favorite, privacy, username) VALUES (?, ?, ?, ?, ? )", new String[]{"collection_id"});
                 ps.setString(1, name);
                 ps.setString(2, description);
                 ps.setBoolean(3, favorite);

@@ -35,8 +35,8 @@ create table book_collections (
 	book_id int not null,
 	collection_id int not null,
 	primary key (book_id, collection_id),
-	foreign key (book_id) references books(book_id),
-	foreign key (collection_id) references collections(collection_id)
+	foreign key (book_id) references books(book_id)  on delete cascade,
+	foreign key (collection_id) references collections(collection_id)  on delete cascade
 );
 create table reviews (
 	review_id int not null auto_increment primary key,

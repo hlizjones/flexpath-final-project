@@ -81,7 +81,7 @@ public class BookCollectionDao {
      * @return The number of rows affected (1 if a review was deleted, 0 if no review was found).
      */
     public int deleteBookFromCollection(int bookId, int collectionId) {
-        return jdbcTemplate.update("DELETE FROM book_collections WHERE book_id = ? AND collections_id = ?", bookId, collectionId);
+        return jdbcTemplate.update("DELETE FROM book_collections WHERE book_id = ? AND collection_id = ?", bookId, collectionId);
     }
 
     /**

@@ -55,6 +55,7 @@ public class Collection {
      * @param username The username of the collection.
      */
     public Collection(int id, String name, String description, Boolean favorite, Boolean privacy, String username) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.favorite = favorite;
