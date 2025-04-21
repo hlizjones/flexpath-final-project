@@ -1,9 +1,11 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../../context/DataProvider";
 
 export default function SearchResults() {
     const { loading, data, error, setMap, map } = useContext(DataContext);
+
+
     const navigate = useNavigate();
 
     const handleClick = (e) => {
@@ -34,7 +36,6 @@ export default function SearchResults() {
                 </thead>
                 <tbody>
                     {data && Array.from(data).map(el => {
-                        console.log(el["id"])
                         return (
                             <tr key={el["id"]} onClick={handleClick} id={el["id"]}>
                                 {Object.values(el).map(value => { 
