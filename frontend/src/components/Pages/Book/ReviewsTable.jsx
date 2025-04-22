@@ -12,7 +12,7 @@ export default function ReviewsTable() {
 const url = useMemo(() => `api/review?bookId=2`, []);
 const options = useMemo(() => ({
     headers: {
-        "Authorization": `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVpZCI6LTEsIm5iZiI6MTc0NTIwNDY0NiwiaXNzIjoiZnJhaG8tc2VjdXJpdHkiLCJleHAiOjE3NDUyMDgyNDYsImlhdCI6MTc0NTIwNDY0NiwiYXV0aG9yaXRpZXMiOlsiQURNSU4iXSwianRpIjoiNWFiNDk0NjQtZDA2NC00ZjFhLTgxZmItZTcwNzc4YjQ4YWYwIn0.Xu3UD7asUHGg8ip9h8-GhaJjmaPBpczowQMfKJyM05Q`,
+        "Authorization": `Bearer`,
         "Content-Type": "application/json"
     }
 }), []);

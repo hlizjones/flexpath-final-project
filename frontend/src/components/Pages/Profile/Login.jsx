@@ -4,7 +4,7 @@ import { AuthContext } from "../../../context/AuthProvider";
 import { useEffect } from "react";
 
 export default function Login() {
-    const { setToken } = useContext(AuthContext);
+    const { setToken, tokenExpMessage } = useContext(AuthContext);
     const [url, setUrl] = useState()
     const [body, setBody] = useState({})
     const { data, error } = useFetch(url, body)
@@ -40,6 +40,7 @@ export default function Login() {
                     <input className="form-control" type="password" id="password" placeholder="Password"></input>
                     <button className="btn btn-secondary" type="submit">Login</button>
                     {error && <div className="mb-5 text-danger">Sign-in failed.</div>}
+                    {tokenExpMessage && <div className="mb-5 text-danger">{tokenExpMessage}</div>}
                 </div>
             </div>
         </form>

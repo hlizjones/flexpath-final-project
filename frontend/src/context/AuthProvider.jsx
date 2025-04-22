@@ -5,6 +5,8 @@ export const AuthContext = createContext();
 export default function AuthProvider({children}) {
     const storedToken = localStorage.getItem("accessToken");
     const [token, setToken] = useState(storedToken ? storedToken : null)
+    const [tokenExpMessage, setTokenExpMessage] = useState(null)
+    console.log(token)
 
     const storedUsername = localStorage.getItem("username");
     const storedRole = localStorage.getItem("userRole");
@@ -13,7 +15,7 @@ export default function AuthProvider({children}) {
 
     return (
         <>
-            <AuthContext.Provider value={{username, setUsername, role, setRole, token, setToken}}>
+            <AuthContext.Provider value={{username, setUsername, role, setRole, token, setToken, tokenExpMessage, setTokenExpMessage}}>
                 {children}
             </AuthContext.Provider>
         </>

@@ -10,12 +10,10 @@ export default function User() {
     const body = useMemo(() => ({headers: {'Authorization': `Bearer ${token}`}}), [token])
     const { data: userData, loading: userLoading, error: userError } = useFetch(userUrl, body)
     const { data: roleData, loading: roleLoading, error: roleError } = useFetch(roleUrl, body)
-    console.log(roleData)
     
 
     useEffect(() => {
         if (userData) {
-            console.log(userData)
             localStorage.setItem("username", userData.username);
             setUsername(userData.username)
         }

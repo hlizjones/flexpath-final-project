@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function UserCollections() {
-    const { token } = useContext(AuthContext);
+    const { token, setToken } = useContext(AuthContext);
     const navigate = useNavigate();
     const [favUrl, setFavUrl] = useState()
     const [favBody, setFavBody] = useState()
