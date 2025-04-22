@@ -1,3 +1,4 @@
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -16,6 +17,7 @@ function App() {
       < hr />
       <DataProvider>
       <Routes>
+        <Route path="/" element ={<Profile/>}/>
         <Route path="/profile" element={<Profile />} />
         <Route path="/search" element={<Search />} />
         <Route path="/book" element={<Book />} />

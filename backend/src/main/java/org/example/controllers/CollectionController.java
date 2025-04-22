@@ -36,16 +36,19 @@ public class CollectionController {
      */
     @GetMapping
     public List<Collection> getCollections(@RequestParam(required = false) String name,
-                                   @RequestParam(required = false) String username) {
+                                           @RequestParam(required = false) String username,
+                                           @RequestParam(required = false) Boolean profile,
+                                           Principal principal) {
 
         Collection collection = new Collection();
         if (name != null) {
             collection.setName(name);
         } if (username != null) {
             collection.setUsername(username);
-        }
-        if (isAdmin()) {
+        } if (isAdmin()) {
             collection.setIsAdmin(true);
+        } if (profile != null && !profile) {
+            collection.setUsername(principal.getName());
         }
 
         return collectionDao.getCollections(collection);
@@ -90,21 +93,37 @@ public class CollectionController {
      *
      * @param collection The new collection.
      * @param id The id of the collection.
-     * @param principal The authenticated collection.
+     * @param principal The authenticated user.
      * @return The updated collection.
      */
     @PutMapping(path = "/{id}")
     public Collection update(@RequestBody Collection collection, @PathVariable int id, Principal principal) {
+        Collection currentCollection = collectionDao.getCollectionById(id);
 
-        if (collectionDao.getCollectionById(id) == null) {
+        if (currentCollection == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Collection not found");
+        }
+        if (collection.getName() == null) {
+            collection.setName(currentCollection.getName());
+        }
+        if (collection.getDescription() == null) {
+            collection.setDescription(currentCollection.getDescription());
+        }
+        if (collection.getFavorite() == null) {
+            collection.setFavorite(currentCollection.getFavorite());
+        }
+        if (collection.getPrivacy() == null) {
+            collection.setPrivacy(currentCollection.getPrivacy());
         }
 
         if (isAdmin()) {
             collection.setId(id);
+            if (collection.getUsername() == null) {
+                collection.setUsername(currentCollection.getUsername());
+            }
             return collectionDao.updateCollection(collection);
         } else {
-            if (!Objects.equals(collectionDao.getCollectionById(id).getUsername(), principal.getName())) {
+            if (!Objects.equals(currentCollection.getUsername(), principal.getName())) {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
             } else {
                 collection.setId(id);

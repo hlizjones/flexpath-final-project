@@ -1,15 +1,20 @@
-import React from "react";
-import Login from "./Login";
-// import { useContext } from "react";
-// import { DataContext } from "../../../context/DataProvider";
-// import UserCollections from "./UserCollections";
+import React, { useContext, useEffect, useState, useMemo } from "react";
+import { AuthContext } from "../../../context/AuthProvider";
+import Login from "./Login"
+import User from "./User";
+import UserCollections from "./UserCollections";
+import CreateCollection from "./CreateCollection";
+
 
 export default function Profile() {
-    
+    const { token } = useContext(AuthContext);
+
     return (
         <>
-        <Login/>
-        {/* <UserCollections/> */}
+            {!token && <Login/>}
+            {token && <User/>}
+            {token && <UserCollections/>}
+            {token && <CreateCollection/>}
         </>
     );
 }

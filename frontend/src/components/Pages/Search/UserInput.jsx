@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { useState } from "react";
+import React, { useContext, useState } from "react";
 import { DataContext } from "../../../context/DataProvider";
 
 
@@ -29,10 +28,10 @@ export default function UserInput() {
 
         map.set(`api`, document.getElementById("toggleSearch").value)
         
-        if (document.getElementById("firstInput") && document.getElementById("firstInput").value !== "") {
+        if (document.getElementById("firstInput").value !== "") {
             map.set(firstInputField.toLowerCase(), document.getElementById("firstInput").value)
         }
-        if (document.getElementById("secondInput") && document.getElementById("secondInput").value !== "") {
+        if (document.getElementById("secondInput").value !== "") {
             map.set(secondInputField.toLowerCase(), document.getElementById("secondInput").value)
         }
         if (document.getElementById("thirdInput") && document.getElementById("thirdInput").value !== "") {

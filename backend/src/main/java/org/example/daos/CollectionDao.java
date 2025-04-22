@@ -59,7 +59,7 @@ public class CollectionDao {
             values.add(collection.getUsername());
         }
 
-        if(!collection.getIsAdmin()) {
+        if(collection.getIsAdmin() != true) {
             qb.whereComplex("(privacy = false OR (privacy = true AND username = ?))");
             qb.complexValues(collection.getUsername());
         } else if (countNonNullFields(collection) == 1) {
@@ -132,12 +132,14 @@ public class CollectionDao {
         String description = collection.getDescription();
         Boolean favorite = collection.getFavorite();
         Boolean privacy = collection.getPrivacy();
+        String username = collection.getUsername();
         int rowsAffected = jdbcTemplate.update(
-                "UPDATE collections SET name= ?, description =?, favorite = ?, privacy = ? WHERE collection_id = ?",
+                "UPDATE collections SET name= ?, description =?, favorite = ?, privacy = ?, username = ? WHERE collection_id = ?",
                 name,
                 description,
                 favorite,
                 privacy,
+                username,
                 id
         );
         if (rowsAffected == 0){
