@@ -8,9 +8,9 @@ export default function User() {
 
     const userUrl = useMemo(() => `api/profile`, []);
     const roleUrl = useMemo(() => `api/profile/roles`, []);
-    const body = useMemo(() => ({headers: {'Authorization': `Bearer ${token}`}}), [token]);
-    const { data: userData, loading: userLoading, error: userError } = useFetch(userUrl, body);
-    const { data: roleData, loading: roleLoading, error: roleError } = useFetch(roleUrl, body);
+    const options = useMemo(() => ({headers: {'Authorization': `Bearer ${token}`}}), [token]);
+    const { data: userData, loading: userLoading, error: userError } = useFetch(userUrl, options);
+    const { data: roleData, loading: roleLoading, error: roleError } = useFetch(roleUrl, options);
 
     const properUsername = useToProper(username)
     const properRole = useToProper(role)

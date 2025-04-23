@@ -6,7 +6,12 @@ import useToProper from "../../../hooks/useToProper";
 
 
 export default function Collection() {
-    const { data, loading, error} = useContext(DataContext)
+    const { data, loading, error } = useContext(DataContext)
+
+    // useEffect(() => {
+    //     setMap(null);
+    //     setOptions(null);
+    // }, [data, setMap, setOptions]);
 
     // useEffect(() => {
     //     if (Object.keys(data).length > 0) {

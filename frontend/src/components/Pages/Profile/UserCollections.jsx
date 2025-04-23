@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function UserCollections({ url, options }) {
     const { token } = useContext(AuthContext);
-    const { setMap, setOptions } = useContext(DataContext);
+    const { setUrl } = useContext(DataContext);
     const navigate = useNavigate();
 
     const { data, loading, error } = useFetch(url, options);
@@ -19,10 +19,7 @@ export default function UserCollections({ url, options }) {
     const handleClick = (e) => {
         const id = e.currentTarget.closest(".card-body").id;
         e.preventDefault();
-        let newMap = new Map();
-        newMap.set(`api`, `collection/${id}`);
-        setMap(newMap);
-        setOptions({ headers: { 'Authorization': `Bearer ${token}` } })
+        setUrl(`api/collection/${id}`);
         navigate(`/collection`);
     }
 

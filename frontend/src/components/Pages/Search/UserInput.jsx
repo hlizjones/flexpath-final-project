@@ -2,8 +2,7 @@ import React, { useContext, useState } from "react";
 import { DataContext } from "../../../context/DataProvider";
 
 
-export default function UserInput() {
-    const { setMap } = useContext(DataContext);
+export default function UserInput({setMap}) {
     const [firstInputField, setFirstInputField] = useState("Title");
     const [secondInputField, setSecondInputField] = useState("Author");
     const [thirdInputField, setThirdInputField] = useState("Genre");

@@ -47,9 +47,9 @@ public class CollectionController {
             collection.setUsername(username);
         } if (isAdmin()) {
             collection.setIsAdmin(true);
-        } else if (!isAdmin()) {
+        } else if (!isAdmin()) { //fix this need two usernames
             collection.setIsAdmin(false);
-        } if (profile != null && !profile) {
+        } if (profile != null && profile) {
             collection.setUsername(principal.getName());
         }
 

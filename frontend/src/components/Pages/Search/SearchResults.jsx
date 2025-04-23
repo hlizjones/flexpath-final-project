@@ -2,16 +2,16 @@ import React, {useContext, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../../context/DataProvider";
 
-export default function SearchResults() {
-    const { loading, data, error, setMap, map } = useContext(DataContext);
+export default function SearchResults({loading, data, error, map}) {
+    const { setUrl } = useContext(DataContext);
     const navigate = useNavigate();
 
     const handleClick = (e) => {
         e.preventDefault();
         const page = map.get(`api`)
-        let newMap = new Map();
-        newMap.set(`api`, `${page}/${e.currentTarget.id}`)
-        setMap(newMap)
+        console.log(page)
+        setUrl(`api/${page}/${e.currentTarget.id}`)
+        
         navigate(`/${page}`)
     }
 
@@ -20,10 +20,10 @@ export default function SearchResults() {
 
     return (
         <>
+        {data &&
             <table className="table table-hover">
                 <thead className="table-secondary">
                     <tr>
-                        
                         {data[0] && Object.keys(data[0]).map(key => {
                             if (key != "id" && key != "privacy" && key != "favorite" && key != "isAdmin") {
                             return (
@@ -45,6 +45,8 @@ export default function SearchResults() {
                     })}
                 </tbody>
             </table>
+}
         </>
+    
     );
 }

@@ -5,7 +5,7 @@ import { DataContext } from "../../../context/DataProvider";
 import { useNavigate } from "react-router-dom";
 
 export default function BookReviewsTable({ bookId }) {
-    const { setMap, setOptions } = useContext(DataContext);
+    const { setUrl } = useContext(DataContext);
     const { token } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -16,10 +16,7 @@ export default function BookReviewsTable({ bookId }) {
 
     const handleClick = (e) => {
         e.preventDefault();
-        let newMap = new Map();
-        newMap.set(`api`, `review/${e.currentTarget.id}`)
-        setMap(newMap);
-        setOptions({ headers: { 'Authorization': `Bearer ${token}` } })
+        setUrl(`api/review/${e.currentTarget.id}`)
         navigate(`/review`);
     }
 

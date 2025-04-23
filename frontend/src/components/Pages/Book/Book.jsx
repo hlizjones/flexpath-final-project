@@ -7,18 +7,18 @@ import useToProper from "../../../hooks/useToProper";
 export default function Book() {
     const { data, loading, error } = useContext(DataContext)
 
-    useEffect(() => {
-        if (Object.keys(data).length > 0) {
-            localStorage.setItem("book", JSON.stringify(data));
-            setBook(data);
-        }
-    }, [data])
+    // useEffect(() => {
+    //     if (Object.keys(data).length > 0) {
+    //         localStorage.setItem("book", JSON.stringify(data));
+    //         setBook(data);
+    //     }
+    // }, [data])
 
-    const storedBook = localStorage.getItem("book");
-    const [book, setBook] = useState(storedBook ? JSON.parse(storedBook) : "")
-    const title = useToProper(book.title)
-    const author = useToProper(book.author)
-    const genre = useToProper(book.genre)
+    // const storedBook = localStorage.getItem("book");
+    // const [book, setBook] = useState(storedBook ? JSON.parse(storedBook) : "")
+    // const title = useToProper(book.title)
+    // const author = useToProper(book.author)
+    // const genre = useToProper(book.genre)
 
 
     if (loading) return <div>Loading collection...</div>;
@@ -27,11 +27,11 @@ export default function Book() {
     return (
         <>
             <div className="container text-center mb-5">
-                <h1>Title: {title}</h1>
-                <h4>Author: {author} | Genre: {genre}</h4>
+                <h1>Title: {data.title}</h1>
+                <h4>Author: {data.author} | Genre: {data.genre}</h4>
             </div>
             {/* <BookManagement /> */}
-            <BookReviewsTable bookId={book.id} />
+            <BookReviewsTable bookId={data.id} />
         </>
     );
 }

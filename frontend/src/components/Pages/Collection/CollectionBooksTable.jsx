@@ -5,7 +5,7 @@ import { DataContext } from "../../../context/DataProvider";
 import { useNavigate } from "react-router-dom";
 
 export default function CollectionBooksTable({collectionId}) {
-    const { setMap, setOptions } = useContext(DataContext);
+    const { setUrl } = useContext(DataContext);
     const { token } = useContext(AuthContext);
     const navigate = useNavigate();
     const url = useMemo(() => `api/book_collection?id=${collectionId}`, [collectionId]);
@@ -15,10 +15,7 @@ export default function CollectionBooksTable({collectionId}) {
 
     const handleClick = (e) => {
         e.preventDefault();
-        let newMap = new Map();
-        newMap.set(`api`, `book/${e.currentTarget.id}`);
-        setMap(newMap);
-        setOptions({ headers: { 'Authorization': `Bearer ${token}` } })
+        setUrl(`api/book/${e.currentTarget.id}`);
         navigate(`/book`);
     }
 

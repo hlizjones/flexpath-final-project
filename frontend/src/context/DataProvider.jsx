@@ -1,19 +1,18 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
 import useFetch from "../hooks/useFetch";
-import useUrlBuilder from "../hooks/useUrlBuilder"
+import { AuthContext } from "./AuthProvider";
 
 export const DataContext = createContext();
 
 export default function DataProvider({ children }) {
-    const [map, setMap] = useState(null);
-    const [body, setOptions] = useState(null);
-    const url = useUrlBuilder(map);
-    console.log(url)
-    const { data, loading, error } = useFetch(url, body);
+     const { token } = useContext(AuthContext);
+    const [options, setOptions] = useState({ headers: { 'Authorization': `Bearer ${token}` } });
+    const [url, setUrl] = useState(null);
+    const { data, loading, error } = useFetch(url, options);
 
     return (
         <>
-            <DataContext.Provider value={{ map, setMap, setOptions, data, loading, error }}>
+            <DataContext.Provider value={{ setUrl, setOptions, data, loading, error }}>
                 {children}
             </DataContext.Provider>
         </>
