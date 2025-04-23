@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function useFetch(map) {
+export default function useUrlBuilder(map) {
     const [url, setUrl] = useState()
 
     useEffect(() => {

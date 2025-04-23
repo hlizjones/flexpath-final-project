@@ -47,6 +47,8 @@ public class CollectionController {
             collection.setUsername(username);
         } if (isAdmin()) {
             collection.setIsAdmin(true);
+        } else if (!isAdmin()) {
+            collection.setIsAdmin(false);
         } if (profile != null && !profile) {
             collection.setUsername(principal.getName());
         }
@@ -85,6 +87,7 @@ public class CollectionController {
     @PostMapping
     public Collection create(@RequestBody Collection collection, Principal principal) {
         collection.setUsername(principal.getName());
+        System.out.println(collection);
         return collectionDao.createCollection(collection);
     }
 

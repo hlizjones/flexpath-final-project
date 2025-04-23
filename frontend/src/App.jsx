@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import Profile from "./components/Pages/Profile/Profile";
 import Search from "./components/Pages/Search/Search";
 import Book from "./components/Pages/Book/Book";
-import Collection from "./components/Collection/Collection"
+import Collection from "./components/Pages/Collection/Collection"
 import Review from "./components/Review/Review";
 import NotFound from "./components/Pages/404/NotFound";
 import DataProvider from "./context/DataProvider";

@@ -1,20 +1,37 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../../context/DataProvider";
-import ReviewsTable from "./ReviewsTable";
-import CollectionManagement from "./CollectionManagement"
+import BookReviewsTable from "./BookReviewTable";
+import BookManagement from "./BookManagement"
+import useToProper from "../../../hooks/useToProper";
 
 export default function Book() {
-    const { data, error } = useContext(DataContext)
+    const { data, loading, error } = useContext(DataContext)
 
-    if (error && !data) return <div>{error.message}</div>;
-    if (!data && !error) return <div>Search book</div>;
+    useEffect(() => {
+        if (Object.keys(data).length > 0) {
+            localStorage.setItem("book", JSON.stringify(data));
+            setBook(data);
+        }
+    }, [data])
+
+    const storedBook = localStorage.getItem("book");
+    const [book, setBook] = useState(storedBook ? JSON.parse(storedBook) : "")
+    const title = useToProper(book.title)
+    const author = useToProper(book.author)
+    const genre = useToProper(book.genre)
+
+
+    if (loading) return <div>Loading collection...</div>;
+    if (error) return <div className="mb-5 text-danger">Error: Failed to load book.</div>;
 
     return (
+        <>
             <div className="container text-center mb-5">
-                <h1>Title: {data.title}</h1>
-                <h4>Author: {data.author} | Genre: {data.genre}</h4>
-                <CollectionManagement />
-                <ReviewsTable bookId={data.id} />
+                <h1>Title: {title}</h1>
+                <h4>Author: {author} | Genre: {genre}</h4>
             </div>
+            {/* <BookManagement /> */}
+            <BookReviewsTable bookId={book.id} />
+        </>
     );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function CollectionManagement() {
+export default function BookManagement() {
 
     const handleSubmit = () => {
 

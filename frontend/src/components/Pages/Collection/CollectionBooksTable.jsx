@@ -1,14 +1,31 @@
-import React from "react";
-import useFetch from "../../hooks/useFetch";
+import React, {useContext, useMemo} from "react";
+import useFetch from "../../../hooks/useFetch";
+import { AuthContext } from "../../../context/AuthProvider";
+import { DataContext } from "../../../context/DataProvider";
+import { useNavigate } from "react-router-dom";
 
-export default function CollectionBooks(props) {
+export default function CollectionBooksTable({collectionId}) {
+    const { setMap, setOptions } = useContext(DataContext);
+    const { token } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const url = useMemo(() => `api/book_collection?id=${collectionId}`, [collectionId]);
+    const options = useMemo(() => ({headers: {'Authorization': `Bearer ${token}`}}), [token]);
 
-    const {data, loading, error} = useFetch(`api/review?collectionId=${props.collectionId}`)
+    const {data, loading, error} = useFetch(url, options)
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        let newMap = new Map();
+        newMap.set(`api`, `book/${e.currentTarget.id}`);
+        setMap(newMap);
+        setOptions({ headers: { 'Authorization': `Bearer ${token}` } })
+        navigate(`/book`);
+    }
 
     if (loading) return <div>Loading Records...</div>;
+    if (error) return <div className="mb-5 text-danger">Error: Failed to load books.</div>;
     return (
         <>
-            {error && <p id="resultsError">Error: {error.message}</p>}
             <table className="table table-hover">
                 <thead className="table-secondary">
                     <tr>
@@ -23,9 +40,8 @@ export default function CollectionBooks(props) {
                 </thead>
                 <tbody>
                     {data && Array.from(data).map(el => {
-                        console.log(el["id"])
                         return (
-                            <tr key={el["id"]}>
+                            <tr key={el["id"]} onClick={handleClick} id={el["id"]}>
                                 {Object.entries(el).map(([key, value]) => { 
                                     if (key != "id" && key != "username" && key != "favorite" && key != "privacy" && key != "isAdmin") {
                                     return (<th key={key}>{value}</th>)}})}

@@ -4,8 +4,6 @@ import { DataContext } from "../../../context/DataProvider";
 
 export default function SearchResults() {
     const { loading, data, error, setMap, map } = useContext(DataContext);
-
-
     const navigate = useNavigate();
 
     const handleClick = (e) => {
@@ -17,16 +15,17 @@ export default function SearchResults() {
         navigate(`/${page}`)
     }
 
-    if (loading) return <div>Loading Records...</div>;
+    if (loading) return <div>Loading records...</div>;
+    if (error) return <div className="mb-5 text-danger">Error: Failed to load records.</div>
 
     return (
         <>
-            {error && <p id="resultsError">Error: {error.message}</p>}
             <table className="table table-hover">
                 <thead className="table-secondary">
                     <tr>
+                        
                         {data[0] && Object.keys(data[0]).map(key => {
-                            if (key != "id") {
+                            if (key != "id" && key != "privacy" && key != "favorite" && key != "isAdmin") {
                             return (
                             <th scope="col" key={key}>{key.toUpperCase()}</th>
                             )
@@ -38,8 +37,8 @@ export default function SearchResults() {
                     {data && Array.from(data).map(el => {
                         return (
                             <tr key={el["id"]} onClick={handleClick} id={el["id"]}>
-                                {Object.values(el).map(value => { 
-                                    if (!Number.isInteger(value))
+                                {Object.entries(el).map(([key, value]) => { 
+                                    if (key != "id" && key != "privacy" && key != "favorite" && key != "isAdmin")
                                     return (<th key={value}>{value}</th>)})}
                             </tr>
                         );

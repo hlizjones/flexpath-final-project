@@ -4,14 +4,14 @@ export const AuthContext = createContext();
 
 export default function AuthProvider({children}) {
     const storedToken = localStorage.getItem("accessToken");
-    const [token, setToken] = useState(storedToken ? storedToken : null)
-    const [tokenExpMessage, setTokenExpMessage] = useState(null)
-    console.log(token)
+    const [token, setToken] = useState(storedToken ? storedToken : null);
+    const [tokenExpMessage, setTokenExpMessage] = useState(null);
 
     const storedUsername = localStorage.getItem("username");
+    const [username, setUsername] = useState(storedUsername ? storedUsername : null);
+    
     const storedRole = localStorage.getItem("userRole");
-    const [username, setUsername] = useState(storedUsername ? storedUsername : null)
-    const [role, setRole] = useState(storedRole ? storedRole : null)
+    const [role, setRole] = useState(storedRole ? storedRole : null);
 
     return (
         <>

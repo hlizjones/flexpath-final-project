@@ -59,7 +59,7 @@ public class CollectionDao {
             values.add(collection.getUsername());
         }
 
-        if(collection.getIsAdmin() != true) {
+        if(!collection.getIsAdmin()) {
             qb.whereComplex("(privacy = false OR (privacy = true AND username = ?))");
             qb.complexValues(collection.getUsername());
         } else if (countNonNullFields(collection) == 1) {
