@@ -1,18 +1,13 @@
-import React, {useContext, useState} from "react";
-import { useNavigate } from "react-router-dom";
-import { DataContext } from "../../../context/DataProvider";
+import React from "react";
+import useLoadPage from "../../../hooks/useLoadPage";
 
 export default function SearchResults({loading, data, error, map}) {
-    const { setUrl } = useContext(DataContext);
-    const navigate = useNavigate();
+    const { handleLoad } = useLoadPage();
 
     const handleClick = (e) => {
         e.preventDefault();
         const page = map.get(`api`)
-        console.log(page)
-        setUrl(`api/${page}/${e.currentTarget.id}`)
-        
-        navigate(`/${page}`)
+        handleLoad(`api/${page}/${e.currentTarget.id}`, page)
     }
 
     if (loading) return <div>Loading records...</div>;

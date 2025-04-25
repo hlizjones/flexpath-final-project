@@ -1,6 +1,4 @@
 import React, { useContext, useState } from "react";
-import { DataContext } from "../../../context/DataProvider";
-
 
 export default function UserInput({setMap}) {
     const [firstInputField, setFirstInputField] = useState("Title");

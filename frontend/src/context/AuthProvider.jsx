@@ -10,7 +10,7 @@ export default function AuthProvider({children}) {
     const storedUsername = localStorage.getItem("username");
     const [username, setUsername] = useState(storedUsername ? storedUsername : null);
     
-    const storedRole = localStorage.getItem("userRole");
+    const storedRole = localStorage.getItem("role");
     const [role, setRole] = useState(storedRole ? storedRole : null);
 
     return (

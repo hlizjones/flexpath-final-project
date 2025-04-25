@@ -7,12 +7,13 @@ import Search from "./components/Pages/Search/Search";
 import Book from "./components/Pages/Book/Book";
 import Collection from "./components/Pages/Collection/Collection"
 import Review from "./components/Review/Review";
+import CreateBook from './components/Pages/CreateBook';
 import NotFound from "./components/Pages/404/NotFound";
 import DataProvider from "./context/DataProvider";
 import { AuthContext } from './context/AuthProvider';
 
 function App() {
-  const { token } = useContext(AuthContext);
+  const { token, role } = useContext(AuthContext);
   return (
     <div>
       <Navbar />
@@ -25,6 +26,7 @@ function App() {
         {token && <Route path="/book" element={<Book />} />}
         {token && <Route path="/collection" element={<Collection />} />}
         {token && <Route path="/review" element={<Review />} />}
+        {role === "ADMIN" && <Route path="/createbook" element={<CreateBook />} />}
         <Route path="/*" element={<NotFound />} />
       </Routes>
       </DataProvider>

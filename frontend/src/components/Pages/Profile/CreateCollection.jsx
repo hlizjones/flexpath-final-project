@@ -1,62 +1,48 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../context/AuthProvider";
-import useFetch from "../../../hooks/useFetch";
+import React, { useContext, useEffect } from "react";
+import { DataContext } from "../../../context/DataProvider";
+import useCreateRequest from "../../../hooks/useCreateRequest";
 
-export default function CreateCollection({setRefresh}) {
-    const { token } = useContext(AuthContext);
-    const [url, setUrl] = useState();
-    const [body, setBody] = useState();
-    const { data, loading, error } = useFetch(url, body);
+export default function CreateCollection() {
+    const { setRefresh } = useContext(DataContext);
+    const { handleRequest, data, loading, error } = useCreateRequest();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setUrl(`api/collection`);
 
-        const collectionToCreate = { 'name': document.getElementById('name').value };
-
+        const object = { 'name': document.getElementById('name').value };
         if (document.getElementById('description').value !== "") {
-            collectionToCreate['description'] = document.getElementById('description').value;
+            object['description'] = document.getElementById('description').value;
         }
         if (document.getElementById('favorite').checked) {
-            collectionToCreate['favorite'] = true;
+            object['favorite'] = true;
         } else {
-            collectionToCreate['favorite'] = false;
+            object['favorite'] = false;
         }
         if (document.getElementById('privacy').checked) {
-            collectionToCreate['privacy'] = true;
+            object['privacy'] = true;
         } else {
-            collectionToCreate['privacy'] = false;
+            object['privacy'] = false;
         }
 
-        setBody({
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                collectionToCreate
-            ),
-        });
+        handleRequest(object, "api/collection", "POST")
 
         document.getElementById('name').value = "";
         document.getElementById('description').value = "";
         document.getElementById('favorite').checked = false;
         document.getElementById('privacy').checked = false;
-
     }
-    
+
     useEffect(() => {
-        if(Object.keys(data).length > 0) {
-        setRefresh(refresh => !refresh)
+        if (Object.keys(data).length > 0) {
+            setRefresh(refresh => !refresh);
         }
-    }, [data]);
+    }, [data, setRefresh]);
 
     return (
         <div className='container'>
             <div className="row row-cols-1 g-5">
                 <div className='col-md-6 mb-3'>
-                    <h4>Create new collection.</h4>
+                    <h4>Create new book collection.</h4>
                     <form onSubmit={handleSubmit}>
                         <div className="d-grid gap-3 mt-3 mb-3">
                             <input className="form-control" type="text" id="name" placeholder="Name of Collection" required></input>
@@ -66,7 +52,7 @@ export default function CreateCollection({setRefresh}) {
                                 <input className="form-check-input" type="checkbox" id="favorite"></input>
                             </div>
                             <div className="form-check" >
-                                <label className="form-label text-nowrap" htmlFor="privacy" >Privacy</label>
+                                <label className="form-label text-nowrap" htmlFor="privacy" >Private</label>
                                 <input className="form-check-input" type="checkbox" id="privacy"></input>
                             </div>
                         </div>

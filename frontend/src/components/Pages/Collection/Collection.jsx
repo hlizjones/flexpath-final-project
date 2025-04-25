@@ -1,29 +1,17 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../../context/AuthProvider";
 import { DataContext } from "../../../context/DataProvider";
 import CollectionManager from "./CollectionManager";
 import CollectionBooksTable from "./CollectionBooksTable";
-import useToProper from "../../../hooks/useToProper";
+import CollectionPrivacy from "./CollectionPrivacy";
 
 
 export default function Collection() {
-    const { data, loading, error } = useContext(DataContext)
+    const { token, username, role } = useContext(AuthContext);
+    const { data, loading, error } = useContext(DataContext);
 
-    // useEffect(() => {
-    //     setMap(null);
-    //     setOptions(null);
-    // }, [data, setMap, setOptions]);
-
-    // useEffect(() => {
-    //     if (Object.keys(data).length > 0) {
-    //         localStorage.setItem("collection", JSON.stringify(data));
-    //         setCollection(data);
-    //     }
-
-    // }, [data])
-
-    // const storedCollection = localStorage.getItem("collection");
-    // const [collection, setCollection] = useState(storedCollection ? JSON.parse(storedCollection) : {})
-    // const username = useToProper(collection.username)
+    const url = `api/book_collection?id=${data.id}`;
+    const options = { headers: { 'Authorization': `Bearer ${token}` } }
 
     if (loading) return <div>Loading collection...</div>;
     if (error) return <div className="mb-5 text-danger">Error: Failed to load collection.</div>;
@@ -31,11 +19,13 @@ export default function Collection() {
     return (
         <>
             <div className="container text-center mb-5">
-                <h1>Name: {data.name}</h1>
-                <h4>Username: {data.name}</h4>
+                <h1>{data.name}</h1>
+                <h4 className="text-capitalize">Created by : {data.username}</h4>
+                <h4 className="fst-italic">{data.description}</h4>
+                {(username === data.username || role === "ADMIN") && <CollectionPrivacy id={data.id} collectionPrivacy = {data.privacy} />}
             </div>
-            <CollectionManager/>
-            <CollectionBooksTable collectionId={data.id}/>
+            {(username === data.username || role === "ADMIN") && <CollectionManager id={data.id} />}
+            <CollectionBooksTable id={data.id} username={username} url={url} options={options} />
         </>
     );
 }

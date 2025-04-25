@@ -1,53 +1,18 @@
-import React, { useContext, useState } from "react";
-import useFetch from "../../../hooks/useFetch";
-import { AuthContext } from "../../../context/AuthProvider";
+import React, { useContext } from "react";
 import { DataContext } from "../../../context/DataProvider"
-import { useNavigate } from "react-router-dom";
+import FavoriteCollection from "./FavoriteCollection";
+import useLoadPage from "../../../hooks/useLoadPage";
 
 
-export default function UserCollections({ url, options }) {
-    const { token } = useContext(AuthContext);
-    const { setUrl } = useContext(DataContext);
-    const navigate = useNavigate();
-
-    const { data, loading, error } = useFetch(url, options);
-
-    const [favUrl, setFavUrl] = useState();
-    const [favOptions, setFavOptions] = useState();
-    useFetch(favUrl, favOptions);
+export default function UserCollections() {
+    const { data, loading, error } = useContext(DataContext);
+    const { handleLoad } = useLoadPage();
 
     const handleClick = (e) => {
         const id = e.currentTarget.closest(".card-body").id;
         e.preventDefault();
-        setUrl(`api/collection/${id}`);
-        navigate(`/collection`);
+        handleLoad(`api/collection/${id}`, "collection")
     }
-
-    const handleFavorite = (e) => {
-        const id = e.currentTarget.closest(".card-body").id
-        e.preventDefault();
-        let boolFav;
-        if (e.currentTarget.className.includes('fill')) {
-            boolFav = false;
-            document.getElementById(id + "btn").className = "bi bi-heart h2";
-        } else {
-            boolFav = true;
-            document.getElementById(id + "btn").className = "bi bi-heart-fill h2";
-        }
-
-        setFavUrl(`api/collection/${id}`);
-        setFavOptions({
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': "application/json"
-            },
-            body: JSON.stringify({
-                favorite: boolFav,
-            }),
-        });
-    }
-
 
     if (loading) return <div>Loading collections...</div>;
     if (error) return <div className="mb-5 text-danger">Error: Failed to load collections.</div>;
@@ -60,16 +25,16 @@ export default function UserCollections({ url, options }) {
                             <div className="col" key={el.id}>
                                 <div className="card text-center">
                                     <div className="card-body" id={el.id}>
-                                        <h4 className="card-title" onClick={handleClick}>{el.name}</h4>
+                                        <h4 className="card-title" onClick={handleClick}>
+                                            {el.name}
+                                        </h4>
                                         <p className="card-text">{el.description}</p>
-                                        {el.favorite && <i className="bi bi-heart-fill h2" id={el.id + "btn"} onClick={handleFavorite}></i>}
-                                        {!el.favorite && <i className="bi bi-heart h2" id={el.id + "btn"} onClick={handleFavorite}></i>}
+                                        <FavoriteCollection id={el.id} collectionFavorite={el.favorite} />
                                     </div>
                                 </div>
                             </div>
                         );
                     })}
-
                 </div>
             </div>
         </>

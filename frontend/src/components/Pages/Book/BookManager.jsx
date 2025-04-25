@@ -1,26 +1,40 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../../context/AuthProvider";
 import { DataContext } from "../../../context/DataProvider";
-import useCreateRequest from "../../../hooks/useCreateRequest";
-import { useNavigate } from "react-router-dom";
+import useFetch from "../../../hooks/useFetch";
+// import DeleteCollection from "./DeleteCollection";
 
-export default function CollectionManager({ id }) {
+export default function BookManager({ id }) {
+    const { token } = useContext(AuthContext);
     const { setRefresh } = useContext(DataContext);
-    const navigate = useNavigate();
-    const { handleRequest, data, loading, error } = useCreateRequest();
-    const { handleRequest: handleDelete, data: deleteCollectionData, loading : deleteCollectionLoading, error: deleteCollectionError } = useCreateRequest();
+
+    const [submitUrl, setSubmitUrl] = useState();
+    const [submitOptions, setSubmitOptions] = useState();
+    const { data, loading, error } = useFetch(submitUrl, submitOptions);
     
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const object = {};
+        const collectionToUpdate = {};
+
         if (document.getElementById('name').value !== "") {
-            object['name'] = document.getElementById('name').value;
+            collectionToUpdate['name'] = document.getElementById('name').value;
         }
         if (document.getElementById('description').value !== "") {
-            object['description'] = document.getElementById('description').value;
+            collectionToUpdate['description'] = document.getElementById('description').value;
         }
 
-        handleRequest(object, `api/collection/${id}`, "PUT");
+        setSubmitUrl(`api/collection/${id}`);
+        setSubmitOptions({
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                collectionToUpdate
+            ),
+        });
  
         document.getElementById('name').value = "";
         document.getElementById('description').value = "";
@@ -33,21 +47,12 @@ export default function CollectionManager({ id }) {
         }
     }, [data, setRefresh]);
 
-    const handleDeleteButton = () => {
-        handleDelete(null, `api/collection/${id}`, "DELETE")
-    }
-
-    useEffect(() => {
-        if (Object.keys(deleteCollectionData).length > 0) {
-            navigate(`/profile`);
-        }
-    }, [deleteCollectionData, navigate]);
 
     return (
         <div className='container'>
             <div className="row row-cols-1 g-5">
                 <div className='col-md-6 mb-3'>
-                    <h4>Update your book collection.</h4>
+                    <h4>Update Collection</h4>
                     <form onSubmit={handleSubmit}>
                         <div className="d-grid gap-3 mt-3 mb-3">
                             <input className="form-control" type="text" id="name" placeholder="Name of Collection"></input>
@@ -57,15 +62,11 @@ export default function CollectionManager({ id }) {
                             <button className="btn btn-secondary" type="submit">Update</button>
                         </div>
                     </form >
-                    <div className="col-md-5 d-grid gap-3 mb-3">
-                    <button className="btn btn-danger" type="button" onClick={handleDeleteButton}>Delete collection</button>
-                    </div>
+                  {/* <DeleteCollection id = {id} token = {token}/> */}
                 </div >
                 <div className='col-md-6 mb-3'>
                     {loading && <div>Updating collection...</div>}
                     {error && <div className="mb-5 text-danger">Error: Failed to update collection.</div>}
-                    {deleteCollectionLoading && <div>Deleting collection...</div>}
-                    {deleteCollectionError && <div className="mb-5 text-danger">Error: Failed to delete collection.</div>}
                 </div>
             </div >
         </div >

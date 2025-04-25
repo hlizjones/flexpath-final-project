@@ -1,13 +1,11 @@
 import React, { useMemo, useContext } from "react";
 import useFetch from "../../../hooks/useFetch";
 import { AuthContext } from "../../../context/AuthProvider";
-import { DataContext } from "../../../context/DataProvider";
-import { useNavigate } from "react-router-dom";
+import useLoadPage from "../../../hooks/useLoadPage";
 
 export default function BookReviewsTable({ bookId }) {
-    const { setUrl } = useContext(DataContext);
     const { token } = useContext(AuthContext);
-    const navigate = useNavigate();
+    const { handleLoad } = useLoadPage();
 
     const url = useMemo(() => `api/review?bookId=${bookId}`, [bookId]);
     const options = useMemo(() => ({ headers: { 'Authorization': `Bearer ${token}` } }), [token]);
@@ -16,8 +14,7 @@ export default function BookReviewsTable({ bookId }) {
 
     const handleClick = (e) => {
         e.preventDefault();
-        setUrl(`api/review/${e.currentTarget.id}`)
-        navigate(`/review`);
+        handleLoad(`api/review/${e.currentTarget.id}`, 'review')
     }
 
     if (loading) return <div>Loading Records...</div>;
@@ -38,7 +35,6 @@ export default function BookReviewsTable({ bookId }) {
                 </thead>
                 <tbody>
                     {data && Array.from(data).map(el => {
-                        console.log(el["id"])
                         return (
                             <tr key={el["id"]} onClick={handleClick} id={el["id"]}>
                                 {Object.entries(el).map(([key, value]) => {

@@ -1,12 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import useFetch from "../../../hooks/useFetch"
 import { AuthContext } from "../../../context/AuthProvider";
+import useCreateRequest from "../../../hooks/useCreateRequest";
 
 export default function Login() {
     const { setToken, tokenExpMessage } = useContext(AuthContext);
-    const [url, setUrl] = useState();
-    const [body, setBody] = useState({});
-    const { data, error } = useFetch(url, body);
+    const { handleRequest, data, error } = useCreateRequest();
 
     useEffect(() => {
         if (data.accessToken) {
@@ -19,14 +18,8 @@ export default function Login() {
         e.preventDefault();
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
-        setUrl(`auth/login`);
-        setBody({
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username: `${username}`, password: `${password}` }),
-        });
+
+        handleRequest({ username: `${username}`, password: `${password}` }, "auth/login", "POST", null)
         document.getElementById("username").value = "";
         document.getElementById("password").value = "";
     }
