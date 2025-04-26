@@ -29,7 +29,6 @@ export default function CollectionManager({ id }) {
     useEffect(() => {
         if (Object.keys(data).length > 0) {
             setRefresh(refresh => !refresh)
-            console.log("Refreshing...")
         }
     }, [data, setRefresh]);
 

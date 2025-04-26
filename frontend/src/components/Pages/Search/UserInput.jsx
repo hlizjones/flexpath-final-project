@@ -1,10 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import useUrlBuilder from "../../../hooks/useUrlBuilder";
+import useLoadPage from "../../../hooks/useLoadPage";
 
-export default function UserInput({setMap}) {
+export default function UserInput({setPage}) {
+    const { handleLoad } = useLoadPage();
+    const { buildUrl } = useUrlBuilder();
     const [firstInputField, setFirstInputField] = useState("Title");
     const [secondInputField, setSecondInputField] = useState("Author");
     const [thirdInputField, setThirdInputField] = useState("Genre");
-
 
     const toggleSearch = (e) => {
         e.preventDefault();
@@ -22,9 +25,10 @@ export default function UserInput({setMap}) {
     const handleSubmit = (e) => {
         e.preventDefault();
         let map = new Map();
+        const page = document.getElementById("toggleSearch").value
 
-        map.set(`api`, document.getElementById("toggleSearch").value)
-        
+        map.set(`api`, page)
+
         if (document.getElementById("firstInput").value !== "") {
             map.set(firstInputField.toLowerCase(), document.getElementById("firstInput").value)
         }
@@ -35,7 +39,8 @@ export default function UserInput({setMap}) {
             map.set(thirdInputField.toLowerCase(), document.getElementById("thirdInput").value)
         }
 
-        setMap(map);
+        handleLoad(buildUrl(map))
+        setPage(page)
     }
 
     return (

@@ -1,18 +1,19 @@
-import React from "react";
+import React, {useContext} from "react";
 import useLoadPage from "../../../hooks/useLoadPage";
+import {DataContext} from "../../../context/DataProvider";
 
-export default function SearchResults({loading, data, error, map}) {
+export default function SearchResults({page}) {
+    const {  data, loading, error, url  } = useContext(DataContext);
     const { handleLoad } = useLoadPage();
 
     const handleClick = (e) => {
         e.preventDefault();
-        const page = map.get(`api`)
         handleLoad(`api/${page}/${e.currentTarget.id}`, page)
     }
 
     if (loading) return <div>Loading records...</div>;
     if (error) return <div className="mb-5 text-danger">Error: Failed to load records.</div>
-
+    if (Object.keys(data).length === 0 || url === "api/collection?profile=true") return <div>Search to see results!</div>
     return (
         <>
         {data &&
@@ -34,7 +35,7 @@ export default function SearchResults({loading, data, error, map}) {
                             <tr key={el["id"]} onClick={handleClick} id={el["id"]}>
                                 {Object.entries(el).map(([key, value]) => { 
                                     if (key != "id" && key != "privacy" && key != "favorite" && key != "isAdmin")
-                                    return (<th key={value}>{value}</th>)})}
+                                    return (<td className="text-capitalize" key={value}>{value}</td>)})}
                             </tr>
                         );
                     })}

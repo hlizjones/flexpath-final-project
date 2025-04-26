@@ -11,6 +11,7 @@ import CreateBook from './components/Pages/CreateBook';
 import NotFound from "./components/Pages/404/NotFound";
 import DataProvider from "./context/DataProvider";
 import { AuthContext } from './context/AuthProvider';
+import BookManager from './components/Pages/Book/BookManager';
 
 function App() {
   const { token, role } = useContext(AuthContext);

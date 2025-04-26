@@ -16,6 +16,7 @@ export default function UserCollections() {
 
     if (loading) return <div>Loading collections...</div>;
     if (error) return <div className="mb-5 text-danger">Error: Failed to load collections.</div>;
+    if (Object.keys(data).length === 0) return <div>No collections to display.</div>
     return (
         <>
             <div className="container mb-5">

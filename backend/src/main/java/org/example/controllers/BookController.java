@@ -86,8 +86,19 @@ public class BookController {
      */
     @PutMapping(path = "/{id}")
     public Book update(@RequestBody Book book, @PathVariable int id) {
-        if (bookDao.getBookById(id) == null) {
+        Book currentBook = bookDao.getBookById(id);
+
+        if (currentBook == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found");
+        }
+        if (book.getTitle() == null) {
+            book.setTitle(currentBook.getTitle());
+        }
+        if (book.getAuthor() == null) {
+            book.setAuthor(currentBook.getAuthor());
+        }
+        if (book.getGenre() == null) {
+            book.setGenre(currentBook.getGenre());
         }
         book.setId(id);
         return bookDao.updateBook(book);

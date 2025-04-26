@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import useCreateRequest from "../../../hooks/useCreateRequest";
 
-export default function FavoriteCollection({ id, collectionFavorite }) {
+export default function FavoriteCollection({ id, initialFavorite }) {
 
     const { handleRequest } = useCreateRequest();
-    const [favorite, setFavorite] = useState(collectionFavorite);
+    const [favorite, setFavorite] = useState(initialFavorite);
 
     const handleFavorite = (e) => {
         e.preventDefault();

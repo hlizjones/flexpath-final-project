@@ -75,7 +75,8 @@ public class ReviewController {
      */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Review create(@RequestBody Review review, Principal principal) {
+    public Review create(@RequestParam int bookId, @RequestBody Review review, Principal principal) {
+        review.setBookId(bookId);
         review.setUsername(principal.getName());
         return reviewDao.createReview(review);
     }
@@ -89,10 +90,21 @@ public class ReviewController {
      * @return The updated review.
      */
     @PutMapping(path = "/{id}")
-    public Review update(@RequestBody Review review, @PathVariable int id, Principal principal) {
+    public Review update(@RequestParam int bookId, @RequestBody Review review, @PathVariable int id, Principal principal) {
+        Review currentReview = reviewDao.getReviewById(id);
 
-        if (reviewDao.getReviewById(id) == null) {
+        if (currentReview == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found");
+        }
+        review.setBookId(bookId);
+        if (review.getRating() == 0) {
+            review.setRating(currentReview.getRating());
+        }
+        if (review.getContent() == null) {
+            review.setContent(currentReview.getContent());
+        }
+        if (review.getPrivacy() == null) {
+            review.setPrivacy(currentReview.getPrivacy());
         }
 
         if (isAdmin()) {

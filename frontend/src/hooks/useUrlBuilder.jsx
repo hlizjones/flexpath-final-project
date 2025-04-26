@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
+import React from "react";
 
-export default function useUrlBuilder(map) {
-    const [url, setUrl] = useState()
+export default function useUrlBuilder() {
 
-    useEffect(() => {
+    const buildUrl = (map) => {
+        let url = 'api/';
 
         if (map !== null && map !== undefined) {
             const arr = Array.from(map)
-            let url = 'api/';
 
             for (let i = 0; i < arr.length; i++) {
                 const [key, value] = arr[i]
@@ -24,13 +23,13 @@ export default function useUrlBuilder(map) {
                     }
                 }
             }
-            setUrl(url)
-        } else {
-            setUrl(null)
         }
-    }, [map])
+        return (url)
+    }
 
-    return (url)
+    return (
+        {buildUrl}
+    )
 }
 
 

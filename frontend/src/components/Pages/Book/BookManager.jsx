@@ -1,74 +1,82 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../context/AuthProvider";
+import React, { useContext, useEffect } from "react";
 import { DataContext } from "../../../context/DataProvider";
-import useFetch from "../../../hooks/useFetch";
-// import DeleteCollection from "./DeleteCollection";
+import useCreateRequest from "../../../hooks/useCreateRequest";
+import { useNavigate } from "react-router-dom";
 
-export default function BookManager({ id }) {
-    const { token } = useContext(AuthContext);
+export default function BookManager({show, setShow, id}) {
     const { setRefresh } = useContext(DataContext);
+    const navigate = useNavigate();
+    const { handleRequest, data, loading, error } = useCreateRequest();
+    const { handleRequest: handleDelete, data: deleteBookData, loading: deleteBookLoading, error: deleteBookError } = useCreateRequest();
 
-    const [submitUrl, setSubmitUrl] = useState();
-    const [submitOptions, setSubmitOptions] = useState();
-    const { data, loading, error } = useFetch(submitUrl, submitOptions);
-    
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        const collectionToUpdate = {};
-
-        if (document.getElementById('name').value !== "") {
-            collectionToUpdate['name'] = document.getElementById('name').value;
+        const object = {};
+        if (document.getElementById('title').value !== "") {
+            object['title'] = document.getElementById('title').value;
         }
-        if (document.getElementById('description').value !== "") {
-            collectionToUpdate['description'] = document.getElementById('description').value;
+        if (document.getElementById('author').value !== "") {
+            object['author'] = document.getElementById('author').value;
+        }
+        if (document.getElementById('genre').value !== "") {
+            object['genre'] = document.getElementById('genre').value;
         }
 
-        setSubmitUrl(`api/collection/${id}`);
-        setSubmitOptions({
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                collectionToUpdate
-            ),
-        });
- 
-        document.getElementById('name').value = "";
-        document.getElementById('description').value = "";
+        handleRequest(object, `api/book/${id}`, "PUT");
+
+        document.getElementById('title').value = "";
+        document.getElementById('author').value = "";
+        document.getElementById('genre').value = "";
     }
 
     useEffect(() => {
         if (Object.keys(data).length > 0) {
+            setShow(false)
             setRefresh(refresh => !refresh)
-            console.log("Refreshing...")
         }
     }, [data, setRefresh]);
 
+    const handleDeleteButton = () => {
+        handleDelete(null, `api/book/${id}`, "DELETE")
+    }
+
+    useEffect(() => {
+        if (Object.keys(deleteBookData).length > 0) {
+            navigate(`/search`);
+        }
+    }, [deleteBookData, navigate]);
+    console.log(show)
 
     return (
+        <>
+        {show &&
         <div className='container'>
             <div className="row row-cols-1 g-5">
                 <div className='col-md-6 mb-3'>
-                    <h4>Update Collection</h4>
+                    <h4>Update book.</h4>
                     <form onSubmit={handleSubmit}>
                         <div className="d-grid gap-3 mt-3 mb-3">
-                            <input className="form-control" type="text" id="name" placeholder="Name of Collection"></input>
-                            <textarea className="form-control" type="description" id="description" placeholder="Describe your collection"></textarea>
+                            <input className="form-control" type="text" id="title" placeholder="Title"></input>
+                            <input className="form-control" type="text" id="author" placeholder="Author"></input>
+                            <input className="form-control" type="text" id="genre" placeholder="Genre"></input>
                         </div>
                         <div className="col-md-5 d-grid gap-3 mb-3">
                             <button className="btn btn-secondary" type="submit">Update</button>
                         </div>
                     </form >
-                  {/* <DeleteCollection id = {id} token = {token}/> */}
+                    <div className="col-md-5 d-grid gap-3 mb-3">
+                        <button className="btn btn-danger" type="button" onClick={handleDeleteButton}>Delete book</button>
+                    </div>
                 </div >
                 <div className='col-md-6 mb-3'>
-                    {loading && <div>Updating collection...</div>}
-                    {error && <div className="mb-5 text-danger">Error: Failed to update collection.</div>}
+                    {loading && <div>Updating book...</div>}
+                    {error && <div className="mb-5 text-danger">Error: Failed to update book.</div>}
+                    {deleteBookLoading && <div>Deleting book...</div>}
+                    {deleteBookError && <div className="mb-5 text-danger">Error: Failed to delete book.</div>}
                 </div>
             </div >
         </div >
+}
+        </>
     );
 }

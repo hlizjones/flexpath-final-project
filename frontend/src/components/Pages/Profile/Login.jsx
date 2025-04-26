@@ -1,5 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
-import useFetch from "../../../hooks/useFetch"
+import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../../../context/AuthProvider";
 import useCreateRequest from "../../../hooks/useCreateRequest";
 
@@ -12,7 +11,7 @@ export default function Login() {
             localStorage.setItem("accessToken", data.accessToken.token);
             setToken(data.accessToken.token);
         }
-    }, [data]);
+    }, [data, setToken]);
 
     const handleSubmit = (e) => {
         e.preventDefault();

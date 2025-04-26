@@ -5,7 +5,6 @@ import User from "./User";
 import UserCollections from "./UserCollections"
 import CreateCollection from "./CreateCollection"
 import useLoadPage from "../../../hooks/useLoadPage";
-
 export default function Profile() {
     const { token } = useContext(AuthContext);
     const {handleLoad} = useLoadPage();
@@ -16,6 +15,7 @@ export default function Profile() {
         handleLoad(url)
         }
     }, [url, token])
+
 
     return (
         <>

@@ -87,6 +87,7 @@ public class ReviewDao {
     public Review createReview(Review review) {
         try {
             int bookId = review.getBookId();
+            System.out.println(bookId);
             int rating = review.getRating();
             String content = review.getContent();
             Boolean privacy = review.getPrivacy();
@@ -117,6 +118,7 @@ public class ReviewDao {
      * @return The updated review.
      */
     public Review updateReview(Review review) {
+
         int id = review.getId();
         int rating = review.getRating();
         String content = review.getContent();
@@ -154,7 +156,7 @@ public class ReviewDao {
      * @throws SQLException If an error occurs while mapping the result set.
      */
     private Review mapToReview(ResultSet rs, int rowNum) throws SQLException {
-        return new Review(
+        Review review = new Review(
                 rs.getInt("review_id"),
                 rs.getInt("book_id"),
                 rs.getInt("rating"),
@@ -162,5 +164,8 @@ public class ReviewDao {
                 rs.getBoolean("privacy"),
                 rs.getString("username")
         );
+        System.out.println(review.getId());
+        System.out.println(review.getBookId());
+        return review;
     }
 }

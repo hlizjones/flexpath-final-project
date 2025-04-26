@@ -1,15 +1,18 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import useFetch from "../../../hooks/useFetch";
 import { AuthContext } from "../../../context/AuthProvider";
 import { DataContext } from "../../../context/DataProvider";
 import useCreateRequest from "../../../hooks/useCreateRequest";
 import useLoadPage from "../../../hooks/useLoadPage";
 
-export default function CollectionBooksTable({ id, username, url, options }) {
-    const { role, username: authUsername } = useContext(AuthContext);
+export default function CollectionBooksTable({ id, username }) {
+    const { role, token, username: authUsername } = useContext(AuthContext);
     const { setRefresh } = useContext(DataContext);
     const { handleLoad } = useLoadPage();
     const { handleRequest, data : removeBookData, loading : removeBookLoading, error: removeBookError } = useCreateRequest();
+
+    const url = useMemo(() => (`api/book_collection?id=${id}`),[id])
+    const options = useMemo(() => ( { headers: { 'Authorization': `Bearer ${token}` } } ) ,[token])
 
     const { data, loading, error } = useFetch(url, options)
 
@@ -33,12 +36,13 @@ export default function CollectionBooksTable({ id, username, url, options }) {
 
     if (loading) return <div>Loading Records...</div>;
     if (error) return <div className="mb-5 text-danger">Error: Failed to load books.</div>;
+    if (Object.keys(data).length === 0) return <div>No books to display.</div>
     if (removeBookLoading) return <div>Removing book from collection...</div>;
     if (removeBookError) return <div className="mb-5 text-danger">Error: Failed to remove book.</div>;
     return (
-        <>
+        <div className="container">
             <table className="table table-hover">
-                <thead className="table-secondary">
+                <thead className="table-secondary text-center">
                     <tr>
                         {data[0] && Object.keys(data[0]).map(key => {
                             if (key != "id" && key != "username" && key != "favorite" && key != "privacy" && key != "isAdmin") {
@@ -47,24 +51,26 @@ export default function CollectionBooksTable({ id, username, url, options }) {
                                 )
                             }
                         })}
-                        {data[0] && <th>DELETE</th>}
+                        {(data[0] && (data.username === authUsername || role === 'ADMIN'))&& <th>DELETE</th>}
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="text-center">
                     {data && Array.from(data).map(el => {
                         return (
                             <tr key={el["id"]} id={el["id"]}>
                                 {Object.entries(el).map(([key, value]) => {
                                     if (key != "id" && key != "username" && key != "favorite" && key != "privacy" && key != "isAdmin") {
-                                        return (<th key={key} onClick={handleClick}>{value}</th>)
+                                        return (<td className="text-capitalize" key={key} onClick={handleClick}>{value}</td>)
                                     }
                                 })}
-                                {(username === authUsername || role === 'ADMIN') && <td onClick={removeBook}><i className="bi bi-trash3-fill h3 ms-2"></i></td>}
+                                
+                                {(el.username === authUsername || role === 'ADMIN') && <td ><i className="bi bi-trash3-fill h3" onClick={removeBook}></i></td>}
+                                
                             </tr>
                         );
                     })}
                 </tbody>
             </table>
-        </>
+        </div>
     );
 }
