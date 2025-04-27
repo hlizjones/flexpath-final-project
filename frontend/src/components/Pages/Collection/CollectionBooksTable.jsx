@@ -4,41 +4,42 @@ import { AuthContext } from "../../../context/AuthProvider";
 import { DataContext } from "../../../context/DataProvider";
 import useCreateRequest from "../../../hooks/useCreateRequest";
 import useLoadPage from "../../../hooks/useLoadPage";
+import useMessageTimeout from "../../../hooks/useMessageTimeout";
 
 export default function CollectionBooksTable({ id }) {
     const { role, token, username: authUsername } = useContext(AuthContext);
     const { setRefresh } = useContext(DataContext);
     const { handleLoad } = useLoadPage();
     const { handleRequest, data : removeBookData, loading : removeBookLoading, error: removeBookError } = useCreateRequest();
+    useMessageTimeout(removeBookError);
 
-    const url = useMemo(() => (`api/book_collection?id=${id}`),[id])
-    const options = useMemo(() => ( { headers: { 'Authorization': `Bearer ${token}` } } ) ,[token])
-
-    const { data, loading, error } = useFetch(url, options)
+    const url = useMemo(() => (`api/book_collection?id=${id}`),[id]);
+    const options = useMemo(() => ( { headers: { 'Authorization': `Bearer ${token}` } } ) ,[token]);
+    const { data, loading, error } = useFetch(url, options);
 
     const handleClick = (e) => {
         e.preventDefault();
-        const bookId = e.currentTarget.closest('tr').id
+        const bookId = e.currentTarget.closest('tr').id;
         handleLoad(`api/book/${bookId}`, 'book');
     }
 
     const removeBook = (e) => {
         e.preventDefault();
-        const bookId = e.currentTarget.closest('tr').id
-        handleRequest(null, `api/book_collection?bookId=${bookId}&collectionId=${id}`, "DELETE")
+        const bookId = e.currentTarget.closest('tr').id;
+        handleRequest(null, `api/book_collection?bookId=${bookId}&collectionId=${id}`, "DELETE");
     }
 
     useEffect(() => {
         if (typeof removeBookData === "string" ) {
-            setRefresh(refresh => !refresh)
+            setRefresh(refresh => !refresh);
         }
     }, [removeBookData, setRefresh]);
 
     if (loading) return <div>Loading Records...</div>;
-    if (error) return <div className="mb-5 text-danger">Error: Failed to load books.</div>;
+    if (error) return <div className="mb-5 text-danger">Error: Failed to load books.</div>
     if (Object.keys(data).length === 0) return <div>No books to display.</div>
-    if (removeBookLoading) return <div>Removing book from collection...</div>;
-    if (removeBookError) return <div className="mb-5 text-danger">Error: Failed to remove book.</div>;
+    if (removeBookLoading) return <div>Removing book from collection...</div>
+    if (removeBookError) return <div className="visible mb-5 text-danger" id="errorMsg">Error: Failed to remove book.</div>
     return (
         <div className="container">
             <table className="table table-hover">

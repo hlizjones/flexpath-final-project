@@ -9,17 +9,16 @@ export default function BookReviewsTable({ bookId }) {
 
     const url = useMemo(() => `api/review?bookId=${bookId}`, [bookId]);
     const options = useMemo(() => ({ headers: { 'Authorization': `Bearer ${token}` } }), [token]);
-
-    const { data, loading, error } = useFetch(url, options)
+    const { data, loading, error } = useFetch(url, options);
 
     const handleClick = (e) => {
         e.preventDefault();
-        console.log(e.currentTarget.id)
-        handleLoad(`api/review/${e.currentTarget.id}`, 'review')
+        console.log(e.currentTarget.id);
+        handleLoad(`api/review/${e.currentTarget.id}`, 'review');
     }
 
-    if (loading) return <div>Loading Records...</div>;
-    if (error) return <div className="mb-5 text-danger">Error: Failed to load reviews.</div>;
+    if (loading) return <div>Loading Records...</div>
+    if (error) return <div className="mb-5 text-danger">Error: Failed to load reviews.</div>
     if (Object.keys(data).length === 0) return <div>No reviews to display.</div>
     return (
         <div className="container">

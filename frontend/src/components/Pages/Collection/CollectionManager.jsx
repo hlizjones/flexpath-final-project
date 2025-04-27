@@ -3,6 +3,7 @@ import { DataContext } from "../../../context/DataProvider";
 import useCreateRequest from "../../../hooks/useCreateRequest";
 import { useNavigate } from "react-router-dom";
 import useLoadPage from "../../../hooks/useLoadPage";
+import useMessageTimeout from "../../../hooks/useMessageTimeout";
 
 export default function CollectionManager({ id }) {
     const { setRefresh } = useContext(DataContext);
@@ -10,6 +11,8 @@ export default function CollectionManager({ id }) {
     const { handleLoad } = useLoadPage();
     const { handleRequest, data, loading, error } = useCreateRequest();
     const { handleRequest: handleDelete, data: deleteCollectionData, loading: deleteCollectionLoading, error: deleteCollectionError } = useCreateRequest();
+    useMessageTimeout(data);
+    useMessageTimeout(deleteCollectionError);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -30,17 +33,17 @@ export default function CollectionManager({ id }) {
 
     useEffect(() => {
         if (Object.keys(data).length > 0) {
-            setRefresh(refresh => !refresh)
+            setRefresh(refresh => !refresh);
         }
     }, [data, setRefresh]);
 
     const handleDeleteButton = () => {
-        handleDelete(null, `api/collection/${id}`, "DELETE")
+        handleDelete(null, `api/collection/${id}`, "DELETE");
     }
 
     useEffect(() => {
         if (Object.keys(deleteCollectionData).length > 0) {
-            handleLoad(`api/collection?profile=true`, `profile`)
+            handleLoad(`api/collection?profile=true`, `profile`);
         }
     }, [deleteCollectionData, navigate, handleLoad]);
 
@@ -64,9 +67,9 @@ export default function CollectionManager({ id }) {
                 </div >
                 <div className='col-md-6 mb-3'>
                     {loading && <div>Updating collection...</div>}
-                    {error && <div className="mb-5 text-danger">Error: Failed to update collection.</div>}
+                    {error && <div className="visible mb-5 text-danger" id="errorMsg">Error: Failed to update collection.</div>}
                     {deleteCollectionLoading && <div>Deleting collection...</div>}
-                    {deleteCollectionError && <div className="mb-5 text-danger">Error: Failed to delete collection.</div>}
+                    {deleteCollectionError && <div className="visible mb-5 text-danger" id="errorMsg">Error: Failed to delete collection.</div>}
                 </div>
             </div >
         </div >

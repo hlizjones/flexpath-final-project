@@ -3,6 +3,7 @@ import { DataContext } from "../../../context/DataProvider";
 import useCreateRequest from "../../../hooks/useCreateRequest";
 import { useNavigate } from "react-router-dom";
 import useLoadPage from "../../../hooks/useLoadPage";
+import useMessageTimeout from "../../../hooks/useMessageTimeout";
 
 
 export default function ReviewManager({ id, bookId }) {
@@ -11,6 +12,8 @@ export default function ReviewManager({ id, bookId }) {
     const { handleRequest, data, loading, error } = useCreateRequest();
     const { handleRequest: handleDelete, data: deleteReviewData, loading: deleteReviewLoading, error: deleteReviewError } = useCreateRequest();
     const { handleLoad } = useLoadPage();
+    useMessageTimeout(error);
+    useMessageTimeout(deleteReviewError);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -31,12 +34,12 @@ export default function ReviewManager({ id, bookId }) {
 
     useEffect(() => {
         if (Object.keys(data).length > 0) {
-            setRefresh(refresh => !refresh)
+            setRefresh(refresh => !refresh);
         }
     }, [data, setRefresh]);
 
     const handleDeleteButton = () => {
-        handleDelete(null, `api/review/${id}`, "DELETE")
+        handleDelete(null, `api/review/${id}`, "DELETE");
     }
 
     useEffect(() => {
@@ -64,13 +67,12 @@ export default function ReviewManager({ id, bookId }) {
                     </div>
                     <div className='col-md-6 mb-3'>
                         {loading && <div>Updating review...</div>}
-                        {error && <div className="mb-5 text-danger">Error: Failed to update review.</div>}
+                        {error && <div className="visible mb-5 text-danger" id="errorMsg">Error: Failed to update review.</div>}
                         {deleteReviewLoading && <div>Deleting review...</div>}
-                        {deleteReviewError && <div className="mb-5 text-danger">Error: Failed to delete review.</div>}
+                        {deleteReviewError && <div className="visible mb-5 text-danger" id="errorMsg">Error: Failed to delete review.</div>}
                     </div>
                 </div>
             </div >
         </div>
     );
-
 }

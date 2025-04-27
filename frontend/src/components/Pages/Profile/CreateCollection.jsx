@@ -1,10 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { DataContext } from "../../../context/DataProvider";
 import useCreateRequest from "../../../hooks/useCreateRequest";
+import useMessageTimeout from "../../../hooks/useMessageTimeout";
 
 export default function CreateCollection() {
     const { setRefresh } = useContext(DataContext);
     const { handleRequest, data, loading, error } = useCreateRequest();
+    useMessageTimeout(error);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,7 +26,7 @@ export default function CreateCollection() {
             object['privacy'] = false;
         }
 
-        handleRequest(object, "api/collection", "POST")
+        handleRequest(object, "api/collection", "POST");
 
         document.getElementById('name').value = "";
         document.getElementById('description').value = "";
@@ -63,7 +65,7 @@ export default function CreateCollection() {
                 </div >
                 <div className='col-md-6 mb-3'>
                     {loading && <div>Creating collection...</div>}
-                    {error && <div className="mb-5 text-danger">Error: Failed to create collection.</div>}
+                    {error && <div className="visible mb-5 text-danger" id="errorMsg">Error: Failed to create collection.</div>}
                 </div>
             </div >
         </div >

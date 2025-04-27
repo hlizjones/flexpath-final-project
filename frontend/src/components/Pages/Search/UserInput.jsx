@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import useUrlBuilder from "../../../hooks/useUrlBuilder";
-import useLoadPage from "../../../hooks/useLoadPage";
 
-export default function UserInput({setPage}) {
-    const { handleLoad } = useLoadPage();
+export default function UserInput({setPage, setUrl}) {
     const { buildUrl } = useUrlBuilder();
     const [firstInputField, setFirstInputField] = useState("Title");
     const [secondInputField, setSecondInputField] = useState("Author");
@@ -25,22 +23,23 @@ export default function UserInput({setPage}) {
     const handleSubmit = (e) => {
         e.preventDefault();
         let map = new Map();
-        const page = document.getElementById("toggleSearch").value
-
-        map.set(`api`, page)
+        const page = document.getElementById("toggleSearch").value;
+        map.set(`api`, page);
 
         if (document.getElementById("firstInput").value !== "") {
-            map.set(firstInputField.toLowerCase(), document.getElementById("firstInput").value)
+            map.set(firstInputField.toLowerCase(), document.getElementById("firstInput").value);
         }
         if (document.getElementById("secondInput").value !== "") {
-            map.set(secondInputField.toLowerCase(), document.getElementById("secondInput").value)
+            map.set(secondInputField.toLowerCase(), document.getElementById("secondInput").value);
         }
         if (document.getElementById("thirdInput") && document.getElementById("thirdInput").value !== "") {
-            map.set(thirdInputField.toLowerCase(), document.getElementById("thirdInput").value)
+            map.set(thirdInputField.toLowerCase(), document.getElementById("thirdInput").value);
         }
 
-        handleLoad(buildUrl(map))
-        setPage(page)
+        setUrl(buildUrl(map));
+        localStorage.setItem("searchUrl", buildUrl(map));
+        setPage(page);
+        localStorage.setItem("page", page);
     }
 
     return (

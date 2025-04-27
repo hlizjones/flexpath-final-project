@@ -6,25 +6,25 @@ export default function useUrlBuilder() {
         let url = 'api/';
 
         if (map !== null && map !== undefined) {
-            const arr = Array.from(map)
+            const arr = Array.from(map);
 
             for (let i = 0; i < arr.length; i++) {
-                const [key, value] = arr[i]
+                const [key, value] = arr[i];
 
                 if (i === 0) {
-                    url += `${value}`
+                    url += `${value}`;
                     if (arr.length > 1) {
-                        url += `?`
+                        url += `?`;
                     }
                 } else if (value) {
-                    url += `${key}=${value}`
+                    url += `${key}=${value}`;
                     if (i < arr.length - 1) {
-                        url += `&`
+                        url += `&`;
                     }
                 }
             }
         }
-        return (url)
+        return (url);
     }
 
     return (

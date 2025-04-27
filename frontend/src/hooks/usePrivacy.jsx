@@ -8,13 +8,16 @@ export default function usePrivacy() {
         let bool;
         if (e.currentTarget.className.includes('bi-lock')) {
             bool = false;
-            e.currentTarget.className = "bi bi-unlock h1"
+            e.currentTarget.className = "bi bi-unlock h1";
         } else {
             bool = true;
-            e.currentTarget.className = "bi bi-lock h1"
+            e.currentTarget.className = "bi bi-lock h1";
         }
-        handleRequest({ privacy: bool }, url, "PUT")
+
+        handleRequest({ privacy: bool }, url, "PUT");
     }
 
-    return ({ handlePrivacy })
+    return (
+        { handlePrivacy }
+    );
 }

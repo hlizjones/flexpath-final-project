@@ -2,10 +2,12 @@ import React, { useContext, useMemo } from "react";
 import { AuthContext } from "../../../context/AuthProvider";
 import useFetch from "../../../hooks/useFetch";
 import useCreateRequest from "../../../hooks/useCreateRequest";
+import useMessageTimeout from "../../../hooks/useMessageTimeout";
 
 export default function AddToCollection({ id }) {
     const { token, username, role } = useContext(AuthContext);
     const { handleRequest, data: addBookData, loading: addBookLoading, error: addBookError } = useCreateRequest();
+    useMessageTimeout(addBookData, addBookError);
 
     let urlToMemoize;
     if (role === "ADMIN") {
@@ -19,7 +21,7 @@ export default function AddToCollection({ id }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        handleRequest(null, `api/book_collection?bookId=${id}&collectionId=${document.getElementById("selectCollection").value}`, "POST")
+        handleRequest(null, `api/book_collection?bookId=${id}&collectionId=${document.getElementById("selectCollection").value}`, "POST");
     }
 
     return (
@@ -34,7 +36,7 @@ export default function AddToCollection({ id }) {
                                 Object.entries(el).map(([key, value]) => {
                                     if (key === "name") {
                                         return (
-                                            <option value={el.id} key={el.id+el.name}>{value}</option>
+                                            <option value={el.id} key={el.id + el.name}>{value}</option>
                                         )
                                     }
                                 })
@@ -47,9 +49,9 @@ export default function AddToCollection({ id }) {
                     </div>
                 </div>
             </form>
-            {Object.keys(addBookData).length > 0 && <div>Book added.</div>}
+            {Object.keys(addBookData).length > 0 && <div className="visible" id="dataMsg">{addBookData}</div>}
             {addBookLoading && <div>Adding book...</div>}
-            {addBookError && <div>Error: Failed to add book.</div>}
+            {addBookError && <div className="visible mb-5 text-danger" id="errorMsg">Error: Failed to create book.</div>}
         </div>
 
     );

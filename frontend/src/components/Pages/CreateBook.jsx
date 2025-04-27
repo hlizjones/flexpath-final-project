@@ -1,10 +1,12 @@
 import React from "react";
 import useCreateRequest from "../../hooks/useCreateRequest";
 import useLoadPage from "../../hooks/useLoadPage";
+import useMessageTimeout from "../../hooks/useMessageTimeout";
 
 export default function CreateBook() {
     const { handleRequest, data, loading, error } = useCreateRequest();
     const { handleLoad } = useLoadPage();
+    useMessageTimeout(error);
 
 
     const handleSubmit = (e) => {
@@ -14,7 +16,7 @@ export default function CreateBook() {
             'genre': document.getElementById('genre').value,
          }
 
-         handleRequest(object, "api/book", "POST")
+         handleRequest(object, "api/book", "POST");
 
         document.getElementById('title').value = " ";
         document.getElementById('author').value = " ";
@@ -23,7 +25,7 @@ export default function CreateBook() {
 
     const handleClick = (e) => {
         e.preventDefault();
-        handleLoad(`api/book/${data.id}`, `book`)
+        handleLoad(`api/book/${data.id}`, `book`);
     }
 
     return (
@@ -42,7 +44,7 @@ export default function CreateBook() {
                         </div>
                     </form >
                     {loading && <div>Creating book...</div>}
-                    {error && <div className="mb-5 text-danger">Error: Failed to create book.</div>}
+                    {error && <div className="visible mb-5 text-danger" id="errorMsg">Error: Failed to create book.</div>}
                     {Object.keys(data).length > 0 && <button className="btn btn-outline-success" type="button" onClick={handleClick}>Go to book!</button>}
                 </div >
             </div >

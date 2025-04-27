@@ -6,17 +6,17 @@ export default function Navbar() {
   const { token, setUser, setRole, setToken, role } = useContext(AuthContext);
 
   const logOut = () => {
-    localStorage.clear()
-    setUser(null)
-    setRole(null)
-    setToken(null)
+    localStorage.clear();
+    setUser(null);
+    setRole(null);
+    setToken(null);
   }
 
   if (!token) {
     return (<nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <Link to="/profile" className="navbar-brand ms-4 nav-link">Login</Link>
     </nav>
-    )
+    );
   }
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">

@@ -1,22 +1,22 @@
 import React, { useContext, useState } from "react";
 import { DataContext } from "../../../context/DataProvider";
 import { AuthContext } from "../../../context/AuthProvider";
-import BookReviewsTable from "./BookReviewTable";
+import BookReviewsTable from "./BookReviewsTable";
 import CreateReview from "./CreateReview";
 import AddToCollection from "./AddToCollection";
 import BookManager from "./BookManager";
 
 export default function Book() {
-    const { role } = useContext(AuthContext)
-    const { data, loading, error } = useContext(DataContext)
-    const [show, setShow] = useState(false)
+    const { role } = useContext(AuthContext);
+    const { data, loading, error } = useContext(DataContext);
+    const [show, setShow] = useState(false);
 
     const reveal = (e) => {
         e.preventDefault();
-        setShow(show => !show)
+        setShow(show => !show);
     }
 
-    if (loading) return <div>Loading book...</div>;
+    if (loading) return <div>Loading book...</div>
     if (error) return <div className="mb-5 text-danger">Error: Failed to load book.</div>
     return (
         <>

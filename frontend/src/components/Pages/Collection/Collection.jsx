@@ -14,17 +14,17 @@ export default function Collection() {
 
     const reveal = (e) => {
         e.preventDefault();
-        setShow(show => !show)
+        setShow(show => !show);
     }
 
     const handleClick = (e) => {
         e.preventDefault();
-        const id = e.currentTarget.id
-        handlePrivacy(e, `api/collection/${id}`)
+        const id = e.currentTarget.id;
+        handlePrivacy(e, `api/collection/${id}`);
     }
 
-    if (loading) return <div>Loading collection...</div>;
-    if (error) return <div className="mb-5 text-danger">Error: Failed to load collection.</div>;
+    if (loading) return <div>Loading collection...</div>
+    if (error) return <div className="mb-5 text-danger">Error: Failed to load collection.</div>
     return (
         <>
             <div className="container text-center mb-5">

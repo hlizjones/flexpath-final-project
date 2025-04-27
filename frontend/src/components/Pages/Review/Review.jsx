@@ -7,23 +7,22 @@ import useFetch from "../../../hooks/useFetch";
 
 
 export default function Review() {
-    const { username, role, token } = useContext(AuthContext)
-    const { data, loading, error } = useContext(DataContext)
+    const { username, role, token } = useContext(AuthContext);
+    const { data, loading, error } = useContext(DataContext);
     const { handlePrivacy } = usePrivacy();
 
     const url = useMemo(() => `api/book/${data.bookId}`, [data.bookId]);
     const options = useMemo(() => ({ headers: { 'Authorization': `Bearer ${token}` } }), [token]);
-
-    const { data: bookData } = useFetch(url, options)
+    const { data: bookData } = useFetch(url, options);
 
     const handleClick = (e) => {
         e.preventDefault();
-        const id = e.currentTarget.id
-        handlePrivacy(e, `api/review/${id}?bookId=${data.bookId}`)
+        const id = e.currentTarget.id;
+        handlePrivacy(e, `api/review/${id}?bookId=${data.bookId}`);
     }
 
-    if (loading) return <div>Loading review...</div>;
-    if (error) return <div className="mb-5 text-danger">Error: Failed to load review.</div>;
+    if (loading) return <div>Loading review...</div>
+    if (error) return <div className="mb-5 text-danger">Error: Failed to load review.</div>
     return (
         <>
             {(data.username === username || role === "ADMIN") &&

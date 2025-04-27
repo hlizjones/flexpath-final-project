@@ -1,10 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../../../context/AuthProvider";
 import useCreateRequest from "../../../hooks/useCreateRequest";
+import useMessageTimeout from "../../../hooks/useMessageTimeout";
 
 export default function Login() {
     const { setToken, tokenExpMessage } = useContext(AuthContext);
     const { handleRequest, data, error } = useCreateRequest();
+    useMessageTimeout(error);
 
     useEffect(() => {
         if (data.accessToken) {
@@ -30,7 +32,7 @@ export default function Login() {
                     <input className="form-control" type="text" id="username" placeholder="Username"></input>
                     <input className="form-control" type="password" id="password" placeholder="Password" autoComplete="on"></input>
                     <button className="btn btn-secondary" type="submit">Login</button>
-                    {error && <div className="mb-5 text-danger">Sign-in failed.</div>}
+                    {error && <div className="visible mb-5 text-danger" id="errorMsg">Sign-in failed.</div>}
                     {tokenExpMessage && <div className="mb-5 text-danger">{tokenExpMessage}</div>}
                 </div>
             </div>

@@ -10,8 +10,8 @@ export default function useLoadPage() {
     const navigate = useNavigate();
 
     const handleLoad = (url, page) => {
-        const options = { headers: { 'Authorization': `Bearer ${token}` } }
-        setUrl(url)
+        const options = { headers: { 'Authorization': `Bearer ${token}` } };
+        setUrl(url);
         setOptions(options);
         localStorage.setItem("url", url);
         localStorage.setItem("options", JSON.stringify(options));
