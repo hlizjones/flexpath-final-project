@@ -52,10 +52,12 @@ public class ReviewDao {
         if (review.getIsAdmin() && review.getBookId() != 0) {
             where.add("book_id");
             values.add(review.getBookId());
+            orderBy.add("rating DESC");
         } else if (!review.getIsAdmin() && review.getBookId() != 0) {
             where.addAll(Arrays.asList("book_id", "(privacy = false OR (privacy = true AND username = ?))"));
             values.addAll(Arrays.asList(review.getBookId(), review.getUsername()));
-            orderBy.add("CASE WHEN username = " + review.getUsername() + " THEN 1 WHEN rating = 5 THEN 2 WHEN rating = 4 THEN 3 WHEN rating = 3 THEN 4 WHEN rating = 2 THEN 5 ELSE 6 END");
+            orderBy.add("CASE WHEN username = " + review.getUsername() + " THEN 1 ELSE 2 END");
+            orderBy.add("rating DESC");
         }
 
         PreparedStatementCreator psc = qb.select("*")
@@ -87,7 +89,6 @@ public class ReviewDao {
     public Review createReview(Review review) {
         try {
             int bookId = review.getBookId();
-            System.out.println(bookId);
             int rating = review.getRating();
             String content = review.getContent();
             Boolean privacy = review.getPrivacy();
@@ -164,8 +165,6 @@ public class ReviewDao {
                 rs.getBoolean("privacy"),
                 rs.getString("username")
         );
-        System.out.println(review.getId());
-        System.out.println(review.getBookId());
         return review;
     }
 }

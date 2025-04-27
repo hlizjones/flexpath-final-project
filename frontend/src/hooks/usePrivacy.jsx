@@ -1,17 +1,17 @@
 import React from "react";
 import useCreateRequest from "./useCreateRequest";
 
-export default function usePrivacy(setPrivacy) {
+export default function usePrivacy() {
     const { handleRequest } = useCreateRequest();
 
-    const handlePrivacy = (url, currentPrivacy) => {
+    const handlePrivacy = (e, url) => {
         let bool;
-        if (currentPrivacy) {
+        if (e.currentTarget.className.includes('bi-lock')) {
             bool = false;
-            setPrivacy(false);
+            e.currentTarget.className = "bi bi-unlock h1"
         } else {
             bool = true;
-            setPrivacy(true)
+            e.currentTarget.className = "bi bi-lock h1"
         }
         handleRequest({ privacy: bool }, url, "PUT")
     }

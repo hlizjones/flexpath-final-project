@@ -2,13 +2,15 @@ import React, { useContext, useEffect } from "react";
 import { DataContext } from "../../../context/DataProvider";
 import useCreateRequest from "../../../hooks/useCreateRequest";
 import { useNavigate } from "react-router-dom";
+import useLoadPage from "../../../hooks/useLoadPage";
 
 export default function CollectionManager({ id }) {
     const { setRefresh } = useContext(DataContext);
     const navigate = useNavigate();
+    const { handleLoad } = useLoadPage();
     const { handleRequest, data, loading, error } = useCreateRequest();
-    const { handleRequest: handleDelete, data: deleteCollectionData, loading : deleteCollectionLoading, error: deleteCollectionError } = useCreateRequest();
-    
+    const { handleRequest: handleDelete, data: deleteCollectionData, loading: deleteCollectionLoading, error: deleteCollectionError } = useCreateRequest();
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -21,7 +23,7 @@ export default function CollectionManager({ id }) {
         }
 
         handleRequest(object, `api/collection/${id}`, "PUT");
- 
+
         document.getElementById('name').value = "";
         document.getElementById('description').value = "";
     }
@@ -38,9 +40,9 @@ export default function CollectionManager({ id }) {
 
     useEffect(() => {
         if (Object.keys(deleteCollectionData).length > 0) {
-            navigate(`/profile`);
+            handleLoad(`api/collection?profile=true`, `profile`)
         }
-    }, [deleteCollectionData, navigate]);
+    }, [deleteCollectionData, navigate, handleLoad]);
 
     return (
         <div className='container'>
@@ -57,7 +59,7 @@ export default function CollectionManager({ id }) {
                         </div>
                     </form >
                     <div className="col-md-5 d-grid gap-3 mb-3">
-                    <button className="btn btn-danger" type="button" onClick={handleDeleteButton}>Delete collection</button>
+                        <button className="btn btn-danger" type="button" onClick={handleDeleteButton}>Delete collection</button>
                     </div>
                 </div >
                 <div className='col-md-6 mb-3'>

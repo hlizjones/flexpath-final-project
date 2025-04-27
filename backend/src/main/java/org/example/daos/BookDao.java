@@ -16,8 +16,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 /**
  * Data access object for books.
@@ -55,24 +53,32 @@ public class BookDao {
         if (book.getTitle() != null) {
             where.add("title");
             values.add(book.getTitle());
-        } else if (book.getAuthor() != null) {
+        } if (book.getAuthor() != null) {
             where.add("author");
             values.add(book.getAuthor());
-        }  else if (book.getGenre() != null) {
+        } if (book.getGenre() != null) {
             where.add("genre");
             values.add(book.getGenre());
         }
 
-        if (countNonNullFields(book) == 1) {
-            qb.whereLike(where.toArray(new String[0]))
-                    .likeValues("%" + values.get(0) + "%")
-                    .orderByClauses("CASE WHEN " + where.get(0) + " = ? THEN 1 WHEN " + where.get(0) + " LIKE ? THEN 2 ELSE 3 END")
-                    .orderByValues(values.get(0), "%" + values.get(0));
-        } else if (countNonNullFields(book) > 1) {
-            qb.whereEqual(where.toArray(new String[0]))
-                    .equalValues(values.toArray(new Object[0]))
-                    .orderByClauses(where.get(0) + " ASC");
+        List<String> likeValues = new ArrayList<>();
+        List<String> orderByValues = new ArrayList<>();
+        for (String value : values) {
+            likeValues.add("%" + value + "%");
+            orderByValues.add(value);
+            orderByValues.add(value + "%");
         }
+
+        List<String> orderByClauses = new ArrayList<>();
+        for (String condition : where) {
+            orderByClauses.add("CASE WHEN " + condition + " = ? THEN 1 WHEN " + condition + " LIKE ? THEN 2 ELSE 3 END");
+        }
+
+        qb.whereLike(where.toArray(new String[0]))
+                .likeValues(likeValues.toArray(new String[0]))
+                .orderByClauses(orderByClauses.toArray(new String[0]))
+                .orderByValues(orderByValues.toArray(new String[0]));
+
         PreparedStatementCreator psc = qb.build();
         return jdbcTemplate.query(psc, this::mapToBook);
     }
@@ -171,15 +177,6 @@ public class BookDao {
         );
     }
 
-    /**
-     * Counts the nonnull fields in the book object.
-     *
-     * @param book A book object.
-     * @return The number of nonnull fields in the book object.
-     */
-    private long countNonNullFields(Book book) {
-        return Stream.of(book.getTitle(), book.getAuthor(), book.getGenre()).filter(Objects::nonNull).count();
-    }
 }
 
 

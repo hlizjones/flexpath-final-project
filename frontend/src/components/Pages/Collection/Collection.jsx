@@ -9,8 +9,7 @@ import usePrivacy from "../../../hooks/usePrivacy";
 export default function Collection() {
     const { username, role } = useContext(AuthContext);
     const { data, loading, error } = useContext(DataContext);
-    const [privacy, setPrivacy] = useState(data.privacy);
-    const { handlePrivacy } = usePrivacy(setPrivacy);
+    const { handlePrivacy } = usePrivacy();
     const [show, setShow] = useState(false)
 
     const reveal = (e) => {
@@ -18,15 +17,14 @@ export default function Collection() {
         setShow(show => !show)
     }
 
-    if (loading) return <div>Loading collection...</div>;
-    if (error) return <div className="mb-5 text-danger">Error: Failed to load collection.</div>;
-
     const handleClick = (e) => {
         e.preventDefault();
         const id = e.currentTarget.id
-        handlePrivacy(`api/collection/${id}`, privacy)
+        handlePrivacy(e, `api/collection/${id}`)
     }
 
+    if (loading) return <div>Loading collection...</div>;
+    if (error) return <div className="mb-5 text-danger">Error: Failed to load collection.</div>;
     return (
         <>
             <div className="container text-center mb-5">
@@ -35,14 +33,14 @@ export default function Collection() {
                 <h4 className="fst-italic">{data.description}</h4>
                 {(username === data.username || role === "ADMIN") &&
                     <>
-                        {privacy && <i className="bi bi-lock h1" id={data.id} onClick={handleClick}></i>}
-                        {!privacy && <i className="bi bi-unlock h1" id={data.id} onClick={handleClick}></i>}
+                        {data.privacy && <i className="bi bi-lock h1" id={data.id} onClick={handleClick}></i>}
+                        {!data.privacy && <i className="bi bi-unlock h1" id={data.id} onClick={handleClick}></i>}
                     </>
                 }
             <div className="d-flex"><button className="btn btn-secondary col-2" type="button" onClick={reveal}>Edit collection</button></div>
             </div>
             {((username === data.username || role === "ADMIN") && show) && <CollectionManager id={data.id} show ={show} setShow = {setShow} />}
-            <CollectionBooksTable id={data.id} username={username} />
+            <CollectionBooksTable id={data.id} />
         </>
     );
 }

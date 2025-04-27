@@ -5,7 +5,7 @@ import { DataContext } from "../../../context/DataProvider";
 import useCreateRequest from "../../../hooks/useCreateRequest";
 import useLoadPage from "../../../hooks/useLoadPage";
 
-export default function CollectionBooksTable({ id, username }) {
+export default function CollectionBooksTable({ id }) {
     const { role, token, username: authUsername } = useContext(AuthContext);
     const { setRefresh } = useContext(DataContext);
     const { handleLoad } = useLoadPage();
@@ -47,7 +47,7 @@ export default function CollectionBooksTable({ id, username }) {
                         {data[0] && Object.keys(data[0]).map(key => {
                             if (key != "id" && key != "username" && key != "favorite" && key != "privacy" && key != "isAdmin") {
                                 return (
-                                    <th scope="col" key={key}>{key.toUpperCase()}</th>
+                                    <th className="text-uppercase" scope="col" key={key}>{key}</th>
                                 )
                             }
                         })}

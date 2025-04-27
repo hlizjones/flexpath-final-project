@@ -6,12 +6,11 @@ import Profile from "./components/Pages/Profile/Profile";
 import Search from "./components/Pages/Search/Search";
 import Book from "./components/Pages/Book/Book";
 import Collection from "./components/Pages/Collection/Collection"
-import Review from "./components/Review/Review";
+import Review from './components/Pages/Review/Review';
 import CreateBook from './components/Pages/CreateBook';
 import NotFound from "./components/Pages/404/NotFound";
 import DataProvider from "./context/DataProvider";
 import { AuthContext } from './context/AuthProvider';
-import BookManager from './components/Pages/Book/BookManager';
 
 function App() {
   const { token, role } = useContext(AuthContext);

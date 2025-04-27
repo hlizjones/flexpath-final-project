@@ -1,24 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import useCreateRequest from "../../../hooks/useCreateRequest";
 
-export default function FavoriteCollection({ id, initialFavorite }) {
-
+export default function FavoriteCollection({ id, favorite }) {
     const { handleRequest } = useCreateRequest();
-    const [favorite, setFavorite] = useState(initialFavorite);
 
     const handleFavorite = (e) => {
         e.preventDefault();
         const id = e.currentTarget.closest(".card-body").id
-        let boolFav;
+        let bool;
         if (e.currentTarget.className.includes('fill')) {
-            boolFav = false;
-            setFavorite(false)
+            bool = false;
+            e.currentTarget.className = "bi bi-heart h2"
         } else {
-            boolFav = true;
-            setFavorite(true)
+            bool = true;
+            e.currentTarget.className = "bi bi-heart-fill h2"
         }
         
-        handleRequest({favorite: boolFav}, `api/collection/${id}`, "PUT")
+        handleRequest({favorite: bool}, `api/collection/${id}`, "PUT")
     }
 
     return (

@@ -16,8 +16,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 /**
  * Data access object for collections.
@@ -62,16 +60,25 @@ public class CollectionDao {
         if(!collection.getIsAdmin()) {
             qb.whereComplex("(privacy = false OR (privacy = true AND username = ?))");
             qb.complexValues(collection.getUsername());
-        } else if (countNonNullFields(collection) == 1) {
-            qb.whereLike(where.toArray(new String[0]))
-                    .likeValues("%" + values.get(0) + "%")
-                    .orderByClauses("CASE WHEN " + where.get(0) + " = ? THEN 1 WHEN " + where.get(0) + " LIKE ? THEN 2 ELSE 3 END")
-                    .orderByValues(values.get(0), "%" + values.get(0));
-        } else if (countNonNullFields(collection) > 1) {
-                    qb.whereEqual(where.toArray(new String[0]))
-                    .equalValues(values.toArray(new Object[0]))
-                    .orderByClauses(where.get(0) + " ASC");
         }
+
+        List<String> likeValues = new ArrayList<>();
+        List<String> orderByValues = new ArrayList<>();
+        for (String value : values) {
+            likeValues.add("%" + value + "%");
+            orderByValues.add(value);
+            orderByValues.add(value + "%");
+        }
+
+        List<String> orderByClauses = new ArrayList<>();
+        for (String condition : where) {
+            orderByClauses.add("CASE WHEN " + condition + " = ? THEN 1 WHEN " + condition + " LIKE ? THEN 2 ELSE 3 END");
+        }
+
+        qb.whereLike(where.toArray(new String[0]))
+                .likeValues(likeValues.toArray(new String[0]))
+                .orderByClauses(orderByClauses.toArray(new String[0]))
+                .orderByValues(orderByValues.toArray(new String[0]));
 
         PreparedStatementCreator psc = qb.build();
 
@@ -176,15 +183,5 @@ public class CollectionDao {
                 rs.getBoolean("privacy"),
                 rs.getString("username")
         );
-    }
-
-    /**
-     * Counts the nonnull fields in the collection object.
-     *
-     * @param collection A collection object.
-     * @return The number of nonnull fields in the collection object.
-     */
-    private long countNonNullFields(Collection collection) {
-        return Stream.of(collection.getName(), collection.getUsername()).filter(Objects::nonNull).count();
     }
 }

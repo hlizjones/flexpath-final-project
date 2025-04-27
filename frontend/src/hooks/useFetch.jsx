@@ -48,8 +48,9 @@ export default function useFetch(url, options, refresh) {
             }
         }
         fetchData();
-    }, [url, options, refresh]);
+    }, [url, options, refresh, navigate, setUsername, setRole, setToken, setTokenExpMessage]);
 
+    console.log("fetch",data)
     return { data, loading, error };
 }
 

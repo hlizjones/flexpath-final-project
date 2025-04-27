@@ -56,7 +56,7 @@ public class Review {
      */
     public Review(int id, int bookId, int rating, String content, Boolean privacy, String username) {
         this.id = id;
-        this.bookId = id;
+        this.bookId = bookId;
         this.rating = rating;
         this.content = content;
         this.privacy = privacy;
@@ -74,7 +74,7 @@ public class Review {
      */
     public Review(int id, int bookId, int rating, Boolean privacy, String username) {
         this.id = id;
-        this.bookId = id;
+        this.bookId = bookId;
         this.rating = rating;
         this.privacy = privacy;
         this.username = username;

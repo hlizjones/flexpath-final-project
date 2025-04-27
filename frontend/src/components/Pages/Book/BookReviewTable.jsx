@@ -29,7 +29,7 @@ export default function BookReviewsTable({ bookId }) {
                         {data[0] && Object.keys(data[0]).map(key => {
                             if (key != "id" && key != "bookId" && key != "privacy" && key != "isAdmin") {
                                 return (
-                                    <th scope="col" key={key}>{key.toUpperCase()}</th>
+                                    <th className="text-uppercase" scope="col" key={key}>{key}</th>
                                 )
                             }
                         })}
@@ -43,15 +43,17 @@ export default function BookReviewsTable({ bookId }) {
                                 {Object.entries(el).map(([key, value]) => {
                                     if (key != "id" && key != "bookId" && key != "privacy" && key != "isAdmin") {
                                         if (key === "username") {
-                                            return (<td className="text-capitalize" key={key}>{value}</td>)
+                                            return (<td className="text-capitalize align-middle" key={key}>{value}</td>)
+                                        } else if (key === "content") {
+                                            return (<td className="text-start align-middle" key={key}>{value}</td>)
                                         } else {
-                                            return (<td key={key}>{value}</td>)
+                                            return (<td className="align-middle" key={key}>{value}</td>)
                                         }
                                     }
                                 })}
-                                <td key={el["id"] + "btn"}>
+                                <td className="align-middle" key={el["id"] + "btn"}>
                                     {(el.username === username || role === "ADMIN") &&
-                                        <i className="bi bi-pencil-square h3" onClick={handleClick} id={el["id"]}></i>
+                                        <i className="bi bi-pencil-square h3 " onClick={handleClick} id={el["id"]}></i>
                                     }
                                 </td>
                             </tr>

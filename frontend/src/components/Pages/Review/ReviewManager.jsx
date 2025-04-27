@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
-import { DataContext } from "../../context/DataProvider";
-import useCreateRequest from "../../hooks/useCreateRequest";
+import { DataContext } from "../../../context/DataProvider";
+import useCreateRequest from "../../../hooks/useCreateRequest";
 import { useNavigate } from "react-router-dom";
-import useLoadPage from "../../hooks/useLoadPage";
+import useLoadPage from "../../../hooks/useLoadPage";
 
 
 export default function ReviewManager({ id, bookId }) {

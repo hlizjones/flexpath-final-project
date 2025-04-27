@@ -15,7 +15,6 @@ export default function Book() {
         e.preventDefault();
         setShow(show => !show)
     }
-    console.log("book", data.id)
 
     if (loading) return <div>Loading book...</div>;
     if (error) return <div className="mb-5 text-danger">Error: Failed to load book.</div>
@@ -30,9 +29,9 @@ export default function Book() {
                 {(role === "ADMIN" && show) && <BookManager id = {data.id} show ={show} setShow = {setShow}/>}
             </div>
             <div className="container mb-5">
-                <div className="row g-5">
+                <div className="row g-5 ">
                     <div className="col">
-                        <AddToCollection/>
+                        <AddToCollection id = {data.id}/>
                     </div>
                     <div className="col">
                         <CreateReview id = {data.id} />
