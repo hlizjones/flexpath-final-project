@@ -1,16 +1,22 @@
-import React, { useMemo, useContext } from "react";
+import React, { useMemo, useContext, useState } from "react";
 import { AuthContext } from "../../../context/AuthProvider";
 import FavoriteCollection from "./FavoriteCollection";
 import useLoadPage from "../../../hooks/useLoadPage";
 import useFetch from "../../../hooks/useFetch";
+import { DataContext } from "../../../context/DataProvider";
+import useSort from "../../../hooks/useSort";
 
 export default function UserCollections() {
     const { token } = useContext(AuthContext);
+    const { refresh } = useContext(DataContext);
     const { handleLoad } = useLoadPage();
 
     const url = useMemo(() => `api/collection?profile=true`, []);
     const options = useMemo(() => ({ headers: { 'Authorization': `Bearer ${token}` } }), [token]);
-    const { data, loading, error } = useFetch(url, options);
+    const { data, loading, error } = useFetch(url, options, refresh);
+
+    const [sort, setSort] = useState({ key: null, order: true });
+    const { sortedData } = useSort(data, sort, setSort);
 
     const handleClick = (e) => {
         const id = e.currentTarget.closest(".card-body").id;
@@ -18,14 +24,28 @@ export default function UserCollections() {
         handleLoad(`api/collection/${id}`, "collection");
     }
 
-    if (loading) return <div>Loading collections...</div>
-    if (error) return <div className="mb-5 text-danger">Error: Failed to load collections.</div>
-    if (Object.keys(data).length === 0) return <div>No collections to display.</div>
+    const handleSort = (e) => {
+        const key = e.currentTarget.id;
+        setSort({ key: key, order: key === sort.key ? !sort.order : sort.order });
+    }
+
     return (
         <>
+            <div className="container dropdown mb-3">
+                <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Sort by
+                </button>
+                <ul className="dropdown-menu">
+                    <li><a className="dropdown-item" id={"name"} onClick={handleSort}>Alphabetical Ascending</a></li>
+                    <li><a className="dropdown-item" id={"name"} onClick={handleSort}>Alphabetical Descending</a></li>
+                </ul>
+            </div>
             <div className="container mb-5">
+                {loading && <div>Loading collections...</div>}
+                {error && <div className="mb-5 text-danger">Error: Failed to load collections.</div>}
+                {!error && Object.keys(sortedData).length === 0 && <div>No collections to display.</div>}
                 <div className="row row-cols-1 row-cols-md-4 g-5 mb-4">
-                    {data && Array.from(data).map(el => {
+                    {sortedData && Array.from(sortedData).map(el => {
                         return (
                             <div className="col" key={el.id}>
                                 <div className="card text-center">

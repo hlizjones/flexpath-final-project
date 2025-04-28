@@ -37,8 +37,7 @@ public class BookCollectionDao {
      * @return List of Book.
      */
     public List<Book> getBookByCollectionId(int id) {
-        return jdbcTemplate.query("SELECT * FROM books LEFT JOIN book_collections on book_collections.book_id = books.book_id WHERE book_collections.collection_id = ?", this::mapToBook, id);
-
+        return jdbcTemplate.query("SELECT * FROM books LEFT JOIN book_collections on book_collections.book_id = books.book_id WHERE book_collections.collection_id = ? ORDER BY books.title ASC", this::mapToBook, id);
     }
 
     /**
@@ -48,7 +47,7 @@ public class BookCollectionDao {
      * @return String The username of the collection.
      */
     public String getCollectionUsername(int id) {
-        return jdbcTemplate.queryForObject("SELECT username, privacy FROM collections WHERE collection_id = ?", String.class, id);
+        return jdbcTemplate.queryForObject("SELECT username FROM collections WHERE collection_id = ?", String.class, id);
     }
 
 //    /**

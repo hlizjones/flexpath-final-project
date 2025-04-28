@@ -1,34 +1,44 @@
 import React from "react";
 import useLoadPage from "../../../hooks/useLoadPage";
+import useSort from "../../../hooks/useSort";
 
-export default function SearchResults({ page, data, loading, error }) {
+export default function SearchResults({ page, data, loading, error, setSort, sort }) {
     const { handleLoad } = useLoadPage();
+    const { sortedData } = useSort(data, sort, setSort);
 
     const handleClick = (e) => {
         e.preventDefault();
         handleLoad(`api/${page}/${e.currentTarget.id}`, page);
     }
 
-    if (loading) return <div>Loading records...</div>
-    if (error) return <div className="mb-5 text-danger">Error: Failed to load records.</div>
-    if (Object.keys(data).length === 0) return <div>Search to find a book or collection!</div>
+    const handleSort = (e) => {
+        const key = e.currentTarget.id;
+        setSort({ key: key, order: key === sort.key ? !sort.order : sort.order });
+    }
+
     return (
-        <>
-            {data &&
+        <div className="container">
+            {loading && <div>Loading records...</div>}
+            {error && <div className="mb-5 text-danger">Error: Failed to load records.</div>}
+            {!error && Object.keys(sortedData).length === 0 && <div>Search to find a book or collection!</div>}
+            {sortedData &&
                 <table className="table table-hover">
                     <thead className="table-secondary">
                         <tr>
-                            {data[0] && Object.keys(data[0]).map(key => {
+                            {sortedData[0] && Object.keys(sortedData[0]).map(key => {
                                 if (key != "id" && key != "privacy" && key != "favorite" && key != "isAdmin") {
                                     return (
-                                        <th scope="col" key={key}>{key.toUpperCase()}</th>
+                                        <th className="text-uppercase align-middle" scope="col" key={key} id={key} onClick={handleSort}>
+                                            {key}
+                                            <i className="bi bi-caret-up-fill" id={key+"caret"}></i>
+                                        </th>
                                     )
                                 }
                             })}
                         </tr>
                     </thead>
                     <tbody>
-                        {data && Array.from(data).map(el => {
+                        {sortedData && Array.from(sortedData).map(el => {
                             return (
                                 <tr key={el["id"]} onClick={handleClick} id={el["id"]}>
                                     {Object.entries(el).map(([key, value]) => {
@@ -41,6 +51,6 @@ export default function SearchResults({ page, data, loading, error }) {
                     </tbody>
                 </table>
             }
-        </>
+        </div>
     );
 }

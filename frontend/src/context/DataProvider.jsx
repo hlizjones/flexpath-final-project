@@ -16,7 +16,7 @@ export default function DataProvider({ children }) {
 
     return (
         <>
-            <DataContext.Provider value={{ setUrl, setOptions, data, loading, error, url, options, setRefresh }}>
+            <DataContext.Provider value={{ setUrl, setOptions, data, loading, error, url, options, setRefresh, refresh }}>
                 {children}
             </DataContext.Provider>
         </>

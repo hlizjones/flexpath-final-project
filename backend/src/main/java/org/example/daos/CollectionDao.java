@@ -42,7 +42,7 @@ public class CollectionDao {
      * @param collection A collection object.
      * @return List of Collection.
      */
-    public List<Collection> getCollections(Collection collection) {
+    public List<Collection> getCollections(Collection collection, String authenticatedUser) {
         QueryBuilder qb = new QueryBuilder();
         List<String> where = new ArrayList<>();
         List<String> values = new ArrayList<>();
@@ -57,14 +57,10 @@ public class CollectionDao {
             values.add(collection.getUsername());
         }
 
-        if(!collection.getIsAdmin()) {
-            qb.whereComplex("(privacy = false OR (privacy = true AND username = ?))");
-            qb.complexValues(collection.getUsername());
-        }
-
         List<String> likeValues = new ArrayList<>();
         List<String> orderByValues = new ArrayList<>();
         for (String value : values) {
+            System.out.println(values);
             likeValues.add("%" + value + "%");
             orderByValues.add(value);
             orderByValues.add(value + "%");
@@ -75,10 +71,18 @@ public class CollectionDao {
             orderByClauses.add("CASE WHEN " + condition + " = ? THEN 1 WHEN " + condition + " LIKE ? THEN 2 ELSE 3 END");
         }
 
+        orderByClauses.add("CASE WHEN username = ? THEN 1 ELSE 2 END");
+        orderByValues.add(authenticatedUser); 
+
         qb.whereLike(where.toArray(new String[0]))
                 .likeValues(likeValues.toArray(new String[0]))
                 .orderByClauses(orderByClauses.toArray(new String[0]))
                 .orderByValues(orderByValues.toArray(new String[0]));
+
+        if(!collection.getIsAdmin()) {
+            qb.whereComplex("(privacy = false OR (privacy = true AND username = ?))");
+            qb.complexValues(authenticatedUser);
+        }
 
         PreparedStatementCreator psc = qb.build();
 

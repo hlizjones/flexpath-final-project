@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useUrlBuilder from "../../../hooks/useUrlBuilder";
 
-export default function UserInput({setPage, setUrl}) {
+export default function UserInput({ setPage, setUrl, setSort }) {
     const { buildUrl } = useUrlBuilder();
     const [firstInputField, setFirstInputField] = useState("Title");
     const [secondInputField, setSecondInputField] = useState("Author");
@@ -40,26 +40,36 @@ export default function UserInput({setPage, setUrl}) {
         localStorage.setItem("searchUrl", buildUrl(map));
         setPage(page);
         localStorage.setItem("page", page);
+        setSort({ key: null, order: true });
+        
+
+        document.getElementById("firstInput").value = "";
+        document.getElementById("secondInput").value = "";
+        if (document.getElementById("thirdInput")) {
+            document.getElementById("thirdInput").value = "";
+        }
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div className="col-md-2 mb-3">
-                <label className="form-label text-nowrap" htmlFor="toggleSearch">Search for</label>
-                <select className="form-select" name="toggleSearch" id="toggleSearch" defaultValue="books" onChange={toggleSearch}>
-                    <option value="book">Book</option>
-                    <option value="collection">Collection</option>
-                </select>
-            </div>
-            <div className="col-md-5 d-grid gap-3 mb-3">
-                <input className="form-control" type="search" id="firstInput" placeholder={firstInputField}></input>
-                <input className="form-control" type="search" id="secondInput" placeholder={secondInputField}></input>
-                {thirdInputField &&
-                    <input className="form-control" type="search" id="thirdInput" placeholder="Genre"></input>}
-            </div>
-            <div className="col-md-5 d-grid gap-3 mb-3">
-                <button className="btn btn-secondary" type="submit">Search</button>
-            </div>
-        </form>
+        <div className='container mb-5'>
+            <form onSubmit={handleSubmit}>
+                <div className="col-md-2 mb-3">
+                    <label className="form-label text-nowrap" htmlFor="toggleSearch">Search for</label>
+                    <select className="form-select" name="toggleSearch" id="toggleSearch" defaultValue="books" onChange={toggleSearch}>
+                        <option value="book">Book</option>
+                        <option value="collection">Collection</option>
+                    </select>
+                </div>
+                <div className="col-md-5 d-grid gap-3 mb-3">
+                    <input className="form-control" type="search" id="firstInput" placeholder={firstInputField}></input>
+                    <input className="form-control" type="search" id="secondInput" placeholder={secondInputField}></input>
+                    {thirdInputField &&
+                        <input className="form-control" type="search" id="thirdInput" placeholder={thirdInputField}></input>}
+                </div>
+                <div className="col-md-5 d-grid gap-3 mb-3">
+                    <button className="btn btn-secondary" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
     );
 }

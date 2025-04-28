@@ -62,11 +62,9 @@ export default function CreateCollection() {
                             <button className="btn btn-secondary" type="submit">Create</button>
                         </div>
                     </form >
-                </div >
-                <div className='col-md-6 mb-3'>
                     {loading && <div>Creating collection...</div>}
                     {error && <div className="visible mb-5 text-danger" id="errorMsg">Error: Failed to create collection.</div>}
-                </div>
+                </div >
             </div >
         </div >
     );

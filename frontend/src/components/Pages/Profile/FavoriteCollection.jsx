@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import useCreateRequest from "../../../hooks/useCreateRequest";
 
 export default function FavoriteCollection({ id, favorite }) {
@@ -6,7 +6,6 @@ export default function FavoriteCollection({ id, favorite }) {
 
     const handleFavorite = (e) => {
         e.preventDefault();
-        const id = e.currentTarget.closest(".card-body").id;
         let bool;
         if (e.currentTarget.className.includes('fill')) {
             bool = false;

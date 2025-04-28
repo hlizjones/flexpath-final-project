@@ -25,11 +25,12 @@ export default function User() {
         }
     }, [roleData, setRole]);
 
-    if ((userLoading || roleLoading)) return <div className="mb-5">Loading profile...</div>
-    if ((userError || roleError)) return <div className="mb-5 text-danger">Failed to load user profile.</div>
+
     return (
         <div className="container text-center mb-5">
-            <h1 className="text-capitalize">Welcome back to your library, {username}!</h1>
+            {(userLoading || roleLoading) && <div className="mb-5">Loading profile...</div>}
+            {(userError || roleError) && <div className="mb-5 text-danger">Failed to load user profile.</div>}
+            {(!userError && !roleError && userData) && <h1 className="text-capitalize">Welcome back to your library, {username}!</h1>}
         </div>
     );
 }

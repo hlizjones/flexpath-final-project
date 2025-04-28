@@ -1,42 +1,62 @@
-import React, { useMemo, useContext } from "react";
+import React, { useMemo, useContext, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
 import { AuthContext } from "../../../context/AuthProvider";
 import useLoadPage from "../../../hooks/useLoadPage";
+import { DataContext } from "../../../context/DataProvider";
+import useSort from "../../../hooks/useSort";
 
 export default function BookReviewsTable({ bookId }) {
     const { token, username, role } = useContext(AuthContext);
+    const { refresh } = useContext(DataContext);
     const { handleLoad } = useLoadPage();
 
     const url = useMemo(() => `api/review?bookId=${bookId}`, [bookId]);
     const options = useMemo(() => ({ headers: { 'Authorization': `Bearer ${token}` } }), [token]);
-    const { data, loading, error } = useFetch(url, options);
+    const { data, loading, error } = useFetch(url, options, refresh);
+    
+    const [sort, setSort] = useState({key: null, order: true});
+    const {sortedData} = useSort(data, sort, setSort);
 
     const handleClick = (e) => {
         e.preventDefault();
-        console.log(e.currentTarget.id);
         handleLoad(`api/review/${e.currentTarget.id}`, 'review');
     }
 
-    if (loading) return <div>Loading Records...</div>
-    if (error) return <div className="mb-5 text-danger">Error: Failed to load reviews.</div>
-    if (Object.keys(data).length === 0) return <div>No reviews to display.</div>
+    const handleSort = (e) => {
+        const key = e.currentTarget.id;
+        setSort({key: key, order: key === sort.key ? !sort.order : sort.order});
+    }
+
+    console.log(sortedData)
     return (
         <div className="container">
+            {loading && <div>Loading Records...</div>}
+            {(error && sortedData.length === 0) && <div className="mb-5 text-danger">Error: Failed to load reviews.</div>}
+            {(!error && sortedData.length === 0) && <div>No reviews to display.</div>}
             <table className="table table-hover">
                 <thead className="table-secondary text-center">
                     <tr>
-                        {data[0] && Object.keys(data[0]).map(key => {
+                        {sortedData[0] && Object.keys(sortedData[0]).map(key => {
                             if (key != "id" && key != "bookId" && key != "privacy" && key != "isAdmin") {
+                                if (key != "content"){
                                 return (
-                                    <th className="text-uppercase" scope="col" key={key}>{key}</th>
+                                    <th className="text-uppercase align-middle" scope="col" key={key} id={key} onClick={handleSort}>
+                                        {key}
+                                        <i className="bi bi-caret-up-fill" id={key+"caret"}></i>
+                                        </th>
+                                )
+                            } else {
+                                return (
+                                    <th className="text-uppercase align-middle" scope="col" key={key}>{key}</th>
                                 )
                             }
+                            }
                         })}
-                        {data[0] && <th>EDIT YOUR REVIEW</th>}
+                        {sortedData[0] && <th>EDIT YOUR REVIEW</th>}
                     </tr>
                 </thead>
                 <tbody className="text-center">
-                    {data && Array.from(data).map(el => {
+                    {sortedData && Array.from(sortedData).map(el => {
                         return (
                             <tr key={el["id"]}>
                                 {Object.entries(el).map(([key, value]) => {

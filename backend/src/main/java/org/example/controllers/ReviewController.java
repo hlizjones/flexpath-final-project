@@ -41,6 +41,8 @@ public class ReviewController {
         }
         if (isAdmin()) {
             review.setIsAdmin(true);
+        } else {
+            review.setIsAdmin(false);
         }
         review.setUsername(principal.getName());
         return reviewDao.getReviews(review);

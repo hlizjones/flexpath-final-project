@@ -45,27 +45,25 @@ public class ReviewDao {
      */
     public List<Review> getReviews(Review review) {
         QueryBuilder qb = new QueryBuilder();
-        List<String> where = new ArrayList<>();
-        List<Object> values = new ArrayList<>();
-        List<String> orderBy = new ArrayList<>();
+
+        qb.select("*").from("reviews");
+
 
         if (review.getIsAdmin() && review.getBookId() != 0) {
-            where.add("book_id");
-            values.add(review.getBookId());
-            orderBy.add("rating DESC");
+            qb.whereEqual("book_id")
+                .equalValues(review.getBookId())
+                .orderByClauses("rating DESC");
         } else if (!review.getIsAdmin() && review.getBookId() != 0) {
-            where.addAll(Arrays.asList("book_id", "(privacy = false OR (privacy = true AND username = ?))"));
-            values.addAll(Arrays.asList(review.getBookId(), review.getUsername()));
-            orderBy.add("CASE WHEN username = " + review.getUsername() + " THEN 1 ELSE 2 END");
-            orderBy.add("rating DESC");
+            qb.whereEqual("book_id")
+                    .equalValues(review.getBookId())
+                    .whereComplex("(privacy = false OR (privacy = true AND username = ?))")
+                    .complexValues(review.getUsername())
+                    .orderByClauses("CASE WHEN username = ? THEN 1 ELSE 2 END")
+                    .orderByValues(review.getUsername())
+                    .orderByClauses("rating DESC");
         }
 
-        PreparedStatementCreator psc = qb.select("*")
-                .from("reviews")
-                .whereEqual(where.toArray(new String[0]))
-                .equalValues(values.toArray(new Object[0]))
-                .orderByClauses(orderBy.toArray(new String[0]))
-                .build();
+        PreparedStatementCreator psc = qb.build();
 
         return jdbcTemplate.query(psc, this::mapToReview);
     }
