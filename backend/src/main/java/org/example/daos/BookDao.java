@@ -3,7 +3,7 @@ package org.example.daos;
 import org.example.exceptions.DaoException;
 import org.example.models.Book;
 import org.example.utils.QueryBuilder;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -22,20 +22,27 @@ import java.util.List;
  */
 @Component
 public class BookDao {
+
     /**
      * The JDBC template for querying the database.
      */
-    private final JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     /**
      * Creates a new book data access object
-     *
-     * @param dataSource The data source for the DAO.
      */
     public BookDao(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    /**
+     * Sets the JdbcTemplate.
+     *
+     * @param jdbcTemplate The JdbcTemplate.
+     */
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    };
 
     /**
      * Gets books.
@@ -92,7 +99,7 @@ public class BookDao {
     public Book getBookById(int id) {
         try {
             return jdbcTemplate.queryForObject("SELECT * FROM books WHERE book_id = ?", this::mapToBook, id);
-        } catch (EmptyResultDataAccessException e) {
+        } catch (DataAccessException e) {
             return null;
         }
     }
@@ -120,7 +127,7 @@ public class BookDao {
             Number key = keyHolder.getKey();
             assert key != null;
             return getBookById(key.intValue());
-        } catch (EmptyResultDataAccessException e) {
+        } catch (DataAccessException e) {
             throw new DaoException("Failed to create book.");
         }
     }

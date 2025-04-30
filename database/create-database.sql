@@ -53,5 +53,40 @@ create table reviews (
 insert into users (username, password) values ('admin', '$2a$10$tBTfzHzjmQVKza3VSa5lsOX6/iL93xPVLlLXYg2FhT6a.jb1o6VDq');
 insert into roles (username, role) values ('admin', 'ADMIN');
 
-insert into users (username, password) values ('user', '$2a$10$rdrt3j7YkAaVTQJcGnPX.ORrpMZ3ZXUMZqhfx0jR68vLaqB2jvsH2');
+insert into users (username, password) values ('user', '$2a$10$tBTfzHzjmQVKza3VSa5lsOX6/iL93xPVLlLXYg2FhT6a.jb1o6VDq');
 insert into roles (username, role) values ('user', 'USER');
+
+INSERT INTO books (title, author, genre) 
+VALUES 
+("Atomic Habits", "James Clear", "Self Help"),
+("Pride and Prejudice", "Jane Austen", "Romance"),
+("The Adventures of Sherlock Holmes", "Sir Authur Conan Doyle", "Mystery"),
+("Call of the Wild", "Jack London", "Adventure"),
+("Harry Potter and the Sorcerer's Stone", "J. K. Rowling", "Fantasy"),
+("The Hobbit", "J.R.R. Tolkien", "Fantasy"),
+("To Kill a Mockingbird", "Harper Lee", "Historical Fiction"),
+("Gone Girl", "Gillian Flynn", "Mystery"),
+("The Shining", "Stephen King", "Horror"),
+("Mexican Gothic", "Silvia Moreno-Garcia", "Gothic"),
+("The Kite Runner", "Khaled Hosseini", "Historical Fiction"),
+("Jane Eyre", "Charlotte Bronte", "Gothic"),
+("Eat, Pray, Love", "Elizabeth Gilbert", "Memoir"),
+("Animal Farm", "George Orwell", "Dystopian"),
+("The Hunger Games", "Suzanne Collins", "Dystopian"),
+("Murder on the Orient Express", "Agatha Christie", "Mystery"),
+("Becoming", "Michelle Obama", "Memoir"),
+("A Game of Thrones", "George R. R. Martin", "Fantasy"),
+("Treasure Island", "Robert Louis Stevenson", "Adventure"),
+("The Adventures of Tom Sawyer", "Mark Twain", "Adventure"),
+("Mistborn: The Final Empire", "Brandon Sanderson", "Fantasy"),
+("The Anxious Generation", "Jonathan Haidt", "Self Help"),
+("Think Like a Monk", "Jay Shetty", "Self Help"),
+("Butter", "Asako Yuzuki", "Mystery"),
+("James", "Percival Everett", "Adventure"),
+("The Notebook", "Nicholas Sparks", "Romance"),
+("The Handmaid's Tale", "Margaret Atwood", "Dystopian"),
+("The Glass Castle", "Jeannette Walls", "Memoir"),
+("The Woman in Cabin 10", "Ruth Ware", "Mystery"),
+("How to Win Friends and Influence People", "Dale Carnegie", "Self Help"),
+("Where the Crawdads Sing", "Delia Owens", "Mystery"),
+("The Great Gatsby", "F. Scott Fitzgerald", "Historical Fiction");

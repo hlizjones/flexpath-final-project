@@ -89,7 +89,6 @@ public class CollectionController {
     @PostMapping
     public Collection create(@RequestBody Collection collection, Principal principal) {
         collection.setUsername(principal.getName());
-        System.out.println(collection);
         return collectionDao.createCollection(collection);
     }
 
