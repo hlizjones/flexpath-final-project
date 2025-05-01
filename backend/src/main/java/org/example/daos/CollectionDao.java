@@ -3,7 +3,7 @@ package org.example.daos;
 import org.example.exceptions.DaoException;
 import org.example.models.Collection;
 import org.example.utils.QueryBuilder;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -25,7 +25,7 @@ public class CollectionDao {
     /**
      * The JDBC template for querying the database.
      */
-    private final JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     /**
      * Creates a new collection data access object
@@ -35,6 +35,15 @@ public class CollectionDao {
     public CollectionDao(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
+
+    /**
+     * Sets the JdbcTemplate.
+     *
+     * @param jdbcTemplate The JdbcTemplate.
+     */
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    };
 
     /**
      * Gets collections.
@@ -60,7 +69,6 @@ public class CollectionDao {
         List<String> likeValues = new ArrayList<>();
         List<String> orderByValues = new ArrayList<>();
         for (String value : values) {
-            System.out.println(values);
             likeValues.add("%" + value + "%");
             orderByValues.add(value);
             orderByValues.add(value + "%");
@@ -96,7 +104,11 @@ public class CollectionDao {
      * @return Collection
      */
     public Collection getCollectionById(int id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM collections WHERE collection_id = ?", this::mapToCollection, id);
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM collections WHERE collection_id = ?", this::mapToCollection, id);
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
     /**
@@ -126,7 +138,7 @@ public class CollectionDao {
             Number key = keyHolder.getKey();
             assert key != null;
             return getCollectionById(key.intValue());
-        } catch (EmptyResultDataAccessException e) {
+        } catch (DataAccessException e) {
             throw new DaoException("Failed to create collection.");
         }
     }

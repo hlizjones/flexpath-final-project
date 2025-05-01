@@ -3,7 +3,6 @@ package org.example.daos;
 import org.example.exceptions.DaoException;
 import org.example.models.User;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -21,12 +20,12 @@ public class UserDao {
     /**
      * The JDBC template for querying the database.
      */
-    private final JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     /**
      * The password encoder for the DAO.
      */
-    private final PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Creates a new user data access object.
@@ -38,6 +37,15 @@ public class UserDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.passwordEncoder = passwordEncoder;
     }
+
+    /**
+     * Sets the JdbcTemplate.
+     *
+     * @param jdbcTemplate The JdbcTemplate.
+     */
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    };
 
     /**
      * Gets all users.
@@ -57,7 +65,7 @@ public class UserDao {
     public User getUserByUsername(String username) {
         try {
             return jdbcTemplate.queryForObject("SELECT * FROM users WHERE username = ?", this::mapToUser, username);
-        } catch (EmptyResultDataAccessException e) {
+        } catch (DataAccessException e) {
             return null;
         }
     }
@@ -73,7 +81,7 @@ public class UserDao {
         try {
             jdbcTemplate.update(sql, user.getUsername(), hashedPassword);
             return getUserByUsername(user.getUsername());
-        } catch (EmptyResultDataAccessException e) {
+        } catch (DataAccessException e) {
             throw new DaoException("Failed to create user.");
         }
     }
@@ -127,6 +135,7 @@ public class UserDao {
             String sql = "INSERT INTO roles (username, role) VALUES (?,?)";
             jdbcTemplate.update(sql, username, role);
         } catch (DataAccessException e) {
+            throw new DaoException("Failed to add role.");
         }
         return getRoles(username);
     }

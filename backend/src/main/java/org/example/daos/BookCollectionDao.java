@@ -1,7 +1,7 @@
 package org.example.daos;
 
 import org.example.models.Book;
-import org.example.models.Collection;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,7 @@ public class BookCollectionDao {
     /**
      * The JDBC template for querying the database.
      */
-    private final JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     /**
      * Creates a new book data access object
@@ -29,6 +29,14 @@ public class BookCollectionDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    /**
+     * Sets the JdbcTemplate.
+     *
+     * @param jdbcTemplate The JdbcTemplate.
+     */
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    };
 
     /**
      * Gets books in a collection.
@@ -36,7 +44,7 @@ public class BookCollectionDao {
      * @param id The id of the collection.
      * @return List of Book.
      */
-    public List<Book> getBookByCollectionId(int id) {
+    public List<Book> getBooksByCollectionId(int id) {
         return jdbcTemplate.query("SELECT * FROM books LEFT JOIN book_collections on book_collections.book_id = books.book_id WHERE book_collections.collection_id = ? ORDER BY books.title ASC", this::mapToBook, id);
     }
 
@@ -47,19 +55,12 @@ public class BookCollectionDao {
      * @return String The username of the collection.
      */
     public String getCollectionUsername(int id) {
-        return jdbcTemplate.queryForObject("SELECT username FROM collections WHERE collection_id = ?", String.class, id);
+        try {
+            return jdbcTemplate.queryForObject("SELECT username FROM collections WHERE collection_id = ?", String.class, id);
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
-
-//    /**
-//     * Gets id of a collection.
-//     *
-//     * @param name The name of the collection.
-//     * @param username The username of the collection.
-//     * @return int The id of the collection.
-//     */
-//    public int getCollectionId(String name, String username) {
-//        return jdbcTemplate.queryForObject("SELECT id FROM collections WHERE name = ? AND username = ?", Integer.class, name, username);
-//    }
 
     /**
      * Adds book to a collection.

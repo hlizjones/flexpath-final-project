@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -33,8 +34,6 @@ public class BookDaoTest {
     JdbcTemplate jdbcTemplate;
     @Mock
     DataSource dataSource;
-    @Mock
-    PreparedStatementCreator psc;
 
     BookDao bookDao;
 
@@ -50,158 +49,158 @@ public class BookDaoTest {
         //Arrange
         Book book1 = new Book(1, "Atomic Habits", "James Clear", "Self Help");
         Book book2 = new Book(2, "Gone Girl", "Gillian Flynn", "Mystery");
-        List<Book> booksToMatch = new ArrayList<>();
-        booksToMatch.add(book1);
-        booksToMatch.add(book2);
+        List<Book> expectedBooks = new ArrayList<>();
+        expectedBooks.add(book1);
+        expectedBooks.add(book2);
 
         Book book = new Book();
 
         Mockito.when(jdbcTemplate.query(any(PreparedStatementCreator.class), any(RowMapper.class)))
-                .thenReturn(booksToMatch);
+                .thenReturn(expectedBooks);
 
         //Act
-        List<Book> booksFromDao = bookDao.getBooks(book);
+        List<Book> actualBooks = bookDao.getBooks(book);
 
         //Assert
-        assertEquals(booksToMatch, booksFromDao);
-        assertEquals(2, booksFromDao.size());
+        assertEquals(expectedBooks, actualBooks);
+        assertEquals(2, actualBooks.size());
     }
 
     @Test
     public void BookDao_getBooksWithTitleField_ReturnsListOfBooks () {
         //Arrange
         Book book1 = new Book(1, "Atomic Habits", "James Clear", "Self Help");
-        List<Book> booksToMatch = new ArrayList<>();
-        booksToMatch.add(book1);
+        List<Book> expectedBooks = new ArrayList<>();
+        expectedBooks.add(book1);
 
         Book book = new Book();
         book.setTitle("Atomic Habits");
 
         Mockito.when(jdbcTemplate.query(any(PreparedStatementCreator.class), any(RowMapper.class)))
-                .thenReturn(booksToMatch);
+                .thenReturn(expectedBooks);
 
         //Act
-        List<Book> booksFromDao = bookDao.getBooks(book);
+        List<Book> actualBooks = bookDao.getBooks(book);
 
         //Assert
-        assertEquals(booksToMatch, booksFromDao);
-        assertEquals(1, booksFromDao.size());
+        assertEquals(expectedBooks, actualBooks);
+        assertEquals(1, actualBooks.size());
     }
 
     @Test
     public void BookDao_getBooksWithAuthorField_ReturnsListOfBooks () {
         //Arrange
         Book book1 = new Book(1, "Atomic Habits", "James Clear", "Self Help");
-        List<Book> booksToMatch = new ArrayList<>();
-        booksToMatch.add(book1);
+        List<Book> expectedBooks = new ArrayList<>();
+        expectedBooks.add(book1);
 
         Book book = new Book();
         book.setAuthor("James Clear");
 
         Mockito.when(jdbcTemplate.query(any(PreparedStatementCreator.class), any(RowMapper.class)))
-                .thenReturn(booksToMatch);
+                .thenReturn(expectedBooks);
 
         //Act
-        List<Book> booksFromDao = bookDao.getBooks(book);
+        List<Book> actualBooks = bookDao.getBooks(book);
 
         //Assert
-        assertEquals(booksToMatch, booksFromDao);
-        assertEquals(1, booksFromDao.size());
+        assertEquals(expectedBooks, actualBooks);
+        assertEquals(1, actualBooks.size());
     }
 
     @Test
     public void BookDao_getBooksWithGenreField_ReturnsListOfBooks () {
         //Arrange
         Book book1 = new Book(1, "Atomic Habits", "James Clear", "Self Help");
-        List<Book> booksToMatch = new ArrayList<>();
-        booksToMatch.add(book1);
+        List<Book> expectedBooks = new ArrayList<>();
+        expectedBooks.add(book1);
 
         Book book = new Book();
         book.setGenre("Self Help");
 
         Mockito.when(jdbcTemplate.query(any(PreparedStatementCreator.class), any(RowMapper.class)))
-                .thenReturn(booksToMatch);
+                .thenReturn(expectedBooks);
 
         //Act
-        List<Book> booksFromDao = bookDao.getBooks(book);
+        List<Book> actualBooks = bookDao.getBooks(book);
 
         //Assert
-        assertEquals(booksToMatch, booksFromDao);
-        assertEquals(1, booksFromDao.size());
+        assertEquals(expectedBooks, actualBooks);
+        assertEquals(1, actualBooks.size());
     }
 
     @Test
     public void BookDao_getBooksWithTitleAndAuthorFields_ReturnsListOfBooks () {
         //Arrange
         Book book1 = new Book(1, "Atomic Habits", "James Clear", "Self Help");
-        List<Book> booksToMatch = new ArrayList<>();
-        booksToMatch.add(book1);
+        List<Book> expectedBooks = new ArrayList<>();
+        expectedBooks.add(book1);
 
         Book book = new Book();
         book.setTitle("Atomic Habits");
         book.setAuthor("James Clear");
 
         Mockito.when(jdbcTemplate.query(any(PreparedStatementCreator.class), any(RowMapper.class)))
-                .thenReturn(booksToMatch);
+                .thenReturn(expectedBooks);
 
         //Act
-        List<Book> booksFromDao = bookDao.getBooks(book);
+        List<Book> actualBooks = bookDao.getBooks(book);
 
         //Assert
-        assertEquals(booksToMatch, booksFromDao);
-        assertEquals(1, booksFromDao.size());
+        assertEquals(expectedBooks, actualBooks);
+        assertEquals(1, actualBooks.size());
     }
 
     @Test
     public void BookDao_getBooksWithTitleAndGenreFields_ReturnsListOfBooks () {
         //Arrange
         Book book1 = new Book(1, "Atomic Habits", "James Clear", "Self Help");
-        List<Book> booksToMatch = new ArrayList<>();
-        booksToMatch.add(book1);
+        List<Book> expectedBooks = new ArrayList<>();
+        expectedBooks.add(book1);
 
         Book book = new Book();
         book.setTitle("Atomic Habits");
         book.setGenre("Self Help");
 
         Mockito.when(jdbcTemplate.query(any(PreparedStatementCreator.class), any(RowMapper.class)))
-                .thenReturn(booksToMatch);
+                .thenReturn(expectedBooks);
 
         //Act
-        List<Book> booksFromDao = bookDao.getBooks(book);
+        List<Book> actualBooks = bookDao.getBooks(book);
 
         //Assert
-        assertEquals(booksToMatch, booksFromDao);
-        assertEquals(1, booksFromDao.size());
+        assertEquals(expectedBooks, actualBooks);
+        assertEquals(1, actualBooks.size());
     }
 
     @Test
     public void BookDao_getBooksWithAuthorAndGenreFields_ReturnsListOfBooks () {
         //Arrange
         Book book1 = new Book(1, "Atomic Habits", "James Clear", "Self Help");
-        List<Book> booksToMatch = new ArrayList<>();
-        booksToMatch.add(book1);
+        List<Book> expectedBooks = new ArrayList<>();
+        expectedBooks.add(book1);
 
         Book book = new Book();
         book.setAuthor("James Clear");
         book.setGenre("Self Help");
 
         Mockito.when(jdbcTemplate.query(any(PreparedStatementCreator.class), any(RowMapper.class)))
-                .thenReturn(booksToMatch);
+                .thenReturn(expectedBooks);
 
         //Act
-        List<Book> booksFromDao = bookDao.getBooks(book);
+        List<Book> actualBooks = bookDao.getBooks(book);
 
         //Assert
-        assertEquals(booksToMatch, booksFromDao);
-        assertEquals(1, booksFromDao.size());
+        assertEquals(expectedBooks, actualBooks);
+        assertEquals(1, actualBooks.size());
     }
 
     @Test
     public void BookDao_getBooksWithAllFields_ReturnsListOfBooks () {
         //Arrange
         Book book1 = new Book(1, "Atomic Habits", "James Clear", "Self Help");
-        List<Book> booksToMatch = new ArrayList<>();
-        booksToMatch.add(book1);
+        List<Book> expectedBooks = new ArrayList<>();
+        expectedBooks.add(book1);
 
         Book book = new Book();
         book.setTitle("Atomic Habits");
@@ -209,18 +208,18 @@ public class BookDaoTest {
         book.setGenre("Self Help");
 
         Mockito.when(jdbcTemplate.query(any(PreparedStatementCreator.class), any(RowMapper.class)))
-                .thenReturn(booksToMatch);
+                .thenReturn(expectedBooks);
 
         //Act
-        List<Book> booksFromDao = bookDao.getBooks(book);
+        List<Book> actualBooks = bookDao.getBooks(book);
 
         //Assert
-        assertEquals(booksToMatch, booksFromDao);
-        assertEquals(1, booksFromDao.size());
+        assertEquals(expectedBooks, actualBooks);
+        assertEquals(1, actualBooks.size());
     }
 
     @Test
-    public void BookDao_getBooksReturnsEmptyArray_ReturnsListOfBooks () {
+    public void BookDao_getBooks_ReturnsEmptyArray () {
         //Arrange
         List<Book> emptyList = new ArrayList<>();
 
@@ -230,25 +229,25 @@ public class BookDaoTest {
                 .thenReturn(emptyList);
 
         //Act
-        List<Book> booksFromDao = bookDao.getBooks(book);
+        List<Book> actualBooks = bookDao.getBooks(book);
 
         //Assert
-        assertTrue(booksFromDao.isEmpty());
+        assertTrue(actualBooks.isEmpty());
     }
 
     @Test
     public void BookDao_getBookById_ReturnsBook () {
         //Arrange
-        Book bookToMatch = new Book(1, "Atomic Habits", "James Clear", "Self Help");
+        Book expectedBook = new Book(1, "Atomic Habits", "James Clear", "Self Help");
 
         Mockito.when(jdbcTemplate.queryForObject(eq("SELECT * FROM books WHERE book_id = ?"), any(RowMapper.class), anyInt()))
-                .thenReturn(bookToMatch);
+                .thenReturn(expectedBook);
 
         //Act
-        Book bookFromDao = bookDao.getBookById(1);
+        Book actualBook = bookDao.getBookById(1);
 
         //Assert
-        assertEquals(bookToMatch, bookFromDao);
+        assertEquals(expectedBook, actualBook);
     }
 
     @Test
@@ -258,16 +257,16 @@ public class BookDaoTest {
                 .thenReturn(null);
 
         //Act
-        Book bookFromDao = bookDao.getBookById(1);
+        Book actualBook = bookDao.getBookById(1);
 
         //Assert
-        assertNull(bookFromDao);
+        assertNull(actualBook);
     }
 
 @Test
     public void BookDao_createBook_ReturnsBook () {
         //Arrange
-        Book book = new Book(1, "Atomic Habits", "James Clear", "Self Help");
+        Book expectedBook = new Book(1, "Atomic Habits", "James Clear", "Self Help");
 
         doAnswer(invocation -> {
             KeyHolder keyHolder = invocation.getArgument(1);
@@ -281,19 +280,19 @@ public class BookDaoTest {
         }).when(jdbcTemplate).update(any(PreparedStatementCreator.class), any(KeyHolder.class));
 
         BookDao bookDao1 = Mockito.spy(bookDao);
-        Mockito.doReturn(book).when(bookDao1).getBookById(1);
+        Mockito.doReturn(expectedBook).when(bookDao1).getBookById(1);
 
         //Act
-        Book bookFromDao = bookDao1.createBook(book);
+        Book actualBook = bookDao1.createBook(expectedBook);
 
         //Assert
-        assertEquals(book, bookFromDao);
+        assertEquals(expectedBook, actualBook);
     }
 
     @Test
-    public void BookDao_createBook_ThrowsNewDaoException () {
+    public void BookDao_createBook_ThrowsNewDaoExceptionWhenKeyIsNull () {
         //Arrange
-        Book book = new Book();
+        Book book = new Book(1, "Atomic Habits", "James Clear", "Self Help");
 
         doAnswer(invocation -> {
             KeyHolder keyHolder = invocation.getArgument(1);
@@ -314,27 +313,42 @@ public class BookDaoTest {
     }
 
     @Test
+    public void BookDao_createBook_ThrowsNewDaoException () {
+        //Arrange
+        Book book = new Book(1, "Atomic Habits", "James Clear", "Self Help");
+
+        Mockito.when(jdbcTemplate.update(any(PreparedStatementCreator.class), any(KeyHolder.class)))
+                .thenThrow(new DataAccessException("..."){ });
+
+        //Act and Assert
+        assertThrows(DaoException.class,
+                () -> {
+                    bookDao.createBook(book);
+                });
+    }
+
+    @Test
     public void BookDao_updateBook_ReturnsBook () {
         //Arrange
-        Book bookToMatch = new Book(1, "Atomic Habits", "James Clear", "Self Help");
+        Book expectedBook = new Book(1, "Atomic Habits", "James Clear", "Self Help");
 
         Mockito.when(jdbcTemplate.update(eq("UPDATE books SET title = ?, author = ?, genre = ? WHERE book_id  = ?"), anyString(), anyString(), anyString(), anyInt()))
                 .thenReturn(1);
 
         BookDao bookDao1 = Mockito.spy(bookDao);
-        Mockito.doReturn(bookToMatch).when(bookDao1).getBookById(1);
+        Mockito.doReturn(expectedBook).when(bookDao1).getBookById(1);
 
         //Act
-        Book bookFromDao = bookDao1.updateBook(bookToMatch);
+        Book actualBook = bookDao1.updateBook(expectedBook);
 
         //Assert
-        assertEquals(bookToMatch, bookFromDao);
+        assertEquals(expectedBook, actualBook);
     }
 
     @Test
     public void BookDao_updateBook_ThrowsNewDaoException () {
         //Arrange
-        Book bookToMatch = new Book(1, "Atomic Habits", "James Clear", "Self Help");
+        Book book = new Book(1, "Atomic Habits", "James Clear", "Self Help");
 
         Mockito.when(jdbcTemplate.update(eq("UPDATE books SET title = ?, author = ?, genre = ? WHERE book_id  = ?"), anyString(), anyString(), anyString(), anyInt()))
                 .thenReturn(0);
@@ -342,7 +356,7 @@ public class BookDaoTest {
         //Act and Assert
         assertThrows(DaoException.class,
                 () -> {
-                    bookDao.updateBook(bookToMatch);
+                    bookDao.updateBook(book);
                 });
     }
 
@@ -353,9 +367,10 @@ public class BookDaoTest {
                 .thenReturn(1);
 
         //Act
-        int numberReturned = bookDao.deleteBook(55);
+        int numberReturned = bookDao.deleteBook(5);
 
         //Assert
         assertEquals(1, numberReturned);
+        assertInstanceOf(Integer.class, numberReturned);
     }
 }

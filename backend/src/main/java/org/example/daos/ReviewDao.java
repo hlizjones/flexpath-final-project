@@ -3,7 +3,7 @@ package org.example.daos;
 import org.example.exceptions.DaoException;
 import org.example.models.Review;
 import org.example.utils.QueryBuilder;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -14,8 +14,6 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,7 +24,7 @@ public class ReviewDao {
     /**
      * The JDBC template for querying the database.
      */
-    private final JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     /**
      * Creates a new review data access object
@@ -38,6 +36,15 @@ public class ReviewDao {
     }
 
     /**
+     * Sets the JdbcTemplate.
+     *
+     * @param jdbcTemplate The JdbcTemplate.
+     */
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    };
+
+    /**
      * Gets reviews.
      *
      * @param review A review object.
@@ -47,7 +54,6 @@ public class ReviewDao {
         QueryBuilder qb = new QueryBuilder();
 
         qb.select("*").from("reviews");
-
 
         if (review.getIsAdmin() && review.getBookId() != 0) {
             qb.whereEqual("book_id")
@@ -75,7 +81,11 @@ public class ReviewDao {
      * @return Review
      */
     public Review getReviewById(int id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM reviews WHERE review_id = ?", this::mapToReview, id);
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM reviews WHERE review_id = ?", this::mapToReview, id);
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
     /**
@@ -105,7 +115,7 @@ public class ReviewDao {
             Number key = keyHolder.getKey();
             assert key != null;
             return getReviewById(key.intValue());
-        } catch (EmptyResultDataAccessException e) {
+        } catch (DataAccessException e) {
             throw new DaoException("Failed to create review.");
         }
     }

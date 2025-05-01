@@ -26,6 +26,14 @@ public class User {
     }
 
     /**
+     * Creates a new user.
+     *
+     */
+    public User() {
+
+    }
+
+    /**
      * Gets the username of the user.
      *
      * @return The username of the user.
