@@ -1,24 +1,12 @@
 import React, { useState } from "react";
 import useUrlBuilder from "../../../hooks/useUrlBuilder";
+import ToggleFields from "./ToggleFields";
 
 export default function UserInput({ setPage, setUrl, setSort }) {
     const { buildUrl } = useUrlBuilder();
     const [firstInputField, setFirstInputField] = useState("Title");
     const [secondInputField, setSecondInputField] = useState("Author");
     const [thirdInputField, setThirdInputField] = useState("Genre");
-
-    const toggleSearch = (e) => {
-        e.preventDefault();
-        if (e.target.value === "book") {
-            setFirstInputField("Title");
-            setSecondInputField("Author");
-            setThirdInputField("Genre");
-        } else if (e.target.value === "collection") {
-            setFirstInputField("Name");
-            setSecondInputField("Username");
-            setThirdInputField(false);
-        }
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -51,25 +39,15 @@ export default function UserInput({ setPage, setUrl, setSort }) {
     }
 
     return (
+        <>
+        <ToggleFields firstInputField={firstInputField} setFirstInputField={setFirstInputField} secondInputField={secondInputField} setSecondInputField={setSecondInputField} thirdInputField={thirdInputField} setThirdInputField={setThirdInputField} />
         <div className='container mb-5'>
             <form onSubmit={handleSubmit}>
-                <div className="col-md-2 mb-3">
-                    <label className="form-label text-nowrap" htmlFor="toggleSearch">Search for</label>
-                    <select className="form-select" name="toggleSearch" id="toggleSearch" defaultValue="books" onChange={toggleSearch}>
-                        <option value="book">Book</option>
-                        <option value="collection">Collection</option>
-                    </select>
-                </div>
-                <div className="col-md-5 d-grid gap-3 mb-3">
-                    <input className="form-control" type="search" id="firstInput" placeholder={firstInputField}></input>
-                    <input className="form-control" type="search" id="secondInput" placeholder={secondInputField}></input>
-                    {thirdInputField &&
-                        <input className="form-control" type="search" id="thirdInput" placeholder={thirdInputField}></input>}
-                </div>
                 <div className="col-md-5 d-grid gap-3 mb-3">
                     <button className="btn btn-secondary" type="submit">Search</button>
                 </div>
             </form>
         </div>
+        </>
     );
 }
