@@ -10,8 +10,6 @@ export default function useFetch(url, options, refresh) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    console.log(url)
-
     useEffect(() => {
         setLoading(true);
         setError(null);

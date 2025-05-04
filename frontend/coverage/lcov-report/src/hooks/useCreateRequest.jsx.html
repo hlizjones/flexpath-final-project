@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -95,16 +95,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -114,22 +112,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState, useContext } from "react";
 import useFetch from "./useFetch";
 import { AuthContext } from "../context/AuthProvider";
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >useCreateRequest(</span>) {
-    const { token } = <span class="cstat-no" title="statement not covered" >useContext(AuthContext);</span>
-    const [url, setUrl] = <span class="cstat-no" title="statement not covered" >useState();</span>
-    const [options, setOptions] = <span class="cstat-no" title="statement not covered" >useState();</span>
-    const { data, loading, error } = <span class="cstat-no" title="statement not covered" >useFetch(url, options);</span>
+export default function useCreateRequest() {
+    const { token } = useContext(AuthContext);
+    const [url, setUrl] = useState();
+    const [options, setOptions] = useState();
+    const { data, loading, error } = useFetch(url, options);
 &nbsp;
-    const handleRequest = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(o</span>bject, argUrl, method) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        setUrl(argUrl);</span>
-<span class="cstat-no" title="statement not covered" >        setOptions({</span>
+    const handleRequest = (object, argUrl, method) =&gt; {
+        setUrl(argUrl);
+        setOptions({
             method: method,
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -141,7 +141,7 @@ export default function <span class="fstat-no" title="function not covered" >use
         });
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return (</span>
+    return (
        {handleRequest, data, loading, error}
     );
 }</pre></td></tr></table></pre>
@@ -151,7 +151,7 @@ export default function <span class="fstat-no" title="function not covered" >use
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-03T03:49:37.562Z
+                at 2025-05-04T07:28:14.879Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

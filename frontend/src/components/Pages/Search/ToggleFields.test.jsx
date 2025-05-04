@@ -58,7 +58,7 @@ describe('ToggleFields', () => {
 
     })
 
-    it('Should call State Setters when Collection is selected', () => {
+    it('Should call state setters when Collection is selected', () => {
         render(
             <ToggleFields
                 firstInputField={"Title"}
@@ -80,7 +80,7 @@ describe('ToggleFields', () => {
 
     })
 
-    it('Should call State Setters when Book is selected', () => {
+    it('Should call state setters when Book is selected', () => {
         render(
             <ToggleFields
                 firstInputField={"Name"}

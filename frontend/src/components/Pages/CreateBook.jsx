@@ -33,7 +33,7 @@ export default function CreateBook() {
             <div className="row row-cols-1 g-5">
                 <div className='col-md-6 mb-3 p-5'>
                     <h4>Create new book.</h4>
-                    <form onSubmit={handleSubmit}>
+                    <form aria-label="form" onSubmit={handleSubmit}>
                         <div className="d-grid gap-3 mt-3 mb-3">
                             <input className="form-control" type="text" id="title" placeholder="Title of Book" required></input>
                             <input className="form-control" type="text" id="author" placeholder="Author of Book" required></input>

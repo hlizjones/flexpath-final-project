@@ -4,7 +4,7 @@ import useSort from "../../../hooks/useSort";
 
 export default function SearchResults({ page, data, loading, error, setSort, sort }) {
     const { handleLoad } = useLoadPage();
-    const { sortedData } = useSort(data, sort, setSort);
+    const { sortedData } = useSort(data, sort);
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -21,7 +21,7 @@ export default function SearchResults({ page, data, loading, error, setSort, sor
             {loading && <div>Loading records...</div>}
             {error && <div className="mb-5 text-danger">Error: Failed to load records.</div>}
             {!error && Object.keys(sortedData).length === 0 && <div>Search to find a book or collection!</div>}
-            {sortedData &&
+            {Object.keys(sortedData).length > 0 &&
                 <table className="table table-hover">
                     <thead className="table-secondary">
                         <tr>
@@ -40,7 +40,7 @@ export default function SearchResults({ page, data, loading, error, setSort, sor
                     <tbody>
                         {sortedData && Array.from(sortedData).map(el => {
                             return (
-                                <tr key={el["id"]} onClick={handleClick} id={el["id"]}>
+                                <tr key={el["id"]} data-testid={"objectRow"} onClick={handleClick} id={el["id"]}>
                                     {Object.entries(el).map(([key, value]) => {
                                         if (key != "id" && key != "privacy" && key != "favorite" && key != "isAdmin")
                                             return (<td className="text-capitalize" key={value}>{value}</td>)

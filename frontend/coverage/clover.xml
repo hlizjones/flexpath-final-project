@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1746244177771" clover="3.2.0">
-  <project timestamp="1746244177771" name="All files">
-    <metrics statements="505" coveredstatements="59" conditionals="388" coveredconditionals="25" methods="126" coveredmethods="7" elements="1019" coveredelements="91" complexity="0" loc="505" ncloc="505" packages="11" files="35" classes="35"/>
+<coverage generated="1746343695028" clover="3.2.0">
+  <project timestamp="1746343695028" name="All files">
+    <metrics statements="504" coveredstatements="91" conditionals="388" coveredconditionals="50" methods="126" coveredmethods="18" elements="1018" coveredelements="159" complexity="0" loc="504" ncloc="504" packages="11" files="35" classes="35"/>
     <package name="src">
       <metrics statements="3" coveredstatements="0" conditionals="10" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="App.jsx" path="C:\Code\flexpath-final-project\frontend\src\App.jsx">
@@ -40,23 +40,23 @@
       </file>
     </package>
     <package name="src.components.Pages">
-      <metrics statements="14" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="3" coveredmethods="0"/>
+      <metrics statements="14" coveredstatements="14" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
       <file name="CreateBook.jsx" path="C:\Code\flexpath-final-project\frontend\src\components\Pages\CreateBook.jsx">
-        <metrics statements="14" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="3" coveredmethods="0"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="31" count="0" type="stmt"/>
+        <metrics statements="14" coveredstatements="14" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
+        <line num="7" count="7" type="stmt"/>
+        <line num="8" count="7" type="stmt"/>
+        <line num="9" count="7" type="stmt"/>
+        <line num="12" count="7" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="26" count="7" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="31" count="7" type="stmt"/>
       </file>
     </package>
     <package name="src.components.Pages.404">
@@ -266,32 +266,34 @@
       </file>
     </package>
     <package name="src.components.Pages.Profile">
-      <metrics statements="82" coveredstatements="0" conditionals="57" coveredconditionals="0" methods="22" coveredmethods="0"/>
+      <metrics statements="84" coveredstatements="0" conditionals="57" coveredconditionals="0" methods="22" coveredmethods="0"/>
       <file name="CreateCollection.jsx" path="C:\Code\flexpath-final-project\frontend\src\components\Pages\Profile\CreateCollection.jsx">
-        <metrics statements="23" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="4" coveredmethods="0"/>
+        <metrics statements="25" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
         <line num="12" count="0" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="18" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="19" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="24" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
         <line num="29" count="0" type="stmt"/>
         <line num="31" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
         <line num="33" count="0" type="stmt"/>
         <line num="34" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="38" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
         <line num="39" count="0" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
+        <line num="40" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
       </file>
       <file name="FavoriteCollection.jsx" path="C:\Code\flexpath-final-project\frontend\src\components\Pages\Profile\FavoriteCollection.jsx">
         <metrics statements="10" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="2" coveredmethods="0"/>
@@ -419,7 +421,7 @@
       </file>
     </package>
     <package name="src.components.Pages.Search">
-      <metrics statements="60" coveredstatements="37" conditionals="47" coveredconditionals="12" methods="12" coveredmethods="4"/>
+      <metrics statements="59" coveredstatements="50" conditionals="47" coveredconditionals="38" methods="12" coveredmethods="10"/>
       <file name="Search.jsx" path="C:\Code\flexpath-final-project\frontend\src\components\Pages\Search\Search.jsx">
         <metrics statements="9" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="8" count="0" type="stmt"/>
@@ -433,36 +435,35 @@
         <line num="20" count="0" type="stmt"/>
       </file>
       <file name="SearchResults.jsx" path="C:\Code\flexpath-final-project\frontend\src\components\Pages\Search\SearchResults.jsx">
-        <metrics statements="14" coveredstatements="0" conditionals="27" coveredconditionals="0" methods="6" coveredmethods="0"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="29" count="0" type="cond" truecount="0" falsecount="6"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="45" count="0" type="cond" truecount="0" falsecount="6"/>
-        <line num="46" count="0" type="stmt"/>
+        <metrics statements="14" coveredstatements="14" conditionals="27" coveredconditionals="26" methods="6" coveredmethods="6"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
+        <line num="9" count="6" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="14" count="6" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="16" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="19" count="6" type="stmt"/>
+        <line num="29" count="12" type="cond" truecount="6" falsecount="0"/>
+        <line num="30" count="9" type="stmt"/>
+        <line num="42" count="9" type="stmt"/>
+        <line num="45" count="36" type="cond" truecount="6" falsecount="0"/>
+        <line num="46" count="27" type="stmt"/>
       </file>
       <file name="ToggleFields.jsx" path="C:\Code\flexpath-final-project\frontend\src\components\Pages\Search\ToggleFields.jsx">
-        <metrics statements="12" coveredstatements="12" conditionals="6" coveredconditionals="5" methods="2" coveredmethods="2"/>
+        <metrics statements="11" coveredstatements="11" conditionals="6" coveredconditionals="5" methods="2" coveredmethods="2"/>
         <line num="5" count="8" type="stmt"/>
         <line num="6" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="1" type="stmt"/>
         <line num="10" count="1" type="stmt"/>
         <line num="11" count="1" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="13" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="12" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="13" count="1" type="stmt"/>
         <line num="14" count="1" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="20" count="8" type="stmt"/>
+        <line num="19" count="8" type="stmt"/>
       </file>
       <file name="UserInput.jsx" path="C:\Code\flexpath-final-project\frontend\src\components\Pages\Search\UserInput.jsx">
         <metrics statements="25" coveredstatements="25" conditionals="10" coveredconditionals="7" methods="2" coveredmethods="2"/>
@@ -494,10 +495,10 @@
       </file>
     </package>
     <package name="src.context">
-      <metrics statements="17" coveredstatements="1" conditionals="10" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <metrics statements="17" coveredstatements="2" conditionals="10" coveredconditionals="0" methods="2" coveredmethods="0"/>
       <file name="AuthProvider.jsx" path="C:\Code\flexpath-final-project\frontend\src\context\AuthProvider.jsx">
         <metrics statements="9" coveredstatements="1" conditionals="6" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="3" count="1" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
         <line num="6" count="0" type="stmt"/>
         <line num="7" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="8" count="0" type="stmt"/>
@@ -508,8 +509,8 @@
         <line num="16" count="0" type="stmt"/>
       </file>
       <file name="DataProvider.jsx" path="C:\Code\flexpath-final-project\frontend\src\context\DataProvider.jsx">
-        <metrics statements="8" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="4" count="0" type="stmt"/>
+        <metrics statements="8" coveredstatements="1" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="4" count="1" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
         <line num="10" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -520,66 +521,65 @@
       </file>
     </package>
     <package name="src.hooks">
-      <metrics statements="102" coveredstatements="16" conditionals="58" coveredconditionals="9" methods="20" coveredmethods="2"/>
+      <metrics statements="100" coveredstatements="20" conditionals="58" coveredconditionals="2" methods="20" coveredmethods="4"/>
       <file name="useCreateRequest.jsx" path="C:\Code\flexpath-final-project\frontend\src\hooks\useCreateRequest.jsx">
-        <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="25" count="3" type="stmt"/>
       </file>
       <file name="useFetch.jsx" path="C:\Code\flexpath-final-project\frontend\src\hooks\useFetch.jsx">
-        <metrics statements="31" coveredstatements="0" conditionals="13" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <metrics statements="30" coveredstatements="0" conditionals="13" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
         <line num="10" count="0" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="20" count="0" type="stmt"/>
-        <line num="21" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="21" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="26" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="27" count="0" type="stmt"/>
+        <line num="24" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
         <line num="28" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="31" count="0" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
-        <line num="38" count="0" type="cond" truecount="0" falsecount="5"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="36" count="0" type="cond" truecount="0" falsecount="5"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
         <line num="39" count="0" type="stmt"/>
         <line num="40" count="0" type="stmt"/>
         <line num="41" count="0" type="stmt"/>
         <line num="42" count="0" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
         <line num="44" count="0" type="stmt"/>
         <line num="46" count="0" type="stmt"/>
-        <line num="48" count="0" type="stmt"/>
-        <line num="51" count="0" type="stmt"/>
-        <line num="55" count="0" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
       </file>
       <file name="useLoadPage.jsx" path="C:\Code\flexpath-final-project\frontend\src\hooks\useLoadPage.jsx">
-        <metrics statements="12" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="19" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
+        <metrics statements="12" coveredstatements="12" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="19" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
       </file>
       <file name="useMessageTimeout.jsx" path="C:\Code\flexpath-final-project\frontend\src\hooks\useMessageTimeout.jsx">
         <metrics statements="8" coveredstatements="0" conditionals="7" coveredconditionals="0" methods="4" coveredmethods="0"/>
@@ -605,44 +605,43 @@
         <line num="20" count="0" type="stmt"/>
       </file>
       <file name="useSort.jsx" path="C:\Code\flexpath-final-project\frontend\src\hooks\useSort.jsx">
-        <metrics statements="18" coveredstatements="0" conditionals="22" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <metrics statements="17" coveredstatements="0" conditionals="22" coveredconditionals="0" methods="5" coveredmethods="0"/>
         <line num="4" count="0" type="stmt"/>
         <line num="6" count="0" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="9" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="10" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="10" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="11" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="12" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="15" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="14" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="15" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="17" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="22" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
       </file>
       <file name="useUrlBuilder.jsx" path="C:\Code\flexpath-final-project\frontend\src\hooks\useUrlBuilder.jsx">
-        <metrics statements="16" coveredstatements="16" conditionals="12" coveredconditionals="9" methods="2" coveredmethods="2"/>
-        <line num="5" count="4" type="stmt"/>
-        <line num="6" count="8" type="stmt"/>
-        <line num="8" count="8" type="cond" truecount="3" falsecount="1"/>
-        <line num="9" count="8" type="stmt"/>
-        <line num="11" count="8" type="stmt"/>
-        <line num="12" count="28" type="stmt"/>
-        <line num="14" count="28" type="cond" truecount="2" falsecount="0"/>
-        <line num="15" count="8" type="stmt"/>
-        <line num="16" count="8" type="cond" truecount="1" falsecount="1"/>
-        <line num="17" count="8" type="stmt"/>
-        <line num="19" count="20" type="cond" truecount="1" falsecount="1"/>
-        <line num="20" count="20" type="stmt"/>
-        <line num="21" count="20" type="cond" truecount="2" falsecount="0"/>
-        <line num="22" count="12" type="stmt"/>
-        <line num="27" count="8" type="stmt"/>
-        <line num="30" count="4" type="stmt"/>
+        <metrics statements="16" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="8" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="14" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="19" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="21" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
       </file>
     </package>
   </project>

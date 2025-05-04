@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">96.29% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/27</span>
+                <span class='fraction'>26/27</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -123,31 +123,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -157,13 +146,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -177,32 +177,32 @@
 import useLoadPage from "../../../hooks/useLoadPage";
 import useSort from "../../../hooks/useSort";
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >SearchResults(</span>{ page, data, loading, error, setSort, sort }) {
-    const { handleLoad } = <span class="cstat-no" title="statement not covered" >useLoadPage();</span>
-    const { sortedData } = <span class="cstat-no" title="statement not covered" >useSort(data, sort, setSort);</span>
+export default function SearchResults({ page, data, loading, error, setSort, sort }) {
+    const { handleLoad } = useLoadPage();
+    const { sortedData } = useSort(data, sort);
 &nbsp;
-    const handleClick = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        e.preventDefault();</span>
-<span class="cstat-no" title="statement not covered" >        handleLoad(`api/${page}/${e.currentTarget.id}`, page);</span>
+    const handleClick = (e) =&gt; {
+        e.preventDefault();
+        handleLoad(`api/${page}/${e.currentTarget.id}`, page);
     }
 &nbsp;
-    const handleSort = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>) =&gt; {</span>
-        const key = <span class="cstat-no" title="statement not covered" >e.currentTarget.id;</span>
-<span class="cstat-no" title="statement not covered" >        setSort({ key: key, order: key === sort.key ? !sort.order : sort.order });</span>
+    const handleSort = (e) =&gt; {
+        const key = e.currentTarget.id;
+        setSort({ key: key, order: key === sort.key ? <span class="branch-0 cbranch-no" title="branch not covered" >!sort.order </span>: sort.order });
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return (</span>
+    return (
         &lt;div className="container"&gt;
             {loading &amp;&amp; &lt;div&gt;Loading records...&lt;/div&gt;}
             {error &amp;&amp; &lt;div className="mb-5 text-danger"&gt;Error: Failed to load records.&lt;/div&gt;}
             {!error &amp;&amp; Object.keys(sortedData).length === 0 &amp;&amp; &lt;div&gt;Search to find a book or collection!&lt;/div&gt;}
-            {sortedData &amp;&amp;
+            {Object.keys(sortedData).length &gt; 0 &amp;&amp;
                 &lt;table className="table table-hover"&gt;
                     &lt;thead className="table-secondary"&gt;
                         &lt;tr&gt;
-                            {sortedData[0] &amp;&amp; Object.keys(sortedData[0]).map(<span class="fstat-no" title="function not covered" >ke</span>y =&gt; {
-<span class="cstat-no" title="statement not covered" >                                if (key != "id" &amp;&amp; key != "privacy" &amp;&amp; key != "favorite" &amp;&amp; key != "isAdmin") {</span>
-<span class="cstat-no" title="statement not covered" >                                    return (</span>
+                            {sortedData[0] &amp;&amp; Object.keys(sortedData[0]).map(key =&gt; {
+                                if (key != "id" &amp;&amp; key != "privacy" &amp;&amp; key != "favorite" &amp;&amp; key != "isAdmin") {
+                                    return (
                                         &lt;th className="text-uppercase align-middle" scope="col" key={key} id={key} onClick={handleSort}&gt;
                                             {key}
                                             &lt;i className="bi bi-caret-up-fill" id={key+"caret"}&gt;&lt;/i&gt;
@@ -213,12 +213,12 @@ export default function <span class="fstat-no" title="function not covered" >Sea
                         &lt;/tr&gt;
                     &lt;/thead&gt;
                     &lt;tbody&gt;
-                        {sortedData &amp;&amp; Array.from(sortedData).map(<span class="fstat-no" title="function not covered" >el</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >                            return (</span>
-                                &lt;tr key={el["id"]} onClick={handleClick} id={el["id"]}&gt;
-                                    {Object.entries(el).map(<span class="fstat-no" title="function not covered" >([</span>key, value]) =&gt; {
-<span class="cstat-no" title="statement not covered" >                                        if (key != "id" &amp;&amp; key != "privacy" &amp;&amp; key != "favorite" &amp;&amp; key != "isAdmin")</span>
-<span class="cstat-no" title="statement not covered" >                                            return (&lt;td className="text-capitalize" key={value}&gt;{value}&lt;/td&gt;)</span>
+                        {sortedData &amp;&amp; Array.from(sortedData).map(el =&gt; {
+                            return (
+                                &lt;tr key={el["id"]} data-testid={"objectRow"} onClick={handleClick} id={el["id"]}&gt;
+                                    {Object.entries(el).map(([key, value]) =&gt; {
+                                        if (key != "id" &amp;&amp; key != "privacy" &amp;&amp; key != "favorite" &amp;&amp; key != "isAdmin")
+                                            return (&lt;td className="text-capitalize" key={value}&gt;{value}&lt;/td&gt;)
                                     })}
                                 &lt;/tr&gt;
                             );
@@ -235,7 +235,7 @@ export default function <span class="fstat-no" title="function not covered" >Sea
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-03T03:49:37.562Z
+                at 2025-05-04T07:28:14.879Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

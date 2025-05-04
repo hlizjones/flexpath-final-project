@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -121,31 +121,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -172,37 +172,37 @@ import useCreateRequest from "../../hooks/useCreateRequest";
 import useLoadPage from "../../hooks/useLoadPage";
 import useMessageTimeout from "../../hooks/useMessageTimeout";
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >CreateBook(</span>) {
-    const { handleRequest, data, loading, error } = <span class="cstat-no" title="statement not covered" >useCreateRequest();</span>
-    const { handleLoad } = <span class="cstat-no" title="statement not covered" >useLoadPage();</span>
-<span class="cstat-no" title="statement not covered" >    useMessageTimeout(error);</span>
+export default function CreateBook() {
+    const { handleRequest, data, loading, error } = useCreateRequest();
+    const { handleLoad } = useLoadPage();
+    useMessageTimeout(error);
 &nbsp;
 &nbsp;
-    const handleSubmit = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        e.preventDefault();</span>
-        const object = <span class="cstat-no" title="statement not covered" >{ 'title': document.getElementById('title').value,</span>
+    const handleSubmit = (e) =&gt; {
+        e.preventDefault();
+        const object = { 'title': document.getElementById('title').value,
             'author': document.getElementById('author').value,
             'genre': document.getElementById('genre').value,
          }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >         handleRequest(object, "api/book", "POST");</span>
+         handleRequest(object, "api/book", "POST");
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        document.getElementById('title').value = " ";</span>
-<span class="cstat-no" title="statement not covered" >        document.getElementById('author').value = " ";</span>
-<span class="cstat-no" title="statement not covered" >        document.getElementById('genre').value = " ";</span>
+        document.getElementById('title').value = " ";
+        document.getElementById('author').value = " ";
+        document.getElementById('genre').value = " ";
     }
 &nbsp;
-    const handleClick = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        e.preventDefault();</span>
-<span class="cstat-no" title="statement not covered" >        handleLoad(`api/book/${data.id}`, `book`);</span>
+    const handleClick = (e) =&gt; {
+        e.preventDefault();
+        handleLoad(`api/book/${data.id}`, `book`);
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return (</span>
+    return (
         &lt;div className='container'&gt;
             &lt;div className="row row-cols-1 g-5"&gt;
                 &lt;div className='col-md-6 mb-3 p-5'&gt;
                     &lt;h4&gt;Create new book.&lt;/h4&gt;
-                    &lt;form onSubmit={handleSubmit}&gt;
+                    &lt;form aria-label="form" onSubmit={handleSubmit}&gt;
                         &lt;div className="d-grid gap-3 mt-3 mb-3"&gt;
                             &lt;input className="form-control" type="text" id="title" placeholder="Title of Book" required&gt;&lt;/input&gt;
                             &lt;input className="form-control" type="text" id="author" placeholder="Author of Book" required&gt;&lt;/input&gt;
@@ -226,7 +226,7 @@ export default function <span class="fstat-no" title="function not covered" >Cre
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-03T03:49:37.562Z
+                at 2025-05-04T07:28:14.879Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

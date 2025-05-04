@@ -2,15 +2,20 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import UserInput from './UserInput'
 import * as hooks from '../../../hooks/useUrlBuilder';
 
+jest.mock('../../../hooks/useUrlBuilder');
+hooks.default.mockImplementation(() => ({
+    buildUrl: jest.fn()
+}));
+
 describe('UserInput', () => {
     const setPage = jest.fn();
     const setUrl = jest.fn();
     const setSort = jest.fn();
 
-    let firstInput;
-    let secondInput;
-
-    beforeEach(() => {
+    it('Should call handleSubmit when Search button is clicked', () => {
+        hooks.default.mockImplementationOnce(() => ({
+            buildUrl: () => "api/book?title=Call of the Wild&author=Jack London&genre=Adventure"
+        }));
 
         render(
             <UserInput
@@ -20,21 +25,9 @@ describe('UserInput', () => {
             />
         );
 
-        firstInput = screen.getByTestId("firstInput");
-        secondInput = screen.getByTestId("secondInput");
-    });
-
-    afterEach(() => {
-        jest.clearAllMocks();
-        jest.restoreAllMocks();
-    });
-
-    it('Should call handleSubmit when Search button is clicked', () => {
-        let thirdInput = screen.getByTestId("thirdInput");
-
-        jest.spyOn(hooks, 'default').mockImplementation(() => ({
-            buildUrl: () => "api/book?title=Call of the Wild&author=Jack London&genre=Adventure"
-        }));
+        const firstInput = screen.getByTestId("firstInput");
+        const secondInput = screen.getByTestId("secondInput");
+        const thirdInput = screen.getByTestId("thirdInput");
 
         fireEvent.change(firstInput, {
             target: { value: "Call of the Wild" }
@@ -54,9 +47,20 @@ describe('UserInput', () => {
     })
 
     it('Should call handleSubmit when Search button is clicked and Third Input Field does not exist', () => {
-        jest.spyOn(hooks, 'default').mockImplementation(() => ({
+        hooks.default.mockImplementationOnce(() => ({
             buildUrl: () => "api/book?title=Call of the Wild&author=Jack London"
         }));
+        
+        render(
+            <UserInput
+                setPage={setPage}
+                setUrl={setUrl}
+                setSort={setSort}
+            />
+        );
+
+        const firstInput = screen.getByTestId("firstInput");
+        const secondInput = screen.getByTestId("secondInput");
 
         fireEvent.change(firstInput, {
             target: { value: "Call of the Wild" }
@@ -73,7 +77,17 @@ describe('UserInput', () => {
     })
 
     it('Should clear input fields when Search button is clicked', () => {
-        let thirdInput = screen.getByTestId("thirdInput");
+        render(
+            <UserInput
+                setPage={setPage}
+                setUrl={setUrl}
+                setSort={setSort}
+            />
+        );
+
+        const firstInput = screen.getByTestId("firstInput");
+        const secondInput = screen.getByTestId("secondInput");
+        const thirdInput = screen.getByTestId("thirdInput");
 
         fireEvent.change(firstInput, {
             target: { value: "Call of the Wild" }
@@ -93,6 +107,17 @@ describe('UserInput', () => {
     })
 
     it('Should clear input fields when Search button is clicked and Third Input Field does not exist', () => {
+        render(
+            <UserInput
+                setPage={setPage}
+                setUrl={setUrl}
+                setSort={setSort}
+            />
+        );
+
+        const firstInput = screen.getByTestId("firstInput");
+        const secondInput = screen.getByTestId("secondInput");
+
         fireEvent.change(firstInput, {
             target: { value: "Call of the Wild" }
         });

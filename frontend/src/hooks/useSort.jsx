@@ -4,7 +4,6 @@ export default function useSort(data, { key, order }) {
     const [sortedData, setSortedData] = useState([]);
 
     useEffect(() => {
-console.log(data)
         const getSortedData = () => {
             if (data && data.length > 0) {
                 if (key && order === true) {

@@ -11,7 +11,8 @@ export default function CreateCollection() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const object = { 'name': document.getElementById('name').value };
+        console.log(document.getElementById('collectionName'))
+        const object = { 'name': document.getElementById('collectionName').value };
         if (document.getElementById('description').value !== "") {
             object['description'] = document.getElementById('description').value;
         }
@@ -25,10 +26,11 @@ export default function CreateCollection() {
         } else {
             object['privacy'] = false;
         }
+        console.log(object)
 
         handleRequest(object, "api/collection", "POST");
 
-        document.getElementById('name').value = "";
+        document.getElementById('collectionName').value = "";
         document.getElementById('description').value = "";
         document.getElementById('favorite').checked = false;
         document.getElementById('privacy').checked = false;
@@ -47,7 +49,7 @@ export default function CreateCollection() {
                     <h4>Create new book collection.</h4>
                     <form onSubmit={handleSubmit}>
                         <div className="d-grid gap-3 mt-3 mb-3">
-                            <input className="form-control" type="text" id="name" placeholder="Name of Collection" required></input>
+                            <input className="form-control" type="text" id="collectionName" placeholder="Name of Collection" required></input>
                             <textarea className="form-control" type="description" id="description" placeholder="Describe your collection"></textarea>
                             <div className="form-check">
                                 <label className="form-label text-nowrap" htmlFor="favorite" >Favorite</label>
