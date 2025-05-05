@@ -65,11 +65,16 @@ public class CollectionController {
      */
     @GetMapping(path = "/{id}")
     @PreAuthorize("permitAll()")
-    public Collection get(@PathVariable int id, Principal principal) {
+    public Collection get(@PathVariable Integer id, Principal principal) {
         Collection collection = collectionDao.getCollectionById(id);
         if (collection == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Collection not found");
         }
+        System.out.print(principal);
+        System.out.print(principal.getName());
+        System.out.println(isAdmin());
+        System.out.println(Objects.equals(collection.getUsername(), principal.getName()));
+        System.out.println(!collection.getPrivacy());
         if (isAdmin() || Objects.equals(collection.getUsername(), principal.getName()) || !collection.getPrivacy()) {
             return collection;
         } else {

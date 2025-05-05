@@ -11,7 +11,6 @@ export default function CreateCollection() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log(document.getElementById('collectionName'))
         const object = { 'name': document.getElementById('collectionName').value };
         if (document.getElementById('description').value !== "") {
             object['description'] = document.getElementById('description').value;
@@ -26,7 +25,6 @@ export default function CreateCollection() {
         } else {
             object['privacy'] = false;
         }
-        console.log(object)
 
         handleRequest(object, "api/collection", "POST");
 
@@ -47,7 +45,7 @@ export default function CreateCollection() {
             <div className="row row-cols-1 g-5">
                 <div className='col-md-6 mb-3'>
                     <h4>Create new book collection.</h4>
-                    <form onSubmit={handleSubmit}>
+                    <form aria-label="form" onSubmit={handleSubmit}>
                         <div className="d-grid gap-3 mt-3 mb-3">
                             <input className="form-control" type="text" id="collectionName" placeholder="Name of Collection" required></input>
                             <textarea className="form-control" type="description" id="description" placeholder="Describe your collection"></textarea>

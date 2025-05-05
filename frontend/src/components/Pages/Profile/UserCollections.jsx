@@ -36,19 +36,19 @@ export default function UserCollections() {
                     Sort by
                 </button>
                 <ul className="dropdown-menu">
-                    <li><a className="dropdown-item" id={"name"} onClick={handleSort}>Alphabetical Ascending</a></li>
-                    <li><a className="dropdown-item" id={"name"} onClick={handleSort}>Alphabetical Descending</a></li>
+                    <li data-testid="Alphabetical Ascending"><a className="dropdown-item" id={"name"} onClick={handleSort}>Alphabetical Ascending</a></li>
+                    <li data-testid="Alphabetical Descending"><a className="dropdown-item" id={"name"} onClick={handleSort}>Alphabetical Descending</a></li>
                 </ul>
             </div>
             <div className="container mb-5">
                 {loading && <div>Loading collections...</div>}
                 {error && <div className="mb-5 text-danger">Error: Failed to load collections.</div>}
-                {!error && Object.keys(sortedData).length === 0 && <div>No collections to display.</div>}
-                <div className="row row-cols-1 row-cols-md-4 g-5 mb-4">
+                {!error && sortedData.length === 0 && <div>No collections to display.</div>}
+                {sortedData.length > 0 && <div className="row row-cols-1 row-cols-md-4 g-5 mb-4">
                     {sortedData && Array.from(sortedData).map(el => {
                         return (
                             <div className="col" key={el.id}>
-                                <div className="card text-center">
+                                <div className="card text-center" data-testid={"card"}>
                                     <div className="card-body" id={el.id}>
                                         <h4 className="card-title" onClick={handleClick}>
                                             {el.name}
@@ -60,7 +60,7 @@ export default function UserCollections() {
                             </div>
                         );
                     })}
-                </div>
+                </div>}
             </div>
         </>
     );

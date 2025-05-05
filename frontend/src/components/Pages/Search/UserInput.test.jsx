@@ -1,11 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import UserInput from './UserInput'
-import * as hooks from '../../../hooks/useUrlBuilder';
+import useUrlBuilder from '../../../hooks/useUrlBuilder';
 
 jest.mock('../../../hooks/useUrlBuilder');
-hooks.default.mockImplementation(() => ({
-    buildUrl: jest.fn()
-}));
 
 describe('UserInput', () => {
     const setPage = jest.fn();
@@ -13,7 +10,7 @@ describe('UserInput', () => {
     const setSort = jest.fn();
 
     it('Should call handleSubmit when Search button is clicked', () => {
-        hooks.default.mockImplementationOnce(() => ({
+        useUrlBuilder.mockImplementation(() => ({
             buildUrl: () => "api/book?title=Call of the Wild&author=Jack London&genre=Adventure"
         }));
 
@@ -47,7 +44,7 @@ describe('UserInput', () => {
     })
 
     it('Should call handleSubmit when Search button is clicked and Third Input Field does not exist', () => {
-        hooks.default.mockImplementationOnce(() => ({
+        useUrlBuilder.mockImplementation(() => ({
             buildUrl: () => "api/book?title=Call of the Wild&author=Jack London"
         }));
         
@@ -77,6 +74,10 @@ describe('UserInput', () => {
     })
 
     it('Should clear input fields when Search button is clicked', () => {
+        useUrlBuilder.mockImplementation(() => ({
+            buildUrl: jest.fn()
+            }));
+
         render(
             <UserInput
                 setPage={setPage}
@@ -107,6 +108,10 @@ describe('UserInput', () => {
     })
 
     it('Should clear input fields when Search button is clicked and Third Input Field does not exist', () => {
+        useUrlBuilder.mockImplementation(() => ({
+            buildUrl: jest.fn()
+            }));
+
         render(
             <UserInput
                 setPage={setPage}

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">89.47% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/19</span>
+                <span class='fraction'>17/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">84.61% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/11</span>
+                <span class='fraction'>11/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">88.23% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/17</span>
+                <span class='fraction'>15/17</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -138,29 +138,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -177,7 +177,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -203,49 +203,49 @@ import useFetch from "../../../hooks/useFetch";
 import { DataContext } from "../../../context/DataProvider";
 import useSort from "../../../hooks/useSort";
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >UserCollections(</span>) {
-    const { token } = <span class="cstat-no" title="statement not covered" >useContext(AuthContext);</span>
-    const { refresh } = <span class="cstat-no" title="statement not covered" >useContext(DataContext);</span>
-    const { handleLoad } = <span class="cstat-no" title="statement not covered" >useLoadPage();</span>
+export default function UserCollections() {
+    const { token } = useContext(AuthContext);
+    const { refresh } = useContext(DataContext);
+    const { handleLoad } = useLoadPage();
 &nbsp;
-    const url = <span class="cstat-no" title="statement not covered" >useMemo(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >`api/collection?profile=true`,</span> []);</span>
-    const options = <span class="cstat-no" title="statement not covered" >useMemo(<span class="fstat-no" title="function not covered" >()</span> =&gt; (<span class="cstat-no" title="statement not covered" >{ headers: { 'Authorization': `Bearer ${token}` } })</span>, [token]);</span>
-    const { data, loading, error } = <span class="cstat-no" title="statement not covered" >useFetch(url, options, refresh);</span>
+    const url = useMemo(() =&gt; `api/collection?profile=true`, []);
+    const options = useMemo(() =&gt; ({ headers: { 'Authorization': `Bearer ${token}` } }), [token]);
+    const { data, loading, error } = useFetch(url, options, refresh);
 &nbsp;
-    const [sort, setSort] = <span class="cstat-no" title="statement not covered" >useState({ key: null, order: true });</span>
-    const { sortedData } = <span class="cstat-no" title="statement not covered" >useSort(data, sort, setSort);</span>
+    const [sort, setSort] = useState({ key: null, order: true });
+    const { sortedData } = useSort(data, sort, setSort);
 &nbsp;
-    const handleClick = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>) =&gt; {</span>
-        const id = <span class="cstat-no" title="statement not covered" >e.currentTarget.closest(".card-body").id;</span>
-<span class="cstat-no" title="statement not covered" >        e.preventDefault();</span>
-<span class="cstat-no" title="statement not covered" >        handleLoad(`api/collection/${id}`, "collection");</span>
+    const handleClick = (e) =&gt; {
+        const id = e.currentTarget.closest(".card-body").id;
+        e.preventDefault();
+        handleLoad(`api/collection/${id}`, "collection");
     }
 &nbsp;
-    const handleSort = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>) =&gt; {</span>
+    const handleSort = <span class="fstat-no" title="function not covered" >(e</span>) =&gt; {
         const key = <span class="cstat-no" title="statement not covered" >e.currentTarget.id;</span>
 <span class="cstat-no" title="statement not covered" >        setSort({ key: key, order: key === sort.key ? !sort.order : sort.order });</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return (</span>
+    return (
         &lt;&gt;
             &lt;div className="container dropdown mb-3"&gt;
                 &lt;button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"&gt;
                     Sort by
                 &lt;/button&gt;
                 &lt;ul className="dropdown-menu"&gt;
-                    &lt;li&gt;&lt;a className="dropdown-item" id={"name"} onClick={handleSort}&gt;Alphabetical Ascending&lt;/a&gt;&lt;/li&gt;
-                    &lt;li&gt;&lt;a className="dropdown-item" id={"name"} onClick={handleSort}&gt;Alphabetical Descending&lt;/a&gt;&lt;/li&gt;
+                    &lt;li data-testid="Alphabetical Ascending"&gt;&lt;a className="dropdown-item" id={"name"} onClick={handleSort}&gt;Alphabetical Ascending&lt;/a&gt;&lt;/li&gt;
+                    &lt;li data-testid="Alphabetical Descending"&gt;&lt;a className="dropdown-item" id={"name"} onClick={handleSort}&gt;Alphabetical Descending&lt;/a&gt;&lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/div&gt;
             &lt;div className="container mb-5"&gt;
                 {loading &amp;&amp; &lt;div&gt;Loading collections...&lt;/div&gt;}
                 {error &amp;&amp; &lt;div className="mb-5 text-danger"&gt;Error: Failed to load collections.&lt;/div&gt;}
-                {!error &amp;&amp; Object.keys(sortedData).length === 0 &amp;&amp; &lt;div&gt;No collections to display.&lt;/div&gt;}
-                &lt;div className="row row-cols-1 row-cols-md-4 g-5 mb-4"&gt;
-                    {sortedData &amp;&amp; Array.from(sortedData).map(<span class="fstat-no" title="function not covered" >el</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >                        return (</span>
+                {!error &amp;&amp; sortedData.length === 0 &amp;&amp; &lt;div&gt;No collections to display.&lt;/div&gt;}
+                {sortedData.length &gt; 0 &amp;&amp; &lt;div className="row row-cols-1 row-cols-md-4 g-5 mb-4"&gt;
+                    {sortedData &amp;&amp; Array.from(sortedData).map(el =&gt; {
+                        return (
                             &lt;div className="col" key={el.id}&gt;
-                                &lt;div className="card text-center"&gt;
+                                &lt;div className="card text-center" data-testid={"card"}&gt;
                                     &lt;div className="card-body" id={el.id}&gt;
                                         &lt;h4 className="card-title" onClick={handleClick}&gt;
                                             {el.name}
@@ -257,7 +257,7 @@ export default function <span class="fstat-no" title="function not covered" >Use
                             &lt;/div&gt;
                         );
                     })}
-                &lt;/div&gt;
+                &lt;/div&gt;}
             &lt;/div&gt;
         &lt;/&gt;
     );
@@ -268,7 +268,7 @@ export default function <span class="fstat-no" title="function not covered" >Use
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-04T07:28:14.879Z
+                at 2025-05-05T09:25:38.856Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

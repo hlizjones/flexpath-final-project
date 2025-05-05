@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/27</span>
+                <span class='fraction'>0/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/16</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/26</span>
+                <span class='fraction'>0/17</span>
             </div>
         
             
@@ -120,37 +120,13 @@
 <a name='L55'></a><a href='#L55'>55</a>
 <a name='L56'></a><a href='#L56'>56</a>
 <a name='L57'></a><a href='#L57'>57</a>
-<a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a>
-<a name='L72'></a><a href='#L72'>72</a>
-<a name='L73'></a><a href='#L73'>73</a>
-<a name='L74'></a><a href='#L74'>74</a>
-<a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L58'></a><a href='#L58'>58</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -179,20 +155,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -218,18 +180,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useContext, useEffect } from "react";
 import { DataContext } from "../../../context/DataProvider";
 import useCreateRequest from "../../../hooks/useCreateRequest";
-import { useNavigate } from "react-router-dom";
-import useLoadPage from "../../../hooks/useLoadPage";
 import useMessageTimeout from "../../../hooks/useMessageTimeout";
+import DeleteCollection from "./DeleteCollection";
 &nbsp;
 export default function <span class="fstat-no" title="function not covered" >CollectionManager(</span>{ id }) {
     const { setRefresh } = <span class="cstat-no" title="statement not covered" >useContext(DataContext);</span>
-    const navigate = <span class="cstat-no" title="statement not covered" >useNavigate();</span>
-    const { handleLoad } = <span class="cstat-no" title="statement not covered" >useLoadPage();</span>
     const { handleRequest, data, loading, error } = <span class="cstat-no" title="statement not covered" >useCreateRequest();</span>
-    const { handleRequest: handleDelete, data: deleteCollectionData, loading: deleteCollectionLoading, error: deleteCollectionError } = <span class="cstat-no" title="statement not covered" >useCreateRequest();</span>
 <span class="cstat-no" title="statement not covered" >    useMessageTimeout(data);</span>
-<span class="cstat-no" title="statement not covered" >    useMessageTimeout(deleteCollectionError);</span>
 &nbsp;
     const handleSubmit = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        e.preventDefault();</span>
@@ -254,16 +211,6 @@ export default function <span class="fstat-no" title="function not covered" >Col
         }
     }, [data, setRefresh]);
 &nbsp;
-    const handleDeleteButton = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        handleDelete(null, `api/collection/${id}`, "DELETE");</span>
-    }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        if (Object.keys(deleteCollectionData).length &gt; 0) {</span>
-<span class="cstat-no" title="statement not covered" >            handleLoad(`api/collection?profile=true`, `profile`);</span>
-        }
-    }, [deleteCollectionData, navigate, handleLoad]);
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    return (</span>
         &lt;div className='container'&gt;
             &lt;div className="row row-cols-1 g-5"&gt;
@@ -278,15 +225,11 @@ export default function <span class="fstat-no" title="function not covered" >Col
                             &lt;button className="btn btn-secondary" type="submit"&gt;Update&lt;/button&gt;
                         &lt;/div&gt;
                     &lt;/form &gt;
-                    &lt;div className="col-md-5 d-grid gap-3 mb-3"&gt;
-                        &lt;button className="btn btn-danger" type="button" onClick={handleDeleteButton}&gt;Delete collection&lt;/button&gt;
-                    &lt;/div&gt;
+                    &lt;DeleteCollection id={id} /&gt;
                 &lt;/div &gt;
                 &lt;div className='col-md-6 mb-3'&gt;
                     {loading &amp;&amp; &lt;div&gt;Updating collection...&lt;/div&gt;}
                     {error &amp;&amp; &lt;div className="visible mb-5 text-danger" id="errorMsg"&gt;Error: Failed to update collection.&lt;/div&gt;}
-                    {deleteCollectionLoading &amp;&amp; &lt;div&gt;Deleting collection...&lt;/div&gt;}
-                    {deleteCollectionError &amp;&amp; &lt;div className="visible mb-5 text-danger" id="errorMsg"&gt;Error: Failed to delete collection.&lt;/div&gt;}
                 &lt;/div&gt;
             &lt;/div &gt;
         &lt;/div &gt;
@@ -298,7 +241,7 @@ export default function <span class="fstat-no" title="function not covered" >Col
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-04T07:28:14.879Z
+                at 2025-05-05T09:25:38.856Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

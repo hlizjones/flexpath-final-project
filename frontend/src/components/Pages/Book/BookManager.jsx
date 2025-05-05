@@ -1,16 +1,14 @@
 import React, { useContext, useEffect } from "react";
 import { DataContext } from "../../../context/DataProvider";
 import useCreateRequest from "../../../hooks/useCreateRequest";
-import { useNavigate } from "react-router-dom";
 import useMessageTimeout from "../../../hooks/useMessageTimeout";
+import DeleteBook from "./DeleteBook";
 
 export default function BookManager({ show, setShow, id }) {
     const { setRefresh } = useContext(DataContext);
-    const navigate = useNavigate();
     const { handleRequest, data, loading, error } = useCreateRequest();
-    const { handleRequest: handleDelete, data: deleteBookData, loading: deleteBookLoading, error: deleteBookError } = useCreateRequest();
+
     useMessageTimeout(error);
-    useMessageTimeout(deleteBookError);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -39,16 +37,6 @@ export default function BookManager({ show, setShow, id }) {
         }
     }, [data, setRefresh, setShow]);
 
-    const handleDeleteButton = () => {
-        handleDelete(null, `api/book/${id}`, "DELETE");
-    }
-
-    useEffect(() => {
-        if (Object.keys(deleteBookData).length > 0) {
-            navigate(`/search`);
-        }
-    }, [deleteBookData, navigate]);
-
     return (
         <>
             {show &&
@@ -66,15 +54,11 @@ export default function BookManager({ show, setShow, id }) {
                                     <button className="btn btn-secondary" type="submit">Update</button>
                                 </div>
                             </form >
-                            <div className="col-md-5 d-grid gap-3 mb-3">
-                                <button className="btn btn-danger" type="button" onClick={handleDeleteButton}>Delete book</button>
-                            </div>
+                            <DeleteBook id={id} />
                         </div >
                         <div className='col-md-6 mb-3'>
                             {loading && <div>Updating book...</div>}
                             {error && <div className="visible mb-5 text-danger" id="errorMsg">Error: Failed to update book.</div>}
-                            {deleteBookLoading && <div>Deleting book...</div>}
-                            {deleteBookError && <div className="visible mb-5 text-danger" id="errorMsg">Error: Failed to delete book.</div>}
                         </div>
                     </div >
                 </div >

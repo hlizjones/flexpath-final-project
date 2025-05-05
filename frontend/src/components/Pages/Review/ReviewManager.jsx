@@ -1,19 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import { DataContext } from "../../../context/DataProvider";
 import useCreateRequest from "../../../hooks/useCreateRequest";
-import { useNavigate } from "react-router-dom";
-import useLoadPage from "../../../hooks/useLoadPage";
 import useMessageTimeout from "../../../hooks/useMessageTimeout";
-
+import DeleteReview from "./DeleteReview";
 
 export default function ReviewManager({ id, bookId }) {
     const { setRefresh } = useContext(DataContext);
-    const navigate = useNavigate();
     const { handleRequest, data, loading, error } = useCreateRequest();
-    const { handleRequest: handleDelete, data: deleteReviewData, loading: deleteReviewLoading, error: deleteReviewError } = useCreateRequest();
-    const { handleLoad } = useLoadPage();
     useMessageTimeout(error);
-    useMessageTimeout(deleteReviewError);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -38,16 +32,6 @@ export default function ReviewManager({ id, bookId }) {
         }
     }, [data, setRefresh]);
 
-    const handleDeleteButton = () => {
-        handleDelete(null, `api/review/${id}`, "DELETE");
-    }
-
-    useEffect(() => {
-        if (Object.keys(deleteReviewData).length > 0) {
-            handleLoad(`api/book/${bookId}`, 'book');
-        }
-    }, [deleteReviewData, navigate, bookId, handleLoad]);
-
     return (
         <div className='container mt-5'>
             <div className='d-flex justify-content-center'>
@@ -62,14 +46,10 @@ export default function ReviewManager({ id, bookId }) {
                             <button className="btn btn-secondary" type="submit">Update Review</button>
                         </div>
                     </form>
-                    <div className="d-grid gap-3 mb-3">
-                        <button className="btn btn-danger" type="button" onClick={handleDeleteButton}>Delete review</button>
-                    </div>
+                    <DeleteReview id={id} bookId={bookId} />
                     <div className='col-md-6 mb-3'>
                         {loading && <div>Updating review...</div>}
                         {error && <div className="visible mb-5 text-danger" id="errorMsg">Error: Failed to update review.</div>}
-                        {deleteReviewLoading && <div>Deleting review...</div>}
-                        {deleteReviewError && <div className="visible mb-5 text-danger" id="errorMsg">Error: Failed to delete review.</div>}
                     </div>
                 </div>
             </div >

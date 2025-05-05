@@ -1,21 +1,19 @@
-import React, { useMemo, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
 import { AuthContext } from "../../../context/AuthProvider";
 import useLoadPage from "../../../hooks/useLoadPage";
 import { DataContext } from "../../../context/DataProvider";
 import useSort from "../../../hooks/useSort";
 
-export default function BookReviewsTable({ bookId }) {
-    const { token, username, role } = useContext(AuthContext);
+export default function BookReviewsTable({ url, options }) {
+    const { username, role } = useContext(AuthContext);
     const { refresh } = useContext(DataContext);
     const { handleLoad } = useLoadPage();
 
-    const url = useMemo(() => `api/review?bookId=${bookId}`, [bookId]);
-    const options = useMemo(() => ({ headers: { 'Authorization': `Bearer ${token}` } }), [token]);
     const { data, loading, error } = useFetch(url, options, refresh);
-    
-    const [sort, setSort] = useState({key: null, order: true});
-    const {sortedData} = useSort(data, sort, setSort);
+
+    const [sort, setSort] = useState({ key: null, order: true });
+    const { sortedData } = useSort(data, sort, setSort);
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -24,32 +22,31 @@ export default function BookReviewsTable({ bookId }) {
 
     const handleSort = (e) => {
         const key = e.currentTarget.id;
-        setSort({key: key, order: key === sort.key ? !sort.order : sort.order});
+        setSort({ key: key, order: key === sort.key ? !sort.order : sort.order });
     }
 
-    console.log(sortedData)
     return (
         <div className="container">
-            {loading && <div>Loading Records...</div>}
+            {loading && <div>Loading reviews...</div>}
             {(error && sortedData.length === 0) && <div className="mb-5 text-danger">Error: Failed to load reviews.</div>}
             {(!error && sortedData.length === 0) && <div>No reviews to display.</div>}
-            <table className="table table-hover">
+            {sortedData.length > 0 && <table className="table table-hover">
                 <thead className="table-secondary text-center">
                     <tr>
                         {sortedData[0] && Object.keys(sortedData[0]).map(key => {
                             if (key != "id" && key != "bookId" && key != "privacy" && key != "isAdmin") {
-                                if (key != "content"){
-                                return (
-                                    <th className="text-uppercase align-middle" scope="col" key={key} id={key} onClick={handleSort}>
-                                        {key}
-                                        <i className="bi bi-caret-up-fill" id={key+"caret"}></i>
+                                if (key != "content") {
+                                    return (
+                                        <th data-testid="headers" className="text-uppercase align-middle" scope="col" key={key} id={key} onClick={handleSort}>
+                                            {key}
+                                            <i className="bi bi-caret-up-fill" id={key + "caret"}></i>
                                         </th>
-                                )
-                            } else {
-                                return (
-                                    <th className="text-uppercase align-middle" scope="col" key={key}>{key}</th>
-                                )
-                            }
+                                    )
+                                } else {
+                                    return (
+                                        <th className="text-uppercase align-middle" scope="col" key={key}>{key}</th>
+                                    )
+                                }
                             }
                         })}
                         {sortedData[0] && <th>EDIT YOUR REVIEW</th>}
@@ -58,7 +55,7 @@ export default function BookReviewsTable({ bookId }) {
                 <tbody className="text-center">
                     {sortedData && Array.from(sortedData).map(el => {
                         return (
-                            <tr key={el["id"]}>
+                            <tr data-testid={"reviewRow"} key={el["id"]}>
                                 {Object.entries(el).map(([key, value]) => {
                                     if (key != "id" && key != "bookId" && key != "privacy" && key != "isAdmin") {
                                         if (key === "username") {
@@ -72,14 +69,14 @@ export default function BookReviewsTable({ bookId }) {
                                 })}
                                 <td className="align-middle" key={el["id"] + "btn"}>
                                     {(el.username === username || role === "ADMIN") &&
-                                        <i className="bi bi-pencil-square h3 " onClick={handleClick} id={el["id"]}></i>
+                                        <i data-testid={"editIcon"} className="bi bi-pencil-square h3 " onClick={handleClick} id={el["id"]}></i>
                                     }
                                 </td>
                             </tr>
                         );
                     })}
                 </tbody>
-            </table>
+            </table>}
         </div>
     );
 }

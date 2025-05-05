@@ -2,20 +2,20 @@ import { act, renderHook } from "@testing-library/react";
 import useCreateRequest from "./useCreateRequest";
 import { AuthContext } from "../context/AuthProvider";
 import { BrowserRouter } from "react-router-dom";
-import * as fetch from "./useFetch";
+import useFetch from "./useFetch";
 
 jest.mock('./useFetch');
-const mockToken = { token: "token" }
+
 const wrapper = ({ children }) =>
     <BrowserRouter>
-        <AuthContext.Provider value={mockToken}>
+        <AuthContext.Provider value={{ token: "token" }}>
             {children}
         </AuthContext.Provider>
     </BrowserRouter>
 
 describe("useCreateRequest", () => {
     it('Initial state should be empty', () => {
-        fetch.default.mockImplementation(() => ({ data: [], loading: false, error: null }));
+        useFetch.mockImplementation(() => ({ data: [], loading: false, error: null }));
         const { result } = renderHook(() => useCreateRequest(), { wrapper });
 
         expect(result.current.data).toEqual([]);
@@ -25,7 +25,7 @@ describe("useCreateRequest", () => {
     })
 
     it('handleRequest should call useFetch', () => {
-        fetch.default.mockImplementation(() => ({ data: [], loading: null, error: null }));
+        useFetch.mockImplementation(() => ({ data: [], loading: false, error: null }));
         const { result } = renderHook(() => useCreateRequest(), { wrapper });
 
         act(() => {
@@ -36,7 +36,7 @@ describe("useCreateRequest", () => {
             }, "api/book", "POST")
         });
 
-        expect(fetch.default).toHaveBeenCalledWith(
+        expect(useFetch).toHaveBeenCalledWith(
             'api/book',
             {
                 method: "POST",

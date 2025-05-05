@@ -40,7 +40,7 @@ export default function Collection() {
             <div className="d-flex"><button className="btn btn-secondary col-2" type="button" onClick={reveal}>Edit collection</button></div>
             </div>
             {((username === data.username || role === "ADMIN") && show) && <CollectionManager id={data.id} show ={show} setShow = {setShow} />}
-            <CollectionBooksTable id={data.id} />
+            <CollectionBooksTable id={data.id} username={data.username} />
         </>
     );
 }

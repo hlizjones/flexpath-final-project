@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>0/13</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>0/12</span>
             </div>
         
             
@@ -106,7 +106,15 @@
 <a name='L41'></a><a href='#L41'>41</a>
 <a name='L42'></a><a href='#L42'>42</a>
 <a name='L43'></a><a href='#L43'>43</a>
-<a name='L44'></a><a href='#L44'>44</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -118,6 +126,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -125,6 +135,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -149,7 +165,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useContext, useState } from "react";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../../context/DataProvider";
 import { AuthContext } from "../../../context/AuthProvider";
 import BookReviewsTable from "./BookReviewsTable";
@@ -158,22 +174,30 @@ import AddToCollection from "./AddToCollection";
 import BookManager from "./BookManager";
 &nbsp;
 export default function <span class="fstat-no" title="function not covered" >Book(</span>) {
-    const { role } = <span class="cstat-no" title="statement not covered" >useContext(AuthContext);</span>
+    const { role, token } = <span class="cstat-no" title="statement not covered" >useContext(AuthContext);</span>
     const { data, loading, error } = <span class="cstat-no" title="statement not covered" >useContext(DataContext);</span>
     const [show, setShow] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
+    const [reviewUrl, setReviewUrl] = <span class="cstat-no" title="statement not covered" >useState(null)</span>
+    const [reviewOptions, setReviewOptions] = <span class="cstat-no" title="statement not covered" >useState(null)</span>
 &nbsp;
     const reveal = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        e.preventDefault();</span>
 <span class="cstat-no" title="statement not covered" >        setShow(<span class="fstat-no" title="function not covered" >sh</span>ow =&gt; <span class="cstat-no" title="statement not covered" >!show)</span>;</span>
     }
-    
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    useEffect(<span class="fstat-no" title="function not covered" >()</span>=&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        setReviewUrl(`api/review?bookId=${data.id}`)</span>
+<span class="cstat-no" title="statement not covered" >        setReviewOptions({ headers: { 'Authorization': `Bearer ${token}` } })</span>
+    }, [data, token])
+&nbsp;
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    return (</span>
         &lt;&gt;
             &lt;div className="container text-center mb-3"&gt;
                 {loading &amp;&amp; &lt;div&gt;Loading book...&lt;/div&gt;}
                 {error &amp;&amp; &lt;div className="mb-5 text-danger"&gt;Error: Failed to load book.&lt;/div&gt;}
                 {!error &amp;&amp; &lt;div&gt;&lt;h1&gt;Title: {data.title}&lt;/h1&gt;
-                &lt;h4 className="mb-3"&gt;Author: {data.author} | Genre: {data.genre}&lt;/h4&gt;&lt;/div&gt;}
+                    &lt;h4 className="mb-3"&gt;Author: {data.author} | Genre: {data.genre}&lt;/h4&gt;&lt;/div&gt;}
                 {role === "ADMIN" &amp;&amp; &lt;div className="d-flex justify-content-center"&gt;&lt;button className="btn btn-outline-secondary col-2" type="button" onClick={reveal}&gt;Edit book&lt;/button&gt;&lt;/div&gt;}
             &lt;/div&gt;
             &lt;div className="container mb-5"&gt;
@@ -189,7 +213,7 @@ export default function <span class="fstat-no" title="function not covered" >Boo
                     &lt;/div&gt;
                 &lt;/div&gt;
             &lt;/div &gt;
-            &lt;BookReviewsTable bookId={data.id} /&gt;
+            &lt;BookReviewsTable url={reviewUrl} options={reviewOptions} /&gt;
         &lt;/&gt;
     );
 }</pre></td></tr></table></pre>
@@ -199,7 +223,7 @@ export default function <span class="fstat-no" title="function not covered" >Boo
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-04T07:28:14.879Z
+                at 2025-05-05T09:25:38.856Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

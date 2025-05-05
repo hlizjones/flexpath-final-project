@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/Pages/Profile/User.jsx</title>
+    <title>Code coverage report for src/components/Pages/Collection/DeleteCollection.jsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../../prettify.css" />
     <link rel="stylesheet" href="../../../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">src/components/Pages/Profile</a> User.jsx</h1>
+        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">src/components/Pages/Collection</a> DeleteCollection.jsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/14</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
-                <span class="quiet">Functions</span>
                 <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/3</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
@@ -94,22 +94,12 @@
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -117,8 +107,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -133,41 +125,37 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useContext, useEffect, useMemo } from "react";
-import { AuthContext } from "../../../context/AuthProvider";
-import useFetch from "../../../hooks/useFetch";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useEffect } from "react";
+import useCreateRequest from "../../../hooks/useCreateRequest";
+import { useNavigate } from "react-router-dom";
+import useLoadPage from "../../../hooks/useLoadPage";
+import useMessageTimeout from "../../../hooks/useMessageTimeout";
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >User(</span>) {
-    const { setUsername, username, setRole, token } = <span class="cstat-no" title="statement not covered" >useContext(AuthContext);</span>
+export default function <span class="fstat-no" title="function not covered" >DeleteCollection(</span>{ id }) {
+    const navigate = <span class="cstat-no" title="statement not covered" >useNavigate();</span>
+    const { handleLoad } = <span class="cstat-no" title="statement not covered" >useLoadPage();</span>
+    const { handleRequest, data, loading, error } = <span class="cstat-no" title="statement not covered" >useCreateRequest();</span>
+<span class="cstat-no" title="statement not covered" >    useMessageTimeout(error);</span>
 &nbsp;
-    const userUrl = <span class="cstat-no" title="statement not covered" >useMemo(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >`api/profile`,</span> []);</span>
-    const roleUrl = <span class="cstat-no" title="statement not covered" >useMemo(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >`api/profile/roles`,</span> []);</span>
-    const options = <span class="cstat-no" title="statement not covered" >useMemo(<span class="fstat-no" title="function not covered" >()</span> =&gt; (<span class="cstat-no" title="statement not covered" >{ headers: { 'Authorization': `Bearer ${token}` } })</span>, [token]);</span>
-    const { data: userData, loading: userLoading, error: userError } = <span class="cstat-no" title="statement not covered" >useFetch(userUrl, options);</span>
-    const { data: roleData, loading: roleLoading, error: roleError } = <span class="cstat-no" title="statement not covered" >useFetch(roleUrl, options);</span>
+&nbsp;
+    const handleDeleteButton = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        handleRequest(null, `api/collection/${id}`, "DELETE");</span>
+    }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        if (userData) {</span>
-<span class="cstat-no" title="statement not covered" >            localStorage.setItem("username", userData.username);</span>
-<span class="cstat-no" title="statement not covered" >            setUsername(userData.username);</span>
+<span class="cstat-no" title="statement not covered" >        if (Object.keys(data).length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >            handleLoad(`api/collection?profile=true`, `profile`);</span>
         }
-    }, [userData, setUsername]);
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        if (roleData) {</span>
-<span class="cstat-no" title="statement not covered" >            localStorage.setItem("role", roleData[0]);</span>
-<span class="cstat-no" title="statement not covered" >            setRole(roleData[0]);</span>
-        }
-    }, [roleData, setRole]);
+    }, [data, navigate, handleLoad]);
 &nbsp;
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return (</span>
-        &lt;div className="container text-center mb-5"&gt;
-            {(userLoading || roleLoading) &amp;&amp; &lt;div className="mb-5"&gt;Loading profile...&lt;/div&gt;}
-            {(userError || roleError) &amp;&amp; &lt;div className="mb-5 text-danger"&gt;Failed to load user profile.&lt;/div&gt;}
-            {(!userError &amp;&amp; !roleError &amp;&amp; userData) &amp;&amp; &lt;h1 className="text-capitalize"&gt;Welcome back to your library, {username}!&lt;/h1&gt;}
+        &lt;div className="col-md-5 d-grid gap-3 mb-3"&gt;
+            &lt;button className="btn btn-danger" type="button" onClick={handleDeleteButton}&gt;Delete collection&lt;/button&gt;
+            {loading &amp;&amp; &lt;div&gt;Deleting collection...&lt;/div&gt;}
+            {error &amp;&amp; &lt;div className="visible mb-5 text-danger" id="errorMsg"&gt;Error: Failed to delete collection.&lt;/div&gt;}
         &lt;/div&gt;
-    );
+    )
 }</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

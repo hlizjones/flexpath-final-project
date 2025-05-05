@@ -67,6 +67,9 @@ public class ReviewDao {
                     .orderByClauses("CASE WHEN username = ? THEN 1 ELSE 2 END")
                     .orderByValues(review.getUsername())
                     .orderByClauses("rating DESC");
+        } else if (!review.getIsAdmin()) {
+            qb.whereComplex("(privacy = false OR (privacy = true AND username = ?))")
+                    .complexValues(review.getUsername());
         }
 
         PreparedStatementCreator psc = qb.build();

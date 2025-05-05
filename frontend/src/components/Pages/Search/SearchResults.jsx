@@ -18,10 +18,10 @@ export default function SearchResults({ page, data, loading, error, setSort, sor
 
     return (
         <div className="container">
-            {loading && <div>Loading records...</div>}
-            {error && <div className="mb-5 text-danger">Error: Failed to load records.</div>}
-            {!error && Object.keys(sortedData).length === 0 && <div>Search to find a book or collection!</div>}
-            {Object.keys(sortedData).length > 0 &&
+            {loading && <div>Loading search results...</div>}
+            {error && <div className="mb-5 text-danger">Error: Failed to load search results.</div>}
+            {!error && sortedData.length === 0 && <div>Search to find a book or collection!</div>}
+            {sortedData.length > 0 &&
                 <table className="table table-hover">
                     <thead className="table-secondary">
                         <tr>

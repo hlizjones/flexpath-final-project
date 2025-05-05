@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../../context/DataProvider";
 import { AuthContext } from "../../../context/AuthProvider";
 import BookReviewsTable from "./BookReviewsTable";
@@ -7,22 +7,30 @@ import AddToCollection from "./AddToCollection";
 import BookManager from "./BookManager";
 
 export default function Book() {
-    const { role } = useContext(AuthContext);
+    const { role, token } = useContext(AuthContext);
     const { data, loading, error } = useContext(DataContext);
     const [show, setShow] = useState(false);
+    const [reviewUrl, setReviewUrl] = useState(null)
+    const [reviewOptions, setReviewOptions] = useState(null)
 
     const reveal = (e) => {
         e.preventDefault();
         setShow(show => !show);
     }
-    
+
+    useEffect(()=> {
+        setReviewUrl(`api/review?bookId=${data.id}`)
+        setReviewOptions({ headers: { 'Authorization': `Bearer ${token}` } })
+    }, [data, token])
+
+
     return (
         <>
             <div className="container text-center mb-3">
                 {loading && <div>Loading book...</div>}
                 {error && <div className="mb-5 text-danger">Error: Failed to load book.</div>}
                 {!error && <div><h1>Title: {data.title}</h1>
-                <h4 className="mb-3">Author: {data.author} | Genre: {data.genre}</h4></div>}
+                    <h4 className="mb-3">Author: {data.author} | Genre: {data.genre}</h4></div>}
                 {role === "ADMIN" && <div className="d-flex justify-content-center"><button className="btn btn-outline-secondary col-2" type="button" onClick={reveal}>Edit book</button></div>}
             </div>
             <div className="container mb-5">
@@ -38,7 +46,7 @@ export default function Book() {
                     </div>
                 </div>
             </div >
-            <BookReviewsTable bookId={data.id} />
+            <BookReviewsTable url={reviewUrl} options={reviewOptions} />
         </>
     );
 }

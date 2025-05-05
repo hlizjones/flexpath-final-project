@@ -87,6 +87,28 @@ public class BookCollectionDaoTest {
     }
 
     @Test
+    public void BookCollectionDao_getCollectionPrivacy_ReturnsPrivacy () {
+        Boolean expectedPrivacy = true;
+
+        Mockito.when(jdbcTemplate.queryForObject(eq("SELECT privacy FROM collections WHERE collection_id = ?"), eq(Boolean.class), anyInt()))
+                .thenReturn(expectedPrivacy);
+
+        Boolean actualPrivacy = bookCollectionDao.getCollectionPrivacy(1);
+
+        assertEquals(expectedPrivacy, actualPrivacy);
+    }
+
+    @Test
+    public void BookCollectionDao_getCollectionPrivacy_ReturnsNull () {
+        Mockito.when(jdbcTemplate.queryForObject(eq("SELECT privacy FROM collections WHERE collection_id = ?"), eq(Boolean.class), anyInt()))
+                .thenReturn(null);
+
+        Boolean actualPrivacy = bookCollectionDao.getCollectionPrivacy(1);
+
+        assertNull(actualPrivacy);
+    }
+
+    @Test
     public void BookCollectionDao_addBookToCollection_ReturnsInt () {
         Mockito.when(jdbcTemplate.update(eq("INSERT INTO book_collections (book_id, collection_id) VALUES (?, ?)"), anyInt(), anyInt()))
                 .thenReturn(1);

@@ -34,9 +34,9 @@ public class ReviewController {
      * @return List of Review.
      */
     @GetMapping
-    public List<Review> getReviews(@RequestParam(required = false) int bookId, Principal principal) {
+    public List<Review> getReviews(@RequestParam(required = false) Integer bookId, Principal principal) {
         Review review = new Review();
-        if (bookId > 0) {
+        if (bookId != null) {
             review.setBookId(bookId);
         }
         if (isAdmin()) {

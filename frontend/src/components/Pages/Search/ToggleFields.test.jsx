@@ -56,7 +56,7 @@ describe('ToggleFields', () => {
         expect(firstInput).toHaveAttribute("placeholder", "Name");
         expect(secondInput).toHaveAttribute("placeholder", "Username");
 
-    })
+    });
 
     it('Should call state setters when Collection is selected', () => {
         render(
@@ -78,7 +78,7 @@ describe('ToggleFields', () => {
         expect(setSecondInputField).toHaveBeenCalledWith("Username");
         expect(setThirdInputField).toHaveBeenCalledWith(false);
 
-    })
+    });
 
     it('Should call state setters when Book is selected', () => {
         render(
@@ -100,5 +100,5 @@ describe('ToggleFields', () => {
         expect(setSecondInputField).toHaveBeenCalledWith("Author");
         expect(setThirdInputField).toHaveBeenCalledWith("Genre");
 
-    })
+    });
 })

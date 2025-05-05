@@ -63,6 +63,20 @@ public class BookCollectionDao {
     }
 
     /**
+     * Gets the privacy of a collection.
+     *
+     * @param id The id of the collection
+     * @return String The username of the collection.
+     */
+    public Boolean getCollectionPrivacy(int id) {
+        try {
+            return jdbcTemplate.queryForObject("SELECT privacy FROM collections WHERE collection_id = ?", Boolean.class, id);
+        } catch (DataAccessException e) {
+            return null;
+        }
+    }
+
+    /**
      * Adds book to a collection.
      *
      * @param bookId The id of the book.

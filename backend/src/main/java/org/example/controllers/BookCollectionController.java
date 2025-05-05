@@ -36,7 +36,7 @@ public class BookCollectionController {
      */
     @GetMapping
     public List<Book> getBooksByCollection(@RequestParam int id, Principal principal) {
-        if (isAdmin() || Objects.equals(bookCollectionDao.getCollectionUsername(id), principal.getName())) {
+        if (isAdmin() || Objects.equals(bookCollectionDao.getCollectionUsername(id), principal.getName()) || !bookCollectionDao.getCollectionPrivacy(id)) {
                 return bookCollectionDao.getBooksByCollectionId(id);
             } else {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");

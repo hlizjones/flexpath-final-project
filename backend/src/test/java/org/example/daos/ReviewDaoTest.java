@@ -83,6 +83,48 @@ public class ReviewDaoTest {
     }
 
     @Test
+    public void ReviewDao_getReviewsByBookIdForAdmin_ReturnsListOfReviews () {
+        Review review1 = new Review(1, 1, 5, "Great book!", true, "user");
+        Review review2 = new Review(1, 1, 3, "Not my favorite", false, "admin");
+        List<Review> expectedReviews = new ArrayList<>();
+        expectedReviews.add(review1);
+        expectedReviews.add(review2);
+
+        Review review = new Review();
+        review.setIsAdmin(true);
+        review.setBookId(1);
+
+        Mockito.when(jdbcTemplate.query(any(PreparedStatementCreator.class), any(RowMapper.class)))
+                .thenReturn(expectedReviews);
+
+        List<Review> actualReviews = reviewDao.getReviews(review);
+
+        assertEquals(expectedReviews, actualReviews);
+        assertEquals(2, actualReviews.size());
+    }
+
+    @Test
+    public void ReviewDao_getReviewsByBookId_ReturnsListOfReviews () {
+        Review review1 = new Review(1, 1, 5, "Great book!", true, "user");
+        Review review2 = new Review(1, 1, 3, "Not my favorite", false, "admin");
+        List<Review> expectedReviews = new ArrayList<>();
+        expectedReviews.add(review1);
+        expectedReviews.add(review2);
+
+        Review review = new Review();
+        review.setIsAdmin(false);
+        review.setBookId(1);
+
+        Mockito.when(jdbcTemplate.query(any(PreparedStatementCreator.class), any(RowMapper.class)))
+                .thenReturn(expectedReviews);
+
+        List<Review> actualReviews = reviewDao.getReviews(review);
+
+        assertEquals(expectedReviews, actualReviews);
+        assertEquals(2, actualReviews.size());
+    }
+
+    @Test
     public void ReviewDao_getReviews_ReturnsEmptyArray () {
         List<Review> expectedReviews = new ArrayList<>();
 
