@@ -12,6 +12,10 @@ jest.mock('../../../hooks/useLoadPage', () => {
 
 jest.mock('../../../hooks/useSort');
 
+afterEach(() => {
+    jest.clearAllMocks();
+});
+
 describe('SearchResults', () => {
     const setSort = jest.fn()
     const data = [{

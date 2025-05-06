@@ -37,7 +37,7 @@ export default function CollectionManager({ id }) {
             <div className="row row-cols-1 g-5">
                 <div className='col-md-6 mb-3'>
                     <h4>Update your book collection.</h4>
-                    <form onSubmit={handleSubmit}>
+                    <form aria-label="form" onSubmit={handleSubmit}>
                         <div className="d-grid gap-3 mt-3 mb-3">
                             <input className="form-control" type="text" id="name" placeholder="Name of Collection"></input>
                             <textarea className="form-control" type="description" id="description" placeholder="Describe your collection"></textarea>

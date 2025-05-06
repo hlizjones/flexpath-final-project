@@ -30,6 +30,10 @@ jest.mock('react-router-dom', () => ({
 const mockNavigate = jest.fn();
 useNavigate.mockReturnValue(mockNavigate);
 
+afterEach(() => {
+    jest.clearAllMocks();
+});
+
 describe("useLoadPage", () => {
     it('Should call state setters when handleLoad is called', () => {
 

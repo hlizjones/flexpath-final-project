@@ -26,7 +26,7 @@ export default function Login() {
     }
 
     return (
-        <form className="container" onSubmit={handleSubmit}>
+        <form aria-label="form" className="container" onSubmit={handleSubmit}>
             <div className="d-flex justify-content-center align-items-center ">
                 <div className="col-md-4 d-grid gap-3 mt-5">
                     <input className="form-control" type="text" id="username" placeholder="Username"></input>

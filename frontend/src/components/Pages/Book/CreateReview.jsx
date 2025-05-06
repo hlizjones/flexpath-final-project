@@ -30,7 +30,6 @@ export default function CreateReview({ id }) {
 
     useEffect(() => {
         if (Object.keys(data).length > 0) {
-            console.log(data)
             setRefresh(refresh => !refresh);
         }
     }, [data, setRefresh]);
@@ -38,7 +37,7 @@ export default function CreateReview({ id }) {
     return (
         <div>
             <h4>Create new review.</h4>
-            <form onSubmit={handleSubmit}>
+            <form aria-label="form" onSubmit={handleSubmit}>
                 <div className="d-grid gap-3 mt-3 mb-3">
                     <input className="form-control" type="number" min="1" max="5" id="rating" placeholder="Rating"></input>
                     <textarea className="form-control" type="search" id="content" placeholder="Share your thoughts"></textarea>

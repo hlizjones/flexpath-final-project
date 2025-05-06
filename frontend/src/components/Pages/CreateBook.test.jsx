@@ -15,6 +15,10 @@ jest.mock('../../hooks/useLoadPage', () => {
 
 jest.mock('../../hooks/useMessageTimeout');
 
+afterEach(() => {
+    jest.clearAllMocks();
+});
+
 describe('CreateBook', () => {
     it('Should render a form', () => {
         useCreateRequest.mockImplementation(()=> ({

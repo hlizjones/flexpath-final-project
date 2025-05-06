@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -89,44 +89,44 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from "react";
 import useCreateRequest from "./useCreateRequest";
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >usePrivacy(</span>) {
-    const { handleRequest } = <span class="cstat-no" title="statement not covered" >useCreateRequest();</span>
+export default function usePrivacy() {
+    const { handleRequest } = useCreateRequest();
 &nbsp;
-    const handlePrivacy = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>, url) =&gt; {</span>
+    const handlePrivacy = (e, url) =&gt; {
         let bool;
-<span class="cstat-no" title="statement not covered" >        if (e.currentTarget.className.includes('bi-lock')) {</span>
-<span class="cstat-no" title="statement not covered" >            bool = false;</span>
-<span class="cstat-no" title="statement not covered" >            e.currentTarget.className = "bi bi-unlock h1";</span>
+        if (e.currentTarget.className.includes('bi-lock')) {
+            bool = false;
+            e.currentTarget.className = "bi bi-unlock h1";
         } else {
-<span class="cstat-no" title="statement not covered" >            bool = true;</span>
-<span class="cstat-no" title="statement not covered" >            e.currentTarget.className = "bi bi-lock h1";</span>
+            bool = true;
+            e.currentTarget.className = "bi bi-lock h1";
         }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        handleRequest({ privacy: bool }, url, "PUT");</span>
+        handleRequest({ privacy: bool }, url, "PUT");
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return (</span>
+    return (
         { handlePrivacy }
     );
 }</pre></td></tr></table></pre>
@@ -136,7 +136,7 @@ export default function <span class="fstat-no" title="function not covered" >use
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-05T09:25:38.856Z
+                at 2025-05-06T03:27:59.895Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

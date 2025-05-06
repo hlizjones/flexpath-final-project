@@ -6,17 +6,14 @@ import * as useSortHook from '../../../hooks/useSort';
 import { AuthContext } from '../../../context/AuthProvider';
 import { DataContext } from '../../../context/DataProvider';
 
-//auth context
 const mockAuthContext = {
     token: "token"
 }
 
-//datacontext
 const mockDataContext = {
     refresh: true
 }
 
-//useloadpage
 const mockHandleLoad = jest.fn();
 jest.mock('../../../hooks/useLoadPage', () => {
     return {
@@ -25,11 +22,13 @@ jest.mock('../../../hooks/useLoadPage', () => {
     }
 });
 
-//usefetch
 jest.mock('../../../hooks/useFetch');
 
-//usesortjest.mock('../../../hooks/useSort');
 jest.mock('../../../hooks/useSort');
+
+afterEach(() => {
+    jest.clearAllMocks();
+});
 
 describe("UserCollections", () => {
     const data = [

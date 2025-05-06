@@ -13,6 +13,10 @@ const wrapper = ({ children }) =>
         </AuthContext.Provider>
     </BrowserRouter>
 
+afterEach(() => {
+    jest.clearAllMocks();
+});
+
 describe("useCreateRequest", () => {
     it('Initial state should be empty', () => {
         useFetch.mockImplementation(() => ({ data: [], loading: false, error: null }));

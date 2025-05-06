@@ -15,7 +15,7 @@ export default function AddToCollectionForm({ formData, id }) {
     return (
         <div>
             <h4>Add book to a collection.</h4>
-            <form onSubmit={handleSubmit}>
+            <form aria-label="form" onSubmit={handleSubmit}>
                 <div className="d-grid gap-3 mt-3 mb-3">
                     {Object.keys(formData).length === 0 && <select className="form-select" name="selectCollection" id="selectCollection" disabled><option>Create a collection to add books.</option></select>}
                     {Object.keys(formData).length > 0 && <select className="form-select" name="selectCollection" id="selectCollection" >

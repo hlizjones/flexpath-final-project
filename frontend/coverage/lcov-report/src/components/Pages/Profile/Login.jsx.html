@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -109,28 +109,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -148,30 +148,30 @@ import { AuthContext } from "../../../context/AuthProvider";
 import useCreateRequest from "../../../hooks/useCreateRequest";
 import useMessageTimeout from "../../../hooks/useMessageTimeout";
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >Login(</span>) {
-    const { setToken, tokenExpMessage } = <span class="cstat-no" title="statement not covered" >useContext(AuthContext);</span>
-    const { handleRequest, data, error } = <span class="cstat-no" title="statement not covered" >useCreateRequest();</span>
-<span class="cstat-no" title="statement not covered" >    useMessageTimeout(error);</span>
+export default function Login() {
+    const { setToken, tokenExpMessage } = useContext(AuthContext);
+    const { handleRequest, data, error } = useCreateRequest();
+    useMessageTimeout(error);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        if (data.accessToken) {</span>
-<span class="cstat-no" title="statement not covered" >            localStorage.setItem("accessToken", data.accessToken.token);</span>
-<span class="cstat-no" title="statement not covered" >            setToken(data.accessToken.token);</span>
+    useEffect(() =&gt; {
+        if (data.accessToken) {
+            localStorage.setItem("accessToken", data.accessToken.token);
+            setToken(data.accessToken.token);
         }
     }, [data, setToken]);
 &nbsp;
-    const handleSubmit = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        e.preventDefault();</span>
-        const username = <span class="cstat-no" title="statement not covered" >document.getElementById("username").value;</span>
-        const password = <span class="cstat-no" title="statement not covered" >document.getElementById("password").value;</span>
+    const handleSubmit = (e) =&gt; {
+        e.preventDefault();
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        handleRequest({ username: `${username}`, password: `${password}` }, "auth/login", "POST", null)</span>
-<span class="cstat-no" title="statement not covered" >        document.getElementById("username").value = "";</span>
-<span class="cstat-no" title="statement not covered" >        document.getElementById("password").value = "";</span>
+        handleRequest({ username: `${username}`, password: `${password}` }, "auth/login", "POST", null)
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return (</span>
-        &lt;form className="container" onSubmit={handleSubmit}&gt;
+    return (
+        &lt;form aria-label="form" className="container" onSubmit={handleSubmit}&gt;
             &lt;div className="d-flex justify-content-center align-items-center "&gt;
                 &lt;div className="col-md-4 d-grid gap-3 mt-5"&gt;
                     &lt;input className="form-control" type="text" id="username" placeholder="Username"&gt;&lt;/input&gt;
@@ -190,7 +190,7 @@ export default function <span class="fstat-no" title="function not covered" >Log
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-05T09:25:38.856Z
+                at 2025-05-06T03:27:59.895Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

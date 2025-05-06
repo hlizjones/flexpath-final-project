@@ -29,6 +29,10 @@ jest.mock('../../../hooks/useFetch');
 
 jest.mock('../../../hooks/useSort');
 
+afterEach(() => {
+    jest.clearAllMocks();
+});
+
 describe("CollectionBooksTable", () => {
     const data = [{
         "id": 1,

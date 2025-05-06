@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import CreateReview from './CreateReview';
-import useCreateRequest from '../../../hooks/useCreateRequest';
+import ReviewManager from './ReviewManager';
 import { DataContext } from '../../../context/DataProvider';
+import useCreateRequest from '../../../hooks/useCreateRequest';
 
 const setRefresh = jest.fn();
 const mockDataContext = {
@@ -13,12 +13,14 @@ jest.mock('../../../hooks/useCreateRequest');
 
 jest.mock('../../../hooks/useMessageTimeout');
 
+jest.mock('./DeleteReview')
+
 afterEach(() => {
     jest.clearAllMocks();
 });
 
-describe("Create review", () => {
-    it("Should render a form", () => {
+describe("ReviewManager", () => {
+    it('Should render a form', () => {
         useCreateRequest.mockImplementation(() => ({
             handleRequest: mockHandleRequest,
             data: [],
@@ -28,14 +30,14 @@ describe("Create review", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CreateReview id={1} />
+                <ReviewManager id={1} bookId={1} />
             </DataContext.Provider>
         );
 
         expect(screen.getByRole('form')).toBeInTheDocument();
-    });
+    })
 
-    it("Should call handleRequest with all fields completed when Create button is clicked", () => {
+    it('Should call handleRequest when Update Review button is clicked', () => {
         useCreateRequest.mockImplementation(() => ({
             handleRequest: mockHandleRequest,
             data: [],
@@ -45,13 +47,12 @@ describe("Create review", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CreateReview id={1} />
+                <ReviewManager id={1} bookId={1} />
             </DataContext.Provider>
         );
 
         const rating = screen.getByPlaceholderText("Rating");
         const content = screen.getByPlaceholderText("Share your thoughts");
-        const privacy = screen.getByLabelText("Private");
 
         fireEvent.change(rating, {
             target: { value: '5' }
@@ -59,46 +60,16 @@ describe("Create review", () => {
         fireEvent.change(content, {
             target: { value: "Great book!" }
         });
-        fireEvent.click(privacy);
 
-        fireEvent.click(screen.getByRole("button", { name: "Create" }));
-
-        expect(mockHandleRequest).toHaveBeenCalledWith({
-            'rating': '5',
-            'content': 'Great book!',
-            'privacy': true
-        }, `api/review?bookId=1`, "POST");
-    });
-
-    it("Should call handleRequest with only rating field completed when Create button is clicked", () => {
-        useCreateRequest.mockImplementation(() => ({
-            handleRequest: mockHandleRequest,
-            data: [],
-            loading: false,
-            error: null
-        }));
-
-        render(
-            <DataContext.Provider value={mockDataContext}>
-                <CreateReview id={1} />
-            </DataContext.Provider>
-        );
-
-        const rating = screen.getByPlaceholderText("Rating");
-
-        fireEvent.change(rating, {
-            target: { value: '5' }
-        });
-
-        fireEvent.click(screen.getByRole("button", { name: "Create" }));
+        fireEvent.click(screen.getByRole("button", { name: "Update Review" }));
 
         expect(mockHandleRequest).toHaveBeenCalledWith({
             'rating': '5',
-            'privacy': false
-        }, `api/review?bookId=1`, "POST")
+            'content': 'Great book!'
+        }, `api/review/1?bookId=1`, "PUT");
     });
 
-    it("Should render a Creating review message", () => {
+    it('Should render updating review message', () => {
         useCreateRequest.mockImplementation(() => ({
             handleRequest: mockHandleRequest,
             data: [],
@@ -108,15 +79,15 @@ describe("Create review", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CreateReview id={1} />
+                <ReviewManager id={1} bookId={1} />
             </DataContext.Provider>
         );
 
-        expect(screen.getByText("Creating review...")).toBeInTheDocument();
-        expect(screen.queryByText("Error: Failed to create review.")).not.toBeInTheDocument();
-    });
+        expect(screen.getByText("Updating review...")).toBeInTheDocument();
+        expect(screen.queryByText("Error: Failed to update review.")).not.toBeInTheDocument();
+    })
 
-    it("Should render an error creating review message", () => {
+    it('Should render error updating review message', () => {
         useCreateRequest.mockImplementation(() => ({
             handleRequest: mockHandleRequest,
             data: [],
@@ -126,15 +97,16 @@ describe("Create review", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CreateReview id={1} />
+                <ReviewManager id={1} bookId={1} />
             </DataContext.Provider>
         );
 
-        expect(screen.getByText("Error: Failed to create review.")).toBeInTheDocument();
-        expect(screen.queryByText("Creating review...")).not.toBeInTheDocument();
-    });
+        expect(screen.queryByText("Updating review...")).not.toBeInTheDocument();
+        expect(screen.getByText("Error: Failed to update review.")).toBeInTheDocument();
 
-    it("Should clear input fields when Create button is clicked", () => {
+    })
+
+    it('Should clear input fields when Update Review button is clicked', () => {
         useCreateRequest.mockImplementation(() => ({
             handleRequest: mockHandleRequest,
             data: [],
@@ -144,13 +116,12 @@ describe("Create review", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CreateReview id={1} />
+                <ReviewManager id={1} bookId={1} />
             </DataContext.Provider>
         );
 
         const rating = screen.getByPlaceholderText("Rating");
         const content = screen.getByPlaceholderText("Share your thoughts");
-        const privacy = screen.getByLabelText("Private");
 
         fireEvent.change(rating, {
             target: { value: '5' }
@@ -158,24 +129,22 @@ describe("Create review", () => {
         fireEvent.change(content, {
             target: { value: "Great book!" }
         });
-        fireEvent.click(privacy);
 
-        fireEvent.click(screen.getByRole("button", { name: "Create" }));
+        fireEvent.click(screen.getByRole("button", { name: "Update Review" }));
 
         expect(rating.value).toBe("");
         expect(content).toHaveValue("");
-        expect(privacy).not.toBeChecked();
-    });
+    })
 
-    it("Should call setRefresh when data is returned from useCreateRequest hook", () => {
+    it('Should call setRefresh when data is returned from useCreateRequest hook', () => {
         useCreateRequest.mockImplementation(() => ({
             handleRequest: mockHandleRequest,
             data: [
                 {
                     "id": 1,
                     "bookId": 1,
-                    "rating": 4,
-                    "content": "Very helpful life tips!",
+                    "rating": 3,
+                    "content": "I didn't like the ending...",
                     "privacy": false,
                     "username": "admin",
                     "isAdmin": null
@@ -187,10 +156,10 @@ describe("Create review", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CreateReview id={1} />
+                <ReviewManager id={1} bookId={1} />
             </DataContext.Provider>
         );
 
         expect(setRefresh).toHaveBeenCalled()
-    });
+    })
 })

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">94.44% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>17/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>8/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/17</span>
+                <span class='fraction'>17/17</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -127,34 +127,34 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -183,40 +183,40 @@ import useCreateRequest from "../../../hooks/useCreateRequest";
 import useMessageTimeout from "../../../hooks/useMessageTimeout";
 import DeleteCollection from "./DeleteCollection";
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >CollectionManager(</span>{ id }) {
-    const { setRefresh } = <span class="cstat-no" title="statement not covered" >useContext(DataContext);</span>
-    const { handleRequest, data, loading, error } = <span class="cstat-no" title="statement not covered" >useCreateRequest();</span>
-<span class="cstat-no" title="statement not covered" >    useMessageTimeout(data);</span>
+export default function CollectionManager({ id }) {
+    const { setRefresh } = useContext(DataContext);
+    const { handleRequest, data, loading, error } = useCreateRequest();
+    useMessageTimeout(data);
 &nbsp;
-    const handleSubmit = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        e.preventDefault();</span>
+    const handleSubmit = (e) =&gt; {
+        e.preventDefault();
 &nbsp;
-        const object = <span class="cstat-no" title="statement not covered" >{};</span>
-<span class="cstat-no" title="statement not covered" >        if (document.getElementById('name').value !== "") {</span>
-<span class="cstat-no" title="statement not covered" >            object['name'] = document.getElementById('name').value;</span>
+        const object = {};
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (document.getElementById('name').value !== "") {
+            object['name'] = document.getElementById('name').value;
         }
-<span class="cstat-no" title="statement not covered" >        if (document.getElementById('description').value !== "") {</span>
-<span class="cstat-no" title="statement not covered" >            object['description'] = document.getElementById('description').value;</span>
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (document.getElementById('description').value !== "") {
+            object['description'] = document.getElementById('description').value;
         }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        handleRequest(object, `api/collection/${id}`, "PUT");</span>
+        handleRequest(object, `api/collection/${id}`, "PUT");
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        document.getElementById('name').value = "";</span>
-<span class="cstat-no" title="statement not covered" >        document.getElementById('description').value = "";</span>
+        document.getElementById('name').value = "";
+        document.getElementById('description').value = "";
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        if (Object.keys(data).length &gt; 0) {</span>
-<span class="cstat-no" title="statement not covered" >            setRefresh(<span class="fstat-no" title="function not covered" >re</span>fresh =&gt; <span class="cstat-no" title="statement not covered" >!refresh)</span>;</span>
+    useEffect(() =&gt; {
+        if (Object.keys(data).length &gt; 0) {
+            setRefresh(<span class="fstat-no" title="function not covered" >re</span>fresh =&gt; <span class="cstat-no" title="statement not covered" >!refresh)</span>;
         }
     }, [data, setRefresh]);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return (</span>
+    return (
         &lt;div className='container'&gt;
             &lt;div className="row row-cols-1 g-5"&gt;
                 &lt;div className='col-md-6 mb-3'&gt;
                     &lt;h4&gt;Update your book collection.&lt;/h4&gt;
-                    &lt;form onSubmit={handleSubmit}&gt;
+                    &lt;form aria-label="form" onSubmit={handleSubmit}&gt;
                         &lt;div className="d-grid gap-3 mt-3 mb-3"&gt;
                             &lt;input className="form-control" type="text" id="name" placeholder="Name of Collection"&gt;&lt;/input&gt;
                             &lt;textarea className="form-control" type="description" id="description" placeholder="Describe your collection"&gt;&lt;/textarea&gt;
@@ -241,7 +241,7 @@ export default function <span class="fstat-no" title="function not covered" >Col
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-05T09:25:38.856Z
+                at 2025-05-06T03:27:59.895Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

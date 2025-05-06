@@ -37,7 +37,7 @@ export default function ReviewManager({ id, bookId }) {
             <div className='d-flex justify-content-center'>
                 <div className='col-md-6 mb-3'>
                     <h4>Update your review.</h4>
-                    <form onSubmit={handleSubmit}>
+                    <form aria-label="form" onSubmit={handleSubmit}>
                         <div className="d-grid gap-3 mb-3">
                             <input className="form-control" type="number" min="1" max="5" id="rating" placeholder="Rating"></input>
                             <textarea className="form-control" type="search" id="content" placeholder="Share your thoughts"></textarea>
