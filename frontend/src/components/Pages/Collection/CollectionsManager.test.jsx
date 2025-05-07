@@ -30,7 +30,7 @@ describe("CollectionManager", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CollectionManager id={1} />
+                <CollectionManager collectionId={1} />
             </DataContext.Provider>
         );
 
@@ -47,7 +47,7 @@ describe("CollectionManager", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CollectionManager id={1} />
+                <CollectionManager collectionId={1} />
             </DataContext.Provider>
         );
 
@@ -81,7 +81,7 @@ describe("CollectionManager", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CollectionManager id={1} />
+                <CollectionManager collectionId={1} />
             </DataContext.Provider>
         );
 
@@ -99,7 +99,7 @@ describe("CollectionManager", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CollectionManager id={1} />
+                <CollectionManager collectionId={1} />
             </DataContext.Provider>
         );
 
@@ -117,7 +117,7 @@ describe("CollectionManager", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CollectionManager id={1} />
+                <CollectionManager collectionId={1} />
             </DataContext.Provider>
         );
 
@@ -156,7 +156,7 @@ describe("CollectionManager", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CollectionManager id={1} />
+                <CollectionManager collectionId={1} />
             </DataContext.Provider>
         );
 

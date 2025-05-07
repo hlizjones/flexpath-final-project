@@ -1,5 +1,5 @@
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Profile from "./components/Pages/Profile/Profile";
@@ -19,16 +19,16 @@ function App() {
       <Navbar />
       < hr />
       <DataProvider>
-      <Routes>
-        <Route path="/" element ={<Profile/>}/>
-        <Route path="/profile" element={<Profile />} />
-        {token && <Route path="/search" element={<Search />} />}
-        {token && <Route path="/book" element={<Book />} />}
-        {token && <Route path="/collection" element={<Collection />} />}
-        {token && <Route path="/review" element={<Review />} />}
-        {role === "ADMIN" && <Route path="/createbook" element={<CreateBook />} />}
-        <Route path="/*" element={<NotFound />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} />
+          {token && <Route path="/search" element={<Search />} />}
+          {token && <Route path="/book" element={<Book />} />}
+          {token && <Route path="/collection" element={<Collection />} />}
+          {token && <Route path="/review" element={<Review />} />}
+          {role === "ADMIN" && <Route path="/createbook" element={<CreateBook />} />}
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
       </DataProvider>
     </div>
   );

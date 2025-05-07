@@ -4,7 +4,7 @@ export default function ToggleFields({ firstInputField, setFirstInputField, seco
 
     const toggleSearch = (e) => {
         e.preventDefault();
-    
+
         if (e.target.value === "book") {
             setFirstInputField("Title");
             setSecondInputField("Author");

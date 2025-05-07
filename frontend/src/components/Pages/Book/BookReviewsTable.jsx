@@ -22,7 +22,7 @@ export default function BookReviewsTable({ url, options }) {
 
     const handleSort = (e) => {
         const key = e.currentTarget.id;
-        setSort({ key: key, order: key === sort.key ? !sort.order : sort.order });
+        setSort({ key: key, order: key === sort.key ? !sort.order : true });
     }
 
     return (
@@ -59,11 +59,11 @@ export default function BookReviewsTable({ url, options }) {
                                 {Object.entries(el).map(([key, value]) => {
                                     if (key != "id" && key != "bookId" && key != "privacy" && key != "isAdmin") {
                                         if (key === "username") {
-                                            return (<td className="text-capitalize align-middle" key={key}>{value}</td>)
+                                            return (<td className="text-capitalize text-center align-middle" key={key}>{value}</td>)
                                         } else if (key === "content") {
-                                            return (<td className="text-start align-middle" key={key}>{value}</td>)
+                                            return (<td className="text-start text-center align-middle" key={key}>{value}</td>)
                                         } else {
-                                            return (<td className="align-middle" key={key}>{value}</td>)
+                                            return (<td className="align-middle text-center " key={key}>{value}</td>)
                                         }
                                     }
                                 })}

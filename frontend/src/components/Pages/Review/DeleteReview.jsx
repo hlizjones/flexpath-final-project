@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 import useLoadPage from "../../../hooks/useLoadPage";
 import useMessageTimeout from "../../../hooks/useMessageTimeout";
 
-export default function DeleteReview({ id, bookId }) {
+export default function DeleteReview({ reviewId, bookId }) {
     const navigate = useNavigate();
     const { handleRequest: handleDelete, data: deleteReviewData, loading: deleteReviewLoading, error: deleteReviewError } = useCreateRequest();
     const { handleLoad } = useLoadPage();
     useMessageTimeout(deleteReviewError);
 
     const handleDeleteButton = () => {
-        handleDelete(null, `api/review/${id}`, "DELETE");
+        handleDelete(null, `api/review/${reviewId}`, "DELETE");
     }
 
     useEffect(() => {

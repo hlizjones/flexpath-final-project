@@ -13,7 +13,7 @@ export default function SearchResults({ page, data, loading, error, setSort, sor
 
     const handleSort = (e) => {
         const key = e.currentTarget.id;
-        setSort({ key: key, order: key === sort.key ? !sort.order : sort.order });
+        setSort({ key: key, order: key === sort.key ? !sort.order : true });
     }
 
     return (

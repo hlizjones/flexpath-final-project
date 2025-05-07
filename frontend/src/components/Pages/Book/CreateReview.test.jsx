@@ -28,7 +28,7 @@ describe("Create review", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CreateReview id={1} />
+                <CreateReview bookId={1} />
             </DataContext.Provider>
         );
 
@@ -45,7 +45,7 @@ describe("Create review", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CreateReview id={1} />
+                <CreateReview bookId={1} />
             </DataContext.Provider>
         );
 
@@ -80,7 +80,7 @@ describe("Create review", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CreateReview id={1} />
+                <CreateReview bookId={1} />
             </DataContext.Provider>
         );
 
@@ -108,7 +108,7 @@ describe("Create review", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CreateReview id={1} />
+                <CreateReview bookId={1} />
             </DataContext.Provider>
         );
 
@@ -126,7 +126,7 @@ describe("Create review", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CreateReview id={1} />
+                <CreateReview bookId={1} />
             </DataContext.Provider>
         );
 
@@ -144,7 +144,7 @@ describe("Create review", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CreateReview id={1} />
+                <CreateReview bookId={1} />
             </DataContext.Provider>
         );
 
@@ -187,7 +187,7 @@ describe("Create review", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <CreateReview id={1} />
+                <CreateReview bookId={1} />
             </DataContext.Provider>
         );
 

@@ -1,7 +1,7 @@
-import React, {useContext} from "react";
+import React from "react";
 import useCreateRequest from "../../../hooks/useCreateRequest";
 
-export default function FavoriteCollection({ id, favorite }) {
+export default function FavoriteCollection({ collectionId, favorite }) {
     const { handleRequest } = useCreateRequest();
 
     const handleFavorite = (e) => {
@@ -14,14 +14,13 @@ export default function FavoriteCollection({ id, favorite }) {
             bool = true;
             e.currentTarget.className = "bi bi-heart-fill h2";
         }
-        
-        handleRequest({favorite: bool}, `api/collection/${id}`, "PUT");
+        handleRequest({ favorite: bool }, `api/collection/${collectionId}`, "PUT");
     }
 
     return (
         <>
-            {favorite && <i className="bi bi-heart-fill h2" id={id + "btn"} onClick={handleFavorite}></i>}
-            {!favorite && <i className="bi bi-heart h2" id={id + "btn"} onClick={handleFavorite}></i>}
+            {favorite && <i className="bi bi-heart-fill h2" id={collectionId + "btn"} onClick={handleFavorite}></i>}
+            {!favorite && <i className="bi bi-heart h2" id={collectionId + "btn"} onClick={handleFavorite}></i>}
         </>
     );
 }

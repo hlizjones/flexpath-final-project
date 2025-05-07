@@ -20,7 +20,8 @@ export default function Login() {
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
-        handleRequest({ username: `${username}`, password: `${password}` }, "auth/login", "POST", null)
+        handleRequest({ username: `${username}`, password: `${password}` }, "auth/login", "POST");
+
         document.getElementById("username").value = "";
         document.getElementById("password").value = "";
     }

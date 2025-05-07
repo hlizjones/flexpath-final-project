@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useLoadPage from "../../../hooks/useLoadPage";
 import useMessageTimeout from "../../../hooks/useMessageTimeout";
 
-export default function DeleteCollection({ id }) {
+export default function DeleteCollection({ collectionId }) {
     const navigate = useNavigate();
     const { handleLoad } = useLoadPage();
     const { handleRequest, data, loading, error } = useCreateRequest();
@@ -12,7 +12,7 @@ export default function DeleteCollection({ id }) {
 
 
     const handleDeleteButton = () => {
-        handleRequest(null, `api/collection/${id}`, "DELETE");
+        handleRequest(null, `api/collection/${collectionId}`, "DELETE");
     }
 
     useEffect(() => {

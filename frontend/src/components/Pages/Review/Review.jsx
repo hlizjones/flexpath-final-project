@@ -47,7 +47,7 @@ export default function Review() {
                         {data.privacy && <i className="bi bi-lock h1" id={data.id} onClick={handleClick}></i>}
                         {!data.privacy && <i className="bi bi-unlock h1" id={data.id} onClick={handleClick}></i>}
                     </>
-                    <ReviewManager id={data.id} bookId={data.bookId} />
+                    <ReviewManager reviewId={data.id} bookId={data.bookId} />
                 </div>
             }
         </>

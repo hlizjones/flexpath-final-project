@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/17</span>
+                <span class='fraction'>0/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>0/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>0/18</span>
             </div>
         
             
@@ -108,7 +108,16 @@
 <a name='L43'></a><a href='#L43'>43</a>
 <a name='L44'></a><a href='#L44'>44</a>
 <a name='L45'></a><a href='#L45'>45</a>
-<a name='L46'></a><a href='#L46'>46</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -121,6 +130,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -136,6 +147,11 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -153,7 +169,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useContext, useState } from "react";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../context/AuthProvider";
 import { DataContext } from "../../../context/DataProvider";
 import CollectionManager from "./CollectionManager";
@@ -162,10 +180,12 @@ import usePrivacy from "../../../hooks/usePrivacy";
 &nbsp;
 &nbsp;
 export default function <span class="fstat-no" title="function not covered" >Collection(</span>) {
-    const { username, role } = <span class="cstat-no" title="statement not covered" >useContext(AuthContext);</span>
+    const { username, role, token } = <span class="cstat-no" title="statement not covered" >useContext(AuthContext);</span>
     const { data, loading, error } = <span class="cstat-no" title="statement not covered" >useContext(DataContext);</span>
     const { handlePrivacy } = <span class="cstat-no" title="statement not covered" >usePrivacy();</span>
-    const [show, setShow] = <span class="cstat-no" title="statement not covered" >useState(false)</span>
+    const [show, setShow] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
+    const [reviewsUrl, setBooksUrl] = <span class="cstat-no" title="statement not covered" >useState(null);</span>
+    const [reviewsOptions, setBooksOptions] = <span class="cstat-no" title="statement not covered" >useState(null);</span>
 &nbsp;
     const reveal = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        e.preventDefault();</span>
@@ -178,24 +198,31 @@ export default function <span class="fstat-no" title="function not covered" >Col
 <span class="cstat-no" title="statement not covered" >        handlePrivacy(e, `api/collection/${id}`);</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (loading) <span class="cstat-no" title="statement not covered" >return &lt;div&gt;Loading collection...&lt;/div&gt;</span></span>
-<span class="cstat-no" title="statement not covered" >    if (error) <span class="cstat-no" title="statement not covered" >return &lt;div className="mb-5 text-danger"&gt;Error: Failed to load collection.&lt;/div&gt;</span></span>
+<span class="cstat-no" title="statement not covered" >    useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        if (data.id) {</span>
+<span class="cstat-no" title="statement not covered" >            setBooksUrl(`api/book_collection?id=${data.id}`);</span>
+<span class="cstat-no" title="statement not covered" >            setBooksOptions({ headers: { 'Authorization': `Bearer ${token}` } });</span>
+        }
+    }, [data, token])
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    return (</span>
         &lt;&gt;
+            {loading &amp;&amp; &lt;div&gt;Loading collection...&lt;/div&gt;}
+            {error &amp;&amp; &lt;div className="mb-5 text-danger"&gt;Error: Failed to load collection.&lt;/div&gt;}
             &lt;div className="container text-center mb-5"&gt;
-                &lt;h1&gt;{data.name}&lt;/h1&gt;
-                &lt;h4 className="text-capitalize"&gt;Created by: {data.username}&lt;/h4&gt;
-                &lt;h4 className="fst-italic"&gt;{data.description}&lt;/h4&gt;
+                {!error &amp;&amp; &lt;div&gt;&lt;h1&gt;{data.name}&lt;/h1&gt;
+                    &lt;h4 className="text-capitalize"&gt;Created by: {data.username}&lt;/h4&gt;
+                    &lt;h4 className="fst-italic"&gt;{data.description}&lt;/h4&gt;&lt;/div&gt;}
                 {(username === data.username || role === "ADMIN") &amp;&amp;
                     &lt;&gt;
                         {data.privacy &amp;&amp; &lt;i className="bi bi-lock h1" id={data.id} onClick={handleClick}&gt;&lt;/i&gt;}
                         {!data.privacy &amp;&amp; &lt;i className="bi bi-unlock h1" id={data.id} onClick={handleClick}&gt;&lt;/i&gt;}
                     &lt;/&gt;
                 }
-            &lt;div className="d-flex"&gt;&lt;button className="btn btn-secondary col-2" type="button" onClick={reveal}&gt;Edit collection&lt;/button&gt;&lt;/div&gt;
+                &lt;div className="d-flex"&gt;&lt;button className="btn btn-secondary col-2" type="button" onClick={reveal}&gt;Edit collection&lt;/button&gt;&lt;/div&gt;
             &lt;/div&gt;
-            {((username === data.username || role === "ADMIN") &amp;&amp; show) &amp;&amp; &lt;CollectionManager id={data.id} show ={show} setShow = {setShow} /&gt;}
-            &lt;CollectionBooksTable id={data.id} username={data.username} /&gt;
+            {((username === data.username || role === "ADMIN") &amp;&amp; show) &amp;&amp; &lt;CollectionManager collectionId={data.id} show={show} setShow={setShow} /&gt;}
+            &lt;CollectionBooksTable collectionId={data.id} username={data.username} url={reviewsUrl} options={reviewsOptions} /&gt;
         &lt;/&gt;
     );
 }</pre></td></tr></table></pre>
@@ -205,7 +232,7 @@ export default function <span class="fstat-no" title="function not covered" >Col
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-06T03:27:59.895Z
+                at 2025-05-07T08:58:38.101Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

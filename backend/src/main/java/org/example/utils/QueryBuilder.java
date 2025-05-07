@@ -23,7 +23,6 @@ public class QueryBuilder {
     private List<String> orderByClauses;
     private List<Object> orderByValues;
 
-
     /**
      * Creates a new query builder object.
      */

@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>0/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/11</span>
+                <span class='fraction'>0/13</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>0/13</span>
             </div>
         
             
@@ -114,7 +114,8 @@
 <a name='L49'></a><a href='#L49'>49</a>
 <a name='L50'></a><a href='#L50'>50</a>
 <a name='L51'></a><a href='#L51'>51</a>
-<a name='L52'></a><a href='#L52'>52</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -134,6 +135,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -177,19 +179,20 @@ export default function <span class="fstat-no" title="function not covered" >Boo
     const { role, token } = <span class="cstat-no" title="statement not covered" >useContext(AuthContext);</span>
     const { data, loading, error } = <span class="cstat-no" title="statement not covered" >useContext(DataContext);</span>
     const [show, setShow] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
-    const [reviewUrl, setReviewUrl] = <span class="cstat-no" title="statement not covered" >useState(null)</span>
-    const [reviewOptions, setReviewOptions] = <span class="cstat-no" title="statement not covered" >useState(null)</span>
+    const [reviewsUrl, setReviewsUrl] = <span class="cstat-no" title="statement not covered" >useState(null);</span>
+    const [reviewsOptions, setReviewsOptions] = <span class="cstat-no" title="statement not covered" >useState(null);</span>
 &nbsp;
     const reveal = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        e.preventDefault();</span>
 <span class="cstat-no" title="statement not covered" >        setShow(<span class="fstat-no" title="function not covered" >sh</span>ow =&gt; <span class="cstat-no" title="statement not covered" >!show)</span>;</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    useEffect(<span class="fstat-no" title="function not covered" >()</span>=&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        setReviewUrl(`api/review?bookId=${data.id}`)</span>
-<span class="cstat-no" title="statement not covered" >        setReviewOptions({ headers: { 'Authorization': `Bearer ${token}` } })</span>
+<span class="cstat-no" title="statement not covered" >    useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        if (data.id) {</span>
+<span class="cstat-no" title="statement not covered" >            setReviewsUrl(`api/review?bookId=${data.id}`);</span>
+<span class="cstat-no" title="statement not covered" >            setReviewsOptions({ headers: { 'Authorization': `Bearer ${token}` } });</span>
+        }
     }, [data, token])
-&nbsp;
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return (</span>
         &lt;&gt;
@@ -201,19 +204,19 @@ export default function <span class="fstat-no" title="function not covered" >Boo
                 {role === "ADMIN" &amp;&amp; &lt;div className="d-flex justify-content-center"&gt;&lt;button className="btn btn-outline-secondary col-2" type="button" onClick={reveal}&gt;Edit book&lt;/button&gt;&lt;/div&gt;}
             &lt;/div&gt;
             &lt;div className="container mb-5"&gt;
-                {(role === "ADMIN" &amp;&amp; show) &amp;&amp; &lt;BookManager id={data.id} show={show} setShow={setShow} /&gt;}
+                {(role === "ADMIN" &amp;&amp; show) &amp;&amp; &lt;BookManager bookId={data.id} show={show} setShow={setShow} /&gt;}
             &lt;/div&gt;
             &lt;div className="container mb-5"&gt;
                 &lt;div className="row g-5 "&gt;
                     &lt;div className="col"&gt;
-                        &lt;AddToCollection id={data.id} /&gt;
+                        &lt;AddToCollection bookId={data.id} /&gt;
                     &lt;/div&gt;
                     &lt;div className="col"&gt;
-                        &lt;CreateReview id={data.id} /&gt;
+                        &lt;CreateReview bookId={data.id} /&gt;
                     &lt;/div&gt;
                 &lt;/div&gt;
             &lt;/div &gt;
-            &lt;BookReviewsTable url={reviewUrl} options={reviewOptions} /&gt;
+            &lt;BookReviewsTable url={reviewsUrl} options={reviewsOptions} /&gt;
         &lt;/&gt;
     );
 }</pre></td></tr></table></pre>
@@ -223,7 +226,7 @@ export default function <span class="fstat-no" title="function not covered" >Boo
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-06T03:27:59.895Z
+                at 2025-05-07T08:58:38.101Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

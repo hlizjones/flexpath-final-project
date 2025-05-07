@@ -28,7 +28,7 @@ export default function useUrlBuilder() {
     }
 
     return (
-        {buildUrl}
+        { buildUrl }
     )
 }
 

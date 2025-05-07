@@ -26,7 +26,7 @@ export default function UserCollections() {
 
     const handleSort = (e) => {
         const key = e.currentTarget.id;
-        setSort({ key: key, order: key === sort.key ? !sort.order : sort.order });
+        setSort({ key: key, order: key === sort.key ? !sort.order : true });
     }
 
     return (
@@ -54,7 +54,7 @@ export default function UserCollections() {
                                             {el.name}
                                         </h4>
                                         <p className="card-text">{el.description}</p>
-                                        <FavoriteCollection id={el.id} favorite={el.favorite} />
+                                        <FavoriteCollection collectionId={el.id} favorite={el.favorite} />
                                     </div>
                                 </div>
                             </div>

@@ -3,13 +3,13 @@ import useCreateRequest from "../../../hooks/useCreateRequest";
 import useMessageTimeout from "../../../hooks/useMessageTimeout";
 
 
-export default function AddToCollectionForm({ formData, id }) {
+export default function AddToCollectionForm({ formData, bookId }) {
     const { handleRequest, data, loading, error } = useCreateRequest();
     useMessageTimeout(data, error);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        handleRequest(null, `api/book_collection?bookId=${id}&collectionId=${document.getElementById("selectCollection").value}`, "POST");
+        handleRequest(null, `api/book_collection?bookId=${bookId}&collectionId=${document.getElementById("selectCollection").value}`, "POST");
     }
 
     return (

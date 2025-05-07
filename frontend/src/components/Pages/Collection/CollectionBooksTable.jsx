@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
 import { AuthContext } from "../../../context/AuthProvider";
 import { DataContext } from "../../../context/DataProvider";
@@ -7,15 +7,13 @@ import useLoadPage from "../../../hooks/useLoadPage";
 import useMessageTimeout from "../../../hooks/useMessageTimeout";
 import useSort from "../../../hooks/useSort";
 
-export default function CollectionBooksTable({ id, username}) {
-    const { role, token, username: authUsername } = useContext(AuthContext);
+export default function CollectionBooksTable({ collectionId, username, url, options }) {
+    const { role, username: authUsername } = useContext(AuthContext);
     const { setRefresh } = useContext(DataContext);
     const { handleLoad } = useLoadPage();
     const { handleRequest, data: removeBookData, loading: removeBookLoading, error: removeBookError } = useCreateRequest();
     useMessageTimeout(removeBookError);
 
-    const url = useMemo(() => (`api/book_collection?id=${id}`), [id]);
-    const options = useMemo(() => ({ headers: { 'Authorization': `Bearer ${token}` } }), [token]);
     const { data, loading, error } = useFetch(url, options);
 
     const [sort, setSort] = useState({ key: null, order: true });
@@ -30,7 +28,7 @@ export default function CollectionBooksTable({ id, username}) {
     const removeBook = (e) => {
         e.preventDefault();
         const bookId = e.currentTarget.closest('tr').id;
-        handleRequest(null, `api/book_collection?bookId=${bookId}&collectionId=${id}`, "DELETE");
+        handleRequest(null, `api/book_collection?bookId=${bookId}&collectionId=${collectionId}`, "DELETE");
     }
 
     useEffect(() => {
@@ -41,8 +39,9 @@ export default function CollectionBooksTable({ id, username}) {
 
     const handleSort = (e) => {
         const key = e.currentTarget.id;
-        setSort({key: key, order: key === sort.key ? !sort.order : sort.order});
+        setSort({ key: key, order: key === sort.key ? !sort.order : true });
     }
+
     return (
         <div className="container">
             {loading && <div>Loading books...</div>}
@@ -58,12 +57,12 @@ export default function CollectionBooksTable({ id, username}) {
                                 return (
                                     <th data-testid="headers" className="text-uppercase" scope="col" key={key} id={key} onClick={handleSort}>
                                         {key}
-                                        <i className="bi bi-caret-up-fill" id={key+"caret"}></i>
-                                        </th>
+                                        <i className="bi bi-caret-up-fill" id={key + "caret"}></i>
+                                    </th>
                                 )
                             }
                         })}
-                        {(sortedData[0] && (username === authUsername || role === 'ADMIN')) && <th>DELETE</th>}
+                        {(sortedData[0] && (username === authUsername || role === 'ADMIN')) && <th>REMOVE BOOK</th>}
                     </tr>
                 </thead>
                 <tbody className="text-center">

@@ -4,7 +4,7 @@ import useCreateRequest from "../../../hooks/useCreateRequest";
 import useMessageTimeout from "../../../hooks/useMessageTimeout";
 import DeleteReview from "./DeleteReview";
 
-export default function ReviewManager({ id, bookId }) {
+export default function ReviewManager({ reviewId, bookId }) {
     const { setRefresh } = useContext(DataContext);
     const { handleRequest, data, loading, error } = useCreateRequest();
     useMessageTimeout(error);
@@ -20,7 +20,7 @@ export default function ReviewManager({ id, bookId }) {
             object['content'] = document.getElementById('content').value;
         }
 
-        handleRequest(object, `api/review/${id}?bookId=${bookId}`, "PUT");
+        handleRequest(object, `api/review/${reviewId}?bookId=${bookId}`, "PUT");
 
         document.getElementById('rating').value = "";
         document.getElementById('content').value = "";
@@ -46,7 +46,7 @@ export default function ReviewManager({ id, bookId }) {
                             <button className="btn btn-secondary" type="submit">Update Review</button>
                         </div>
                     </form>
-                    <DeleteReview id={id} bookId={bookId} />
+                    <DeleteReview reviewId={reviewId} bookId={bookId} />
                     <div className='col-md-6 mb-3'>
                         {loading && <div>Updating review...</div>}
                         {error && <div className="visible mb-5 text-danger" id="errorMsg">Error: Failed to update review.</div>}

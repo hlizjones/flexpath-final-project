@@ -30,7 +30,7 @@ describe("ReviewManager", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <ReviewManager id={1} bookId={1} />
+                <ReviewManager reviewId={1} bookId={1} />
             </DataContext.Provider>
         );
 
@@ -47,7 +47,7 @@ describe("ReviewManager", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <ReviewManager id={1} bookId={1} />
+                <ReviewManager reviewId={1} bookId={1} />
             </DataContext.Provider>
         );
 
@@ -79,7 +79,7 @@ describe("ReviewManager", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <ReviewManager id={1} bookId={1} />
+                <ReviewManager reviewId={1} bookId={1} />
             </DataContext.Provider>
         );
 
@@ -97,7 +97,7 @@ describe("ReviewManager", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <ReviewManager id={1} bookId={1} />
+                <ReviewManager reviewId={1} bookId={1} />
             </DataContext.Provider>
         );
 
@@ -116,7 +116,7 @@ describe("ReviewManager", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <ReviewManager id={1} bookId={1} />
+                <ReviewManager reviewId={1} bookId={1} />
             </DataContext.Provider>
         );
 
@@ -156,7 +156,7 @@ describe("ReviewManager", () => {
 
         render(
             <DataContext.Provider value={mockDataContext}>
-                <ReviewManager id={1} bookId={1} />
+                <ReviewManager reviewId={1} bookId={1} />
             </DataContext.Provider>
         );
 

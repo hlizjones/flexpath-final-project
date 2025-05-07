@@ -4,7 +4,7 @@ import useCreateRequest from "../../../hooks/useCreateRequest";
 import useMessageTimeout from "../../../hooks/useMessageTimeout";
 import DeleteCollection from "./DeleteCollection";
 
-export default function CollectionManager({ id }) {
+export default function CollectionManager({ collectionId }) {
     const { setRefresh } = useContext(DataContext);
     const { handleRequest, data, loading, error } = useCreateRequest();
     useMessageTimeout(data);
@@ -20,7 +20,7 @@ export default function CollectionManager({ id }) {
             object['description'] = document.getElementById('description').value;
         }
 
-        handleRequest(object, `api/collection/${id}`, "PUT");
+        handleRequest(object, `api/collection/${collectionId}`, "PUT");
 
         document.getElementById('name').value = "";
         document.getElementById('description').value = "";
@@ -46,7 +46,7 @@ export default function CollectionManager({ id }) {
                             <button className="btn btn-secondary" type="submit">Update</button>
                         </div>
                     </form >
-                    <DeleteCollection id={id} />
+                    <DeleteCollection collectionId={collectionId} />
                 </div >
                 <div className='col-md-6 mb-3'>
                     {loading && <div>Updating collection...</div>}

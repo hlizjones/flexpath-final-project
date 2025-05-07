@@ -70,11 +70,6 @@ public class CollectionController {
         if (collection == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Collection not found");
         }
-        System.out.print(principal);
-        System.out.print(principal.getName());
-        System.out.println(isAdmin());
-        System.out.println(Objects.equals(collection.getUsername(), principal.getName()));
-        System.out.println(!collection.getPrivacy());
         if (isAdmin() || Objects.equals(collection.getUsername(), principal.getName()) || !collection.getPrivacy()) {
             return collection;
         } else {
@@ -108,6 +103,8 @@ public class CollectionController {
     public Collection update(@RequestBody Collection collection, @PathVariable int id, Principal principal) {
         Collection currentCollection = collectionDao.getCollectionById(id);
 
+        collection.setId(id);
+        collection.setUsername(currentCollection.getUsername());
         if (currentCollection == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Collection not found");
         }
@@ -125,16 +122,11 @@ public class CollectionController {
         }
 
         if (isAdmin()) {
-            collection.setId(id);
-            if (collection.getUsername() == null) {
-                collection.setUsername(currentCollection.getUsername());
-            }
             return collectionDao.updateCollection(collection);
         } else {
             if (!Objects.equals(currentCollection.getUsername(), principal.getName())) {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
             } else {
-                collection.setId(id);
                 return collectionDao.updateCollection(collection);
             }
         }

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Controller for collections.
+ * Controller for books and collections.
  *
  */
 @RestController
@@ -22,7 +22,7 @@ import java.util.Objects;
 @PreAuthorize("permitAll()")
 public class BookCollectionController {
     /**
-     * The collection data access object.
+     * The book collection data access object.
      */
     @Autowired
     private BookCollectionDao bookCollectionDao;
@@ -32,7 +32,7 @@ public class BookCollectionController {
      *
      * @param id The id of the collection.
      * @param principal The authenticated user.
-     * @return  List of Book.
+     * @return List of Book.
      */
     @GetMapping
     public List<Book> getBooksByCollection(@RequestParam int id, Principal principal) {
@@ -49,7 +49,7 @@ public class BookCollectionController {
      * @param bookId The id of the book.
      * @param collectionId The id of the collection.
      * @param principal The authenticated user.
-     * @return  List of Book.
+     * @return List of Book.
      */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
@@ -68,12 +68,12 @@ public class BookCollectionController {
     }
 
     /**
-     * Adds a book to a collection.
+     * Deletes a book from a collection.
      *
      * @param bookId The id of the book.
      * @param collectionId The id of the collection.
      * @param principal The authenticated user.
-     * @return  List of Book.
+     * @return List of Book.
      */
     @DeleteMapping
     public String deleteBooksFromCollection(@RequestParam int bookId, @RequestParam int collectionId, Principal principal) {

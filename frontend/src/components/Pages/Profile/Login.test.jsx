@@ -66,7 +66,7 @@ describe("Login", () => {
 
         fireEvent.click(screen.getByRole('button', { name: "Login" }));
 
-        expect(mockHandleRequest).toHaveBeenCalledWith({ username: `admin`, password: `admin` }, "auth/login", "POST", null)
+        expect(mockHandleRequest).toHaveBeenCalledWith({ username: `admin`, password: `admin` }, "auth/login", "POST");
 
     });
 

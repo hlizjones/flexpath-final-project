@@ -3,7 +3,7 @@ import { DataContext } from "../../../context/DataProvider";
 import useCreateRequest from "../../../hooks/useCreateRequest";
 import useMessageTimeout from "../../../hooks/useMessageTimeout";
 
-export default function CreateReview({ id }) {
+export default function CreateReview({ bookId }) {
     const { setRefresh } = useContext(DataContext);
     const { handleRequest, data, loading, error } = useCreateRequest();
     useMessageTimeout(error);
@@ -21,7 +21,7 @@ export default function CreateReview({ id }) {
             object['privacy'] = false;
         }
 
-        handleRequest(object, `api/review?bookId=${id}`, "POST");
+        handleRequest(object, `api/review?bookId=${bookId}`, "POST");
 
         document.getElementById('rating').value = "";
         document.getElementById('content').value = "";

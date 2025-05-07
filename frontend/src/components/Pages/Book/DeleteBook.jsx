@@ -3,13 +3,13 @@ import useCreateRequest from "../../../hooks/useCreateRequest";
 import { useNavigate } from "react-router-dom";
 import useMessageTimeout from "../../../hooks/useMessageTimeout";
 
-export default function DeleteBook({ id }) {
+export default function DeleteBook({ bookId }) {
     const navigate = useNavigate();
     const { handleRequest, data, loading, error } = useCreateRequest();
     useMessageTimeout(error);
 
     const handleDeleteButton = () => {
-        handleRequest(null, `api/book/${id}`, "DELETE");
+        handleRequest(null, `api/book/${bookId}`, "DELETE");
     }
 
     useEffect(() => {

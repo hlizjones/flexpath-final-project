@@ -8,15 +8,15 @@ export default function CreateBook() {
     const { handleLoad } = useLoadPage();
     useMessageTimeout(error);
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        const object = { 'title': document.getElementById('title').value,
+        const object = {
+            'title': document.getElementById('title').value,
             'author': document.getElementById('author').value,
             'genre': document.getElementById('genre').value,
-         }
+        }
 
-         handleRequest(object, "api/book", "POST");
+        handleRequest(object, "api/book", "POST");
 
         document.getElementById('title').value = " ";
         document.getElementById('author').value = " ";

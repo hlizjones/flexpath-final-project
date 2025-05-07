@@ -3,7 +3,7 @@ import { AuthContext } from "../../../context/AuthProvider";
 import useFetch from "../../../hooks/useFetch";
 import AddToCollectionForm from "./AddToCollectionForm";
 
-export default function AddToCollection({ id }) {
+export default function AddToCollection({ bookId }) {
     const { token, username, role } = useContext(AuthContext);
 
     let urlToMemoize;
@@ -17,6 +17,6 @@ export default function AddToCollection({ id }) {
     const { data } = useFetch(url, options)
 
     return (
-        <AddToCollectionForm formData={data} id={id} />
+        <AddToCollectionForm formData={data} bookId={bookId} />
     );
 }

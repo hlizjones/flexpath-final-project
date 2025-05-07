@@ -50,6 +50,7 @@ export default function useFetch(url, options, refresh) {
 
     }, [url, options, refresh, navigate, setUsername, setRole, setToken, setTokenExpMessage, token]);
 
+    console.log(error)
     return { data, loading, error }
 }
 

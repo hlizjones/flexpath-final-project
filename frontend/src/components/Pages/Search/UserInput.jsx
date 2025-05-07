@@ -29,7 +29,6 @@ export default function UserInput({ setPage, setUrl, setSort }) {
         setPage(page);
         localStorage.setItem("page", page);
         setSort({ key: null, order: true });
-        
 
         document.getElementById("firstInput").value = "";
         document.getElementById("secondInput").value = "";
@@ -40,14 +39,14 @@ export default function UserInput({ setPage, setUrl, setSort }) {
 
     return (
         <>
-        <ToggleFields firstInputField={firstInputField} setFirstInputField={setFirstInputField} secondInputField={secondInputField} setSecondInputField={setSecondInputField} thirdInputField={thirdInputField} setThirdInputField={setThirdInputField} />
-        <div className='container mb-5'>
-            <form onSubmit={handleSubmit}>
-                <div className="col-md-5 d-grid gap-3 mb-3">
-                    <button className="btn btn-secondary" type="submit">Search</button>
-                </div>
-            </form>
-        </div>
+            <ToggleFields firstInputField={firstInputField} setFirstInputField={setFirstInputField} secondInputField={secondInputField} setSecondInputField={setSecondInputField} thirdInputField={thirdInputField} setThirdInputField={setThirdInputField} />
+            <div className='container mb-5'>
+                <form onSubmit={handleSubmit}>
+                    <div className="col-md-5 d-grid gap-3 mb-3">
+                        <button className="btn btn-secondary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
         </>
     );
 }

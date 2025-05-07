@@ -137,7 +137,6 @@ public class CollectionDao {
             jdbcTemplate.update(psc, keyHolder);
 
             Number key = keyHolder.getKey();
-            System.out.println(key);
             assert key != null;
             return getCollectionById(key.intValue());
         } catch (DataAccessException e) {

@@ -4,10 +4,9 @@ import useCreateRequest from "../../../hooks/useCreateRequest";
 import useMessageTimeout from "../../../hooks/useMessageTimeout";
 import DeleteBook from "./DeleteBook";
 
-export default function BookManager({ show, setShow, id }) {
+export default function BookManager({ show, setShow, bookId }) {
     const { setRefresh } = useContext(DataContext);
     const { handleRequest, data, loading, error } = useCreateRequest();
-
     useMessageTimeout(error);
 
     const handleSubmit = (e) => {
@@ -23,7 +22,7 @@ export default function BookManager({ show, setShow, id }) {
             object['genre'] = document.getElementById('genre').value;
         }
 
-        handleRequest(object, `api/book/${id}`, "PUT");
+        handleRequest(object, `api/book/${bookId}`, "PUT");
 
         document.getElementById('title').value = "";
         document.getElementById('author').value = "";
@@ -54,7 +53,7 @@ export default function BookManager({ show, setShow, id }) {
                                     <button className="btn btn-secondary" type="submit">Update</button>
                                 </div>
                             </form >
-                            <DeleteBook id={id} />
+                            <DeleteBook bookId={bookId} />
                         </div >
                         <div className='col-md-6 mb-3'>
                             {loading && <div>Updating book...</div>}

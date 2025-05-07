@@ -81,7 +81,7 @@ public class BookCollectionDao {
      *
      * @param bookId The id of the book.
      * @param collectionId The id of the collection.
-     * @return The number of rows affected (1 if a review was added, 0 if no review was found).
+     * @return The number of rows affected (1 if a book was added, 0 if no book was found).
      */
     public int addBookToCollection(int bookId, int collectionId) {
         return jdbcTemplate.update("INSERT INTO book_collections (book_id, collection_id) VALUES (?, ?)", bookId, collectionId);
@@ -92,7 +92,7 @@ public class BookCollectionDao {
      *
      * @param bookId The id of the book.
      * @param collectionId The id of the collection.
-     * @return The number of rows affected (1 if a review was deleted, 0 if no review was found).
+     * @return The number of rows affected (1 if a book was deleted, 0 if no book was found).
      */
     public int deleteBookFromCollection(int bookId, int collectionId) {
         return jdbcTemplate.update("DELETE FROM book_collections WHERE book_id = ? AND collection_id = ?", bookId, collectionId);

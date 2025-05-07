@@ -40,7 +40,7 @@ describe("AddToCollectionForm", () => {
             error: null
         }));
 
-        render(<AddToCollectionForm formData={[]} id={1} />);
+        render(<AddToCollectionForm formData={[]} bookId={1} />);
 
         expect(screen.getByRole('form')).toBeInTheDocument();
     });
@@ -53,7 +53,7 @@ describe("AddToCollectionForm", () => {
             error: null
         }));
 
-        render(<AddToCollectionForm formData={[]} id={1} />);
+        render(<AddToCollectionForm formData={[]} bookId={1} />);
 
         expect(screen.getByRole('option', { name: "Create a collection to add books." })).toBeInTheDocument();
         expect(screen.queryByRole('option', { name: "Favorites" })).not.toBeInTheDocument();
@@ -68,7 +68,7 @@ describe("AddToCollectionForm", () => {
             error: null
         }));
 
-        render(<AddToCollectionForm formData={data} id={1} />);
+        render(<AddToCollectionForm formData={data} bookId={1} />);
 
         expect(screen.queryByRole('option', { name: "Create a collection to add books." })).not.toBeInTheDocument();
         expect(screen.getByRole('option', { name: "Favorites" })).toBeInTheDocument();
@@ -83,7 +83,7 @@ describe("AddToCollectionForm", () => {
             error: null
         }));
 
-        render(<AddToCollectionForm formData={[]} id={1} />);
+        render(<AddToCollectionForm formData={[]} bookId={1} />);
 
         expect(screen.getByRole('button', { name: "Add" })).toBeDisabled();
     });
@@ -96,7 +96,7 @@ describe("AddToCollectionForm", () => {
             error: null
         }));
 
-        render(<AddToCollectionForm formData={data} id={1} />);
+        render(<AddToCollectionForm formData={data} bookId={1} />);
 
         fireEvent.change(screen.getByRole('combobox'), {
             target: { value: "1" }
@@ -118,7 +118,7 @@ describe("AddToCollectionForm", () => {
             error: null
         }));
 
-        render(<AddToCollectionForm formData={data} id={1} />);
+        render(<AddToCollectionForm formData={data} bookId={1} />);
 
         expect(screen.getByText('Adding book...')).toBeInTheDocument();
         expect(screen.queryByText('Error: Failed to add book.')).not.toBeInTheDocument();
@@ -132,7 +132,7 @@ describe("AddToCollectionForm", () => {
             error: "Error"
         }));
 
-        render(<AddToCollectionForm formData={data} id={1} />);
+        render(<AddToCollectionForm formData={data} bookId={1} />);
 
         expect(screen.queryByText('Adding book...')).not.toBeInTheDocument();
         expect(screen.getByText('Error: Failed to add book.')).toBeInTheDocument();
@@ -146,7 +146,7 @@ describe("AddToCollectionForm", () => {
             error: null
         }));
 
-        render(<AddToCollectionForm formData={data} id={1} />);
+        render(<AddToCollectionForm formData={data} bookId={1} />);
 
         expect(screen.queryByText('Adding book...')).not.toBeInTheDocument();
         expect(screen.queryByText('Error: Failed to add book.')).not.toBeInTheDocument();
